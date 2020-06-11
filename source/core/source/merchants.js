@@ -26,6 +26,8 @@ var gca_merchants = {
 		(gca_options.bool("merchants","show_shop_info") &&
 			this.containerItemsInfo.prepare());
 
+        // TODO: highlight good items
+
 		// Double click to sell/buy items
 		(gca_options.bool("merchants","double_click_actions") &&
 			this.doubleClickActions.init());
