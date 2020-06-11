@@ -1643,6 +1643,10 @@ var gca_global = {
 
 					let auctionStatus1 = document.createElement("div");
 					auctionStatus1.id = "auction_status_gladiator";
+					auctionStatus1.className = "auction_status";
+                    auctionStatus1.addEventListener("click", function(){
+                        window.location = jQuery(".menuitem:contains(Auction house)")[0].href;
+                    })
 					td.appendChild(auctionStatus1);
 
 					let loading = document.createElement("div");
@@ -1651,6 +1655,10 @@ var gca_global = {
 
 					let auctionStatus2 = document.createElement("div");
 					auctionStatus2.id = "auction_status_mercenary";
+					auctionStatus2.className = "auction_status";
+                    auctionStatus2.addEventListener("click", function(){
+                        window.location = jQuery(".menuitem:contains(Auction house)").parent().find(".advanced_menu_shift")[0].href;
+                    })
 					td.appendChild(auctionStatus2);
 
 					loading = document.createElement("div");

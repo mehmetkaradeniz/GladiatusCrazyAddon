@@ -127,7 +127,8 @@
 	#AuctionStatusDiv table{border-spacing: 0px; border: 0px;}
 	#AuctionStatus{line-height: 13px;color:white;}
 	#AuctionStatusDiv table table{font-size: 11px; line-height: 9px;}
-
+    .auction_status{cursor: pointer;}
+    .auction_status:hover{background: #ded2ad;}
 	#AuctionStatusDiv .auction_status_bg_left{width: 20px; height: 30px; background: transparent url('interface/auct_status_bg.png') 0px -30px no-repeat;}
 	.gca_rtl #AuctionStatusDiv .auction_status_bg_left{width: 20px; height: 30px; background: transparent url('interface/auct_status_bg.png') -20px -30px no-repeat;}
 	#AuctionStatusDiv .auction_status_bg_center{height: 28px; padding-top: 2px; background: transparent url('interface/auct_status_bg.png') repeat-x;}
