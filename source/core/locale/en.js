@@ -60,7 +60,7 @@ gca_languages["en"] = {
 			// Button bar - Message
 			message_private_write : "Write private message",
 			message_guild_write : "Write guild message",
-			message_send : "Send",
+			message_send : "(╯°□°)╯︵ ┻━┻",
 			message_sent_success : "Message was sent successfully",
 			message_sent_failed : "Failed to sent message",
 			message_empty : "The message is empty",
@@ -103,7 +103,7 @@ gca_languages["en"] = {
 
 			// Notifications
 			notification_guild_application : "There is a pending guild application!",
-			low_durability_items : "There are {{number}} item(s) with durability under {{percent}}%",
+			low_durability_items : "There are {{number}} item(s) with durability under {{percent}}%, My Lord.",
 			item_worth_rubies : "That item woth rubies!",
 
 			// Gold - Exp data
