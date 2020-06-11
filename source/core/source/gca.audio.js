@@ -75,8 +75,8 @@ var gca_audio = {
 
 	// Sounds list
 	buildInSounds : {
-		'water'			: 'alert-sound-water.ogg',
-		'coin'			: 'coins.ogg',
+		'water'			: 'blacksmith-sound.mp3',
+		'coin'			: 'coin-spin.wav',
 		'channel'		: 'communication-channel.ogg',
 		'voila'			: 'et-voila.ogg',
 		'in-the-way'	: 'gets-in-the-way.ogg',
