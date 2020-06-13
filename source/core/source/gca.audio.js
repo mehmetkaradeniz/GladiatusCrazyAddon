@@ -75,8 +75,8 @@ var gca_audio = {
 
 	// Sounds list
 	buildInSounds : {
-		'water'			: 'blacksmith-sound.mp3',
-		'coin'			: 'coin-spin.wav',
+		'blacksmith'	: 'blacksmith.mp3',
+		'coin'			: 'coin-spin.mp3',
 		'channel'		: 'communication-channel.ogg',
 		'voila'			: 'et-voila.ogg',
 		'in-the-way'	: 'gets-in-the-way.ogg',
@@ -115,7 +115,7 @@ var gca_audio = {
 		// Make obj if not exist
 		this.audioIdObjs[id] = {
 			id : id,
-			url : gca_resources.audio + this.buildInSounds['water'],
+			url : gca_resources.audio + this.buildInSounds['blacksmith'],
 			volume : 1,
 			muted : false,
 			obj : false
