@@ -5019,6 +5019,7 @@ var gca_global = {
 		if(loaded) return;
 		loaded = true;
 		gca_global.inject();
+        registerHotkeyEvents();
 	};
 	gca_global.preinject();
 	if (document.readyState == 'interactive' || document.readyState == 'complete') {
@@ -5028,7 +5029,6 @@ var gca_global = {
 		window.addEventListener('load', fireLoad, true);
 	}
 
-    registerHotkeyEvents();
 })();
 
 var map = {};
@@ -5040,45 +5040,141 @@ function registerHotkeyEvents() {
         if (map[18]) { // Alt
 
             if (map[49]) { // 1
-                redirectToExpedition();
+                navigateToExpedition();
             }
             else if (map[50]) { // 2
-                redirectToDungeon();
+                navigateToDungeon();
             }
             else if (map[51]) { // 3
-                redirectToCircusTurma();
+                navigateToCircusProvinciarum();
             }
             else if (map[52]) { // 4
-                redirectToHorreum();
+                navigateToHorreum();
             }
             else if (map[53]) { // 5
-                redirectToAuction();
+                navigateToSmelter();
             }
 
+            if (map[81]) { // Q
+                var pageParams = gca_getPage.parameters();
+
+                if (pageParams.mod == "location") {
+                    attackExpedition(2);
+                }
+                else if (pageParams.mod == "dungeon") {
+                    attackDungeon();
+                }
+                else if (pageParams.mod == "arena" && pageParams.submod == "serverArena" && pageParams.aType == "3") {
+                    attackCircusProvinciarumPlayer(1);
+                }
+                else if (pageParams.mod == "forge" && pageParams.submod == "storage") {
+                    storeResources();
+                }
+                else if (pageParams.mod == "forge" && pageParams.submod == "smeltery") {
+                    sendAllAsPackage();
+                }
+
+            }
         }
     }
 }
 
-function redirectToExpedition() {
+function navigateToExpedition() {
     window.location = jQuery("#cooldown_bar_expedition .cooldown_bar_link")[0].href;
 }
 
-function redirectToDungeon() {
+function navigateToDungeon() {
     window.location = jQuery("#cooldown_bar_dungeon .cooldown_bar_link")[0].href;
 }
 
-function redirectToCircusTurma() {
+function navigateToCircusProvinciarum() {
     window.location = jQuery("#cooldown_bar_ct .cooldown_bar_link")[0].href;
 }
 
-function redirectToHorreum() {
+function navigateToHorreum() {
     window.location = jQuery(".menuitem:contains(Horreum)")[0].href;
 }
 
-function redirectToAuction() {
-    window.location = jQuery(".menuitem:contains(Auction house)")[0].href;
+function navigateToSmelter() {
+    window.location = jQuery(".menuitem:contains(Smelter)")[0].href;
 }
 
+function attackExpedition(monsterNo) {
+    if (monsterNo < 1 || monsterNo > 4) {
+        gca_notifications.error("Invalid monster no");
+        return;
+    }
+
+    if (isCountdownActive()) {
+        gca_notifications.warning("Wait for countdown");
+        return;
+    }
+
+    jQuery("#expedition_list .expedition_box:nth-child(" + monsterNo + ") .expedition_button")[0].click();
+}
+
+function attackDungeon() {
+    if (isCountdownActive()) {
+        gca_notifications.warning("Wait for countdown");
+        return;
+    }
+
+    if(dungeonBossExists()){
+        attackDungeonBoss();
+    }
+    else{
+        attackDungeonMinion();
+    }
+}
+
+function dungeonBossExists(){
+    return exists("#content .map_label:contains('Boss')");
+}
+
+function attackDungeonBoss(){
+    jQuery("#content .map_label:contains('Boss')").click();
+}
+
+function attackDungeonMinion(){
+    jQuery("#content img[src*='combatloc.gif']").last().click()
+}
+
+function attackCircusProvinciarumPlayer(playerNo) {
+    if (playerNo < 1 || playerNo > 5) {
+        gca_notifications.error("Invalid player no");
+        return;
+    }
+
+    if (isCountdownActive()) {
+        gca_notifications.warning("Wait for countdown");
+        return;
+    }
+
+    jQuery("#own3 > table > tbody > tr:nth-child(" + (playerNo + 1) + ") > td:nth-child(4) > div")[0].click();
+
+}
+
+function storeResources() {
+    jQuery("#store").click();
+}
+
+function sendAllAsPackage() {
+    let btn = jQuery("#content > table > tbody > tr > td:nth-child(1) > div.background_trader.pngfix > div.awesome-button")[0];
+    if (btn === undefined) {
+        gca_notifications.warning("No package found");
+        return;
+    }
+
+    jQuery("#content > table > tbody > tr > td:nth-child(1) > div.background_trader.pngfix > div.awesome-button")[0].click()
+}
+
+function isCountdownActive() {
+    return exists("#content *[data-ticker-type='countdown'");
+}
+
+function exists(selector) {
+    return jQuery(selector).length > 0;
+}
 // ESlint defs
 /* global gca, gca_audio, gca_build, gca_data, gca_data_recipes, gca_getPage, gca_links, gca_locale, gca_notifications, gca_options, gca_resources, gca_section, gca_tools */
 /* global jQuery, Chart, expeditionProgressBar, dungeonProgressBar, arenaProgressBar, ctProgressBar */
