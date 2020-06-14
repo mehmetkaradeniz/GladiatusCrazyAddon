@@ -5027,7 +5027,57 @@ var gca_global = {
 		window.addEventListener('DOMContentLoaded', fireLoad, true);
 		window.addEventListener('load', fireLoad, true);
 	}
+
+    registerHotkeyEvents();
 })();
+
+var map = {};
+function registerHotkeyEvents() {
+    onkeydown = onkeyup = function (e) {
+        e = e || event; // to deal with IE
+        map[e.keyCode] = e.type == 'keydown';
+
+        if (map[18]) { // Alt
+
+            if (map[49]) { // 1
+                redirectToExpedition();
+            }
+            else if (map[50]) { // 2
+                redirectToDungeon();
+            }
+            else if (map[51]) { // 3
+                redirectToCircusTurma();
+            }
+            else if (map[52]) { // 4
+                redirectToHorreum();
+            }
+            else if (map[53]) { // 5
+                redirectToAuction();
+            }
+
+        }
+    }
+}
+
+function redirectToExpedition() {
+    window.location = jQuery("#cooldown_bar_expedition .cooldown_bar_link")[0].href;
+}
+
+function redirectToDungeon() {
+    window.location = jQuery("#cooldown_bar_dungeon .cooldown_bar_link")[0].href;
+}
+
+function redirectToCircusTurma() {
+    window.location = jQuery("#cooldown_bar_ct .cooldown_bar_link")[0].href;
+}
+
+function redirectToHorreum() {
+    window.location = jQuery(".menuitem:contains(Horreum)")[0].href;
+}
+
+function redirectToAuction() {
+    window.location = jQuery(".menuitem:contains(Auction house)")[0].href;
+}
 
 // ESlint defs
 /* global gca, gca_audio, gca_build, gca_data, gca_data_recipes, gca_getPage, gca_links, gca_locale, gca_notifications, gca_options, gca_resources, gca_section, gca_tools */
