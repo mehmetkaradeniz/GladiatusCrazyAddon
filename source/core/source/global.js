@@ -5054,6 +5054,10 @@ function registerHotkeyEvents() {
             else if (map[53]) { // 5
                 navigateToSmelter();
             }
+            else if(map[69]){ // e
+                e.preventDefault();
+                navigateToPackages();
+            }
 
             if (map[81]) { // Q
                 var pageParams = gca_getPage.parameters();
@@ -5072,6 +5076,9 @@ function registerHotkeyEvents() {
                 }
                 else if (pageParams.mod == "forge" && pageParams.submod == "smeltery") {
                     sendAllAsPackage();
+                }
+                else if (pageParams.mod == "packages") {
+                    moveFirstPackageToInventory();
                 }
 
             }
@@ -5097,6 +5104,10 @@ function navigateToHorreum() {
 
 function navigateToSmelter() {
     window.location = jQuery(".menuitem:contains(Smelter)")[0].href;
+}
+
+function navigateToPackages() {
+    window.location = jQuery("#menue_packages").attr("href");
 }
 
 function attackExpedition(monsterNo) {
@@ -5166,6 +5177,10 @@ function sendAllAsPackage() {
     }
 
     jQuery("#content > table > tbody > tr > td:nth-child(1) > div.background_trader.pngfix > div.awesome-button")[0].click()
+}
+
+function moveFirstPackageToInventory(){
+    gca_tools.item.move(jQuery("#packages .ui-draggable")[0],'inv');
 }
 
 function isCountdownActive() {
