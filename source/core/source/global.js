@@ -5032,11 +5032,22 @@ var gca_global = {
 })();
 
 var map = {};
+var itemHighlightKeywords = new Array("bacias",
+                                    "insanity",
+                                    "Uróthiens",
+                                    "Delicacy",
+                                    "Rayol",
+                                    "Kerrannas",
+                                    "truth"
+                                    );
+
 function registerHotkeyEvents() {
     onkeydown = onkeyup = function (e) {
         e = e || event; // to deal with IE
         map[e.keyCode] = e.type == 'keydown';
+        let pageParams = gca_getPage.parameters();
 
+        
         if (map[18]) { // Alt
 
             if (map[49]) { // 1
@@ -5065,7 +5076,6 @@ function registerHotkeyEvents() {
 
 
             if (map[81]) { // Q
-                var pageParams = gca_getPage.parameters();
 
                 if (pageParams.mod == "location") {
                     attackExpedition(2);
@@ -5085,10 +5095,48 @@ function registerHotkeyEvents() {
                 else if (pageParams.mod == "packages") {
                     moveFirstPackageToInventory();
                 }
+                else if (pageParams.mod == "auction") {
+                    highlightItems();
+                }
 
             }
         }
+        else{
+            
+            if(map[16]){ // Shift
+                if(map[9]){ // Tab
+                    if(pageParams.mod == "overview"){
+                        e.preventDefault();
+                        navigateToPreviousMercenary();
+                    }
+                }
+            }
+            else if(map[9]){ // Tab
+                if(pageParams.mod == "overview"){
+                    e.preventDefault();
+                    navigateToNextMercenary();
+                }
+            }
+        }
     }
+}
+
+function navigateToNextMercenary() {
+    let i = getActiveMercenaryIndex();
+    if(i < 5){
+        jQuery(".charmercsel")[i+1].click();
+    }
+}
+
+function navigateToPreviousMercenary() {
+    let i = getActiveMercenaryIndex();
+    if(i > 0){
+        jQuery(".charmercsel")[i-1].click();
+    }
+}
+
+function getActiveMercenaryIndex() {
+    return jQuery(".charmercsel").index(jQuery(".charmercsel.active"));
 }
 
 function navigateToExpedition() {
@@ -5196,6 +5244,27 @@ function moveFirstPackageToInventory(){
 function isCountdownActive() {
     return exists("#content *[data-ticker-type='countdown'");
 }
+
+function highlightItems() {
+    let items = jQuery(".auction_item_div .ui-draggable");
+    for (let i = 0; i < items.length; i++) {
+        let itemProps = jQuery(items[i]).data().tooltip[0];
+        for (let j = 0; j < itemProps.length; j++) {
+
+            for (let k = 0; k < itemHighlightKeywords.length; k++) {
+                let prop = itemProps[j][0].toString().toLowerCase();
+                let keyword = itemHighlightKeywords[k].toLowerCase();
+                if (prop.contains(keyword)) {
+                    jQuery(items[i]).closest(".section-header").css("border", "red solid 4px");
+                    break;
+                }
+            }
+        }
+    }
+}
+
+
+
 
 function exists(selector) {
     return jQuery(selector).length > 0;
