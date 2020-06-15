@@ -5058,6 +5058,11 @@ function registerHotkeyEvents() {
                 e.preventDefault();
                 navigateToPackages();
             }
+            else if(map[67]){ // c
+                e.preventDefault();
+                navigateToOverview();
+            }
+
 
             if (map[81]) { // Q
                 var pageParams = gca_getPage.parameters();
@@ -5109,6 +5114,11 @@ function navigateToSmelter() {
 function navigateToPackages() {
     window.location = jQuery("#menue_packages").attr("href");
 }
+
+function navigateToOverview() {
+    window.location = jQuery(".menuitem:contains(Overview)")[0].href;
+}
+
 
 function attackExpedition(monsterNo) {
     if (monsterNo < 1 || monsterNo > 4) {
