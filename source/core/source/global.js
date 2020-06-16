@@ -5065,6 +5065,10 @@ function registerHotkeyEvents() {
             else if (map[53]) { // 5
                 navigateToSmelter();
             }
+            else if(map[83]){ // s
+                e.preventDefault();
+                navigateToMessages();
+            }
             else if(map[69]){ // e
                 e.preventDefault();
                 navigateToPackages();
@@ -5157,6 +5161,10 @@ function navigateToHorreum() {
 
 function navigateToSmelter() {
     window.location = jQuery(".menuitem:contains(Smelter)")[0].href;
+}
+
+function navigateToMessages() {
+    window.location = jQuery("#menue_messages").attr("href");
 }
 
 function navigateToPackages() {
