@@ -5065,6 +5065,10 @@ function registerHotkeyEvents() {
             else if (map[53]) { // 5
                 navigateToSmelter();
             }
+            else if (map[54]) { // 6
+                navigateToWorkbench();
+            }
+
             else if(map[83]){ // s
                 e.preventDefault();
                 navigateToMessages();
@@ -5162,6 +5166,12 @@ function navigateToHorreum() {
 function navigateToSmelter() {
     window.location = jQuery(".menuitem:contains(Smelter)")[0].href;
 }
+
+function navigateToWorkbench() {
+    window.location = jQuery(".menuitem:contains(Workbench)")[0].href;
+}
+
+
 
 function navigateToMessages() {
     window.location = jQuery("#menue_messages").attr("href");
