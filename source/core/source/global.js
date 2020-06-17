@@ -5130,14 +5130,18 @@ function registerHotkeyEvents() {
 }
 
 function navigateToNextMercenary() {
-    let i = getActiveMercenaryIndex();
-    if(i < 5){
-        jQuery(".charmercsel")[i+1].click();
-    }
+    let currentIndex = getActiveMercenaryIndex();
+    let nextIndex = (currentIndex + 1) % 6;
+    jQuery(".charmercsel")[nextIndex].click();
 }
 
 function navigateToPreviousMercenary() {
-    let i = getActiveMercenaryIndex();
+    debugger;
+    let currentIndex = getActiveMercenaryIndex();
+    let previousIndex = (currentIndex + 5) % 6;
+    jQuery(".charmercsel")[previousIndex].click();
+
+
     if(i > 0){
         jQuery(".charmercsel")[i-1].click();
     }
