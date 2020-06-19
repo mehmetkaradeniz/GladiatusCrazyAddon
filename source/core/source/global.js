@@ -5086,10 +5086,15 @@ function registerHotkeyEvents() {
             if (map[81]) { // Q
 
                 if (pageParams.mod == "location") {
-                    attackExpedition(2);
+                    attackExpedition(3);
                 }
                 else if (pageParams.mod == "dungeon") {
-                    attackDungeon();
+                    if(shouldEnterDungeon()) {
+                        enterDungeon();
+                    }
+                    else {
+                        attackDungeon();
+                    }
                 }
                 else if (pageParams.mod == "arena" && pageParams.submod == "serverArena" && pageParams.aType == "3") {
                     attackCircusProvinciarumPlayer(1);
@@ -5113,14 +5118,14 @@ function registerHotkeyEvents() {
             
             if(map[16]){ // Shift
                 if(map[9]){ // Tab
-                    if(pageParams.mod == "overview"){
+                    if(pageParams.mod == "overview" || pageParams.mod == "player"){
                         e.preventDefault();
                         navigateToPreviousMercenary();
                     }
                 }
             }
             else if(map[9]){ // Tab
-                if(pageParams.mod == "overview"){
+                if(pageParams.mod == "overview" || pageParams.mod == "player"){
                     e.preventDefault();
                     navigateToNextMercenary();
                 }
@@ -5216,6 +5221,14 @@ function attackDungeon() {
     else{
         attackDungeonMinion();
     }
+}
+
+function shouldEnterDungeon() {
+    return exists(".button1[value=Normal]");
+}
+
+function enterDungeon() {
+    jQuery(".button1[value=Normal]").click();
 }
 
 function dungeonBossExists(){
