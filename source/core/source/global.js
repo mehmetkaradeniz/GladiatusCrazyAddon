@@ -5032,13 +5032,20 @@ var gca_global = {
 })();
 
 var map = {};
-var itemHighlightKeywords = new Array("bacias",
+var itemHighlightKeywords = new Array("Delicacy",
+                                    "Táliths",
+                                    "Damage",
                                     "insanity",
+                                    "earth",
                                     "Uróthiens",
-                                    "Delicacy",
-                                    "Rayol",
                                     "Kerrannas",
-                                    "truth"
+                                    "zeindras",
+                                    "truth",
+                                    "lucius",
+                                    "samnit",
+                                    "grandmaster",
+                                    "elite spear carrier",
+                                    "murmillo",
                                     );
 
 function registerHotkeyEvents() {
