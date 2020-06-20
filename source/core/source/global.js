@@ -2463,7 +2463,7 @@ var gca_global = {
 					this.countdown_started = new Date().getTime();
 					this.countdown_interval = setInterval(() => {
 						this.countdown();
-					}, 500);
+					}, 5000);
 					this.countdown();
 				}
 			},
@@ -2693,7 +2693,7 @@ var gca_global = {
 						this.countdown_started = new Date().getTime();
 						this.countdown_interval = setInterval(() => {
 							this.countdown();
-						}, 500);
+						}, 5000);
 						this.countdown();
 					}
 				},
@@ -2853,7 +2853,7 @@ var gca_global = {
 					// Refresh the countdown
 					this.countdown_interval = setInterval(function(){
 						that.countdown();
-					}, 1000);
+					}, 5000);
 					this.countdown();
 				}
 			},
@@ -3671,7 +3671,7 @@ var gca_global = {
 				// Update bars
 				this.update();
 				if (this.isPraying) {
-					setInterval(() => {this.updateTime();}, 1000);
+					setInterval(() => {this.updateTime();}, 5000);
 				}
 			},
 

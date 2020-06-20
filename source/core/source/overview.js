@@ -1359,7 +1359,7 @@ var gca_overview = {
 			// Interval variable
 			var interval = setInterval(() => {
 				this.updateTimer(buff, interval);
-			}, 1000);
+			}, 5000);
 		},
 
 		updateTimer : function(buff, interval){
