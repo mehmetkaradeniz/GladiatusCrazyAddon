@@ -5088,6 +5088,10 @@ function registerHotkeyEvents() {
                 e.preventDefault();
                 navigateToOverview();
             }
+            else if(map[71]){ // g
+                e.preventDefault();
+                navigateToGeneralMerchant();
+            }
 
 
             if (map[81]) { // Q
@@ -5199,6 +5203,10 @@ function navigateToPackages() {
 
 function navigateToOverview() {
     window.location = jQuery(".menuitem:contains(Overview)")[0].href;
+}
+
+function navigateToGeneralMerchant() {
+    window.location = jQuery(".menuitem:contains(General goods)")[0].href;
 }
 
 
