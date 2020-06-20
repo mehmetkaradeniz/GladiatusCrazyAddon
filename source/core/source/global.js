@@ -5206,7 +5206,7 @@ function navigateToOverview() {
 }
 
 function navigateToGeneralMerchant() {
-    window.location = jQuery(".menuitem:contains(General goods)")[0].href;
+    window.location = gca_getPage.link({"mod":"inventory","sub":"3", "subsub" : "2"});
 }
 
 
