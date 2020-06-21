@@ -5156,11 +5156,6 @@ function navigateToPreviousMercenary() {
     let currentIndex = getActiveMercenaryIndex();
     let previousIndex = (currentIndex + 5) % 6;
     jQuery(".charmercsel")[previousIndex].click();
-
-
-    if(i > 0){
-        jQuery(".charmercsel")[i-1].click();
-    }
 }
 
 function getActiveMercenaryIndex() {
