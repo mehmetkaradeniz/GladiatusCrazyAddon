@@ -5129,16 +5129,24 @@ function registerHotkeyEvents() {
             
             if(map[16]){ // Shift
                 if(map[9]){ // Tab
-                    if(pageParams.mod == "overview" || pageParams.mod == "player"){
+                    // if(pageParams.mod == "overview" || pageParams.mod == "player"){
+                    //     e.preventDefault();
+                    //     navigateToPreviousMercenary();
+                    // }
+                    if(hasInventory()){
                         e.preventDefault();
-                        navigateToPreviousMercenary();
+                        navigateToPreviousInventoryTab();
                     }
                 }
             }
             else if(map[9]){ // Tab
-                if(pageParams.mod == "overview" || pageParams.mod == "player"){
+                // if(pageParams.mod == "overview" || pageParams.mod == "player"){
+                //     e.preventDefault();
+                //     navigateToNextMercenary();
+                // }
+                if(hasInventory()){
                     e.preventDefault();
-                    navigateToNextMercenary();
+                    navigateToNextInventoryTab();
                 }
             }
         }
@@ -5152,7 +5160,6 @@ function navigateToNextMercenary() {
 }
 
 function navigateToPreviousMercenary() {
-    debugger;
     let currentIndex = getActiveMercenaryIndex();
     let previousIndex = (currentIndex + 5) % 6;
     jQuery(".charmercsel")[previousIndex].click();
@@ -5160,6 +5167,26 @@ function navigateToPreviousMercenary() {
 
 function getActiveMercenaryIndex() {
     return jQuery(".charmercsel").index(jQuery(".charmercsel.active"));
+}
+
+function hasInventory(){
+    return exists(".inventoryBox");
+}
+
+function navigateToNextInventoryTab() {
+    let currentIndex = getCurrentInventoryTabIndex();
+    let nextIndex = (currentIndex + 1) % 4;
+    jQuery("#inventory_nav .awesome-tabs")[nextIndex].click();
+}
+
+function navigateToPreviousInventoryTab() {
+    let currentIndex = getCurrentInventoryTabIndex();
+    let previousIndex = (currentIndex + 3) % 4;
+    jQuery("#inventory_nav .awesome-tabs")[previousIndex].click();
+}
+
+function getCurrentInventoryTabIndex(){
+    return jQuery("#inventory_nav .awesome-tabs").index(jQuery("#inventory_nav .awesome-tabs.current").first());
 }
 
 function navigateToExpedition() {
