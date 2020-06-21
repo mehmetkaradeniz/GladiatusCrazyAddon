@@ -5088,6 +5088,10 @@ function registerHotkeyEvents() {
                 e.preventDefault();
                 navigateToOverview();
             }
+            else if(map[65]){ // a
+                e.preventDefault();
+                navigateToProvinciarumArena();
+            }
             else if(map[71]){ // g
                 e.preventDefault();
                 navigateToGeneralMerchant();
@@ -5107,12 +5111,7 @@ function registerHotkeyEvents() {
                         attackDungeon();
                     }
                 }
-                // Provinciarum Arena
-                else if (pageParams.mod == "arena" && pageParams.submod == "serverArena" && pageParams.aType == "2") {
-                    attackServerArenaPlayer(1);
-                }
-                // Circus Provinciarum
-                else if (pageParams.mod == "arena" && pageParams.submod == "serverArena" && pageParams.aType == "3") {
+                else if (pageParams.mod == "arena" && pageParams.submod == "serverArena") {
                     attackServerArenaPlayer(1);
                 }
                 else if (pageParams.mod == "forge" && pageParams.submod == "storage") {
@@ -5230,6 +5229,10 @@ function navigateToPackages() {
 
 function navigateToOverview() {
     window.location = jQuery(".menuitem:contains(Overview)")[0].href;
+}
+
+function navigateToProvinciarumArena() {
+    window.location = gca_getPage.link({"mod":"arena", "submod":"serverArena", "Type" : "2"});
 }
 
 function navigateToGeneralMerchant() {
