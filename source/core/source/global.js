@@ -5107,8 +5107,13 @@ function registerHotkeyEvents() {
                         attackDungeon();
                     }
                 }
+                // Provinciarum Arena
+                else if (pageParams.mod == "arena" && pageParams.submod == "serverArena" && pageParams.aType == "2") {
+                    attackServerArenaPlayer(1);
+                }
+                // Circus Provinciarum
                 else if (pageParams.mod == "arena" && pageParams.submod == "serverArena" && pageParams.aType == "3") {
-                    attackCircusProvinciarumPlayer(1);
+                    attackServerArenaPlayer(1);
                 }
                 else if (pageParams.mod == "forge" && pageParams.submod == "storage") {
                     storeResources();
@@ -5280,7 +5285,7 @@ function attackDungeonMinion(){
     jQuery("#content img[src*='combatloc.gif']").last().click()
 }
 
-function attackCircusProvinciarumPlayer(playerNo) {
+function attackServerArenaPlayer(playerNo) {
     if (playerNo < 1 || playerNo > 5) {
         gca_notifications.error("Invalid player no");
         return;
@@ -5291,8 +5296,7 @@ function attackCircusProvinciarumPlayer(playerNo) {
         return;
     }
 
-    jQuery("#own3 > table > tbody > tr:nth-child(" + (playerNo + 1) + ") > td:nth-child(4) > div")[0].click();
-
+    jQuery("#content article table > tbody > tr:nth-child(" + (playerNo + 1) + ") > td:nth-child(4) > div")[0].click();
 }
 
 function storeResources() {
