@@ -5034,18 +5034,11 @@ var gca_global = {
 var map = {};
 var itemHighlightKeywords = new Array("Delicacy",
                                     "Táliths",
-                                    "Damage",
+                                    "Damage +1",
                                     "insanity",
                                     "earth",
-                                    "Uróthiens",
-                                    "Kerrannas",
-                                    "zeindras",
                                     "truth",
                                     "lucius",
-                                    "samnit",
-                                    "grandmaster",
-                                    "elite spear carrier",
-                                    "murmillo",
                                     );
 
 function registerHotkeyEvents() {
