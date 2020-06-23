@@ -2693,7 +2693,7 @@ var gca_global = {
 						this.countdown_started = new Date().getTime();
 						this.countdown_interval = setInterval(() => {
 							this.countdown();
-						}, 5000);
+						}, 10000);
 						this.countdown();
 					}
 				},
@@ -2853,7 +2853,7 @@ var gca_global = {
 					// Refresh the countdown
 					this.countdown_interval = setInterval(function(){
 						that.countdown();
-					}, 5000);
+					}, 10000);
 					this.countdown();
 				}
 			},
