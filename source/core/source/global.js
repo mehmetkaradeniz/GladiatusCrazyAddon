@@ -5094,11 +5094,11 @@ function registerHotkeyEvents() {
             if (map[81]) { // Q
 
                 if (pageParams.mod == "location") {
-                    attackExpedition(3);
+                    attackExpedition(2);
                 }
                 else if (pageParams.mod == "dungeon") {
                     if(shouldEnterDungeon()) {
-                        enterDungeon();
+                        // enterDungeon();
                     }
                     else {
                         attackDungeon();
