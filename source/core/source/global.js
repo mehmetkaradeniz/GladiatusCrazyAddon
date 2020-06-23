@@ -5117,7 +5117,8 @@ function registerHotkeyEvents() {
                     moveFirstPackageToInventory();
                 }
                 else if (pageParams.mod == "auction") {
-                    highlightItems();
+                    // highlightItems();
+                    hideBadPricedItems();
                 }
 
             }
@@ -5333,6 +5334,10 @@ function highlightItems() {
             }
         }
     }
+}
+
+function hideBadPricedItems(){
+    jQuery(".auction_bid_div:not(:has(.gca-auction-good-price))").closest("td").hide()
 }
 
 
