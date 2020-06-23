@@ -5079,7 +5079,7 @@ function registerHotkeyEvents() {
             }
             else if(map[67]){ // c
                 e.preventDefault();
-                navigateToOverview();
+                navigateToDoll(1);
             }
             else if(map[65]){ // a
                 e.preventDefault();
@@ -5220,8 +5220,8 @@ function navigateToPackages() {
     window.location = jQuery("#menue_packages").attr("href");
 }
 
-function navigateToOverview() {
-    window.location = jQuery(".menuitem:contains(Overview)")[0].href;
+function navigateToDoll(dollNo) {
+    window.location = gca_getPage.link({ "mod": "overview", "doll": dollNo });
 }
 
 function navigateToProvinciarumArena() {
