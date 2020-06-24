@@ -32,7 +32,7 @@ var gca_hotkey = {
                     //     e.preventDefault();
                     //     gca_hotkey.navigateToNextMercenary();
                     // }
-                    if (hasInventory()) {
+                    if (gca_hotkey.hasInventory()) {
                         e.preventDefault();
                         gca_hotkey.navigateToNextInventoryTab();
                     }
