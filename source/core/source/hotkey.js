@@ -21,94 +21,11 @@ var gca_hotkey = {
             let pageParams = gca_getPage.parameters();
 
             if (map[18]) { // Alt
-
-                if (map[49]) { // 1
-                    gca_hotkey.navigateToExpedition();
-                }
-                else if (map[50]) { // 2
-                    gca_hotkey.navigateToDungeon();
-                }
-                else if (map[51]) { // 3
-                    gca_hotkey.navigateToCircusProvinciarum();
-                }
-                else if (map[52]) { // 4
-                    gca_hotkey.navigateToHorreum();
-                }
-                else if (map[53]) { // 5
-                    gca_hotkey.navigateToSmelter();
-                }
-                else if (map[54]) { // 6
-                    gca_hotkey.navigateToWorkbench();
-                }
-                else if (map[83]) { // s
-                    e.preventDefault();
-                    gca_hotkey.navigateToMessages();
-                }
-                else if (map[69]) { // e
-                    e.preventDefault();
-                    gca_hotkey.navigateToPackages();
-                }
-                else if (map[67]) { // c
-                    e.preventDefault();
-                    gca_hotkey.navigateToDoll(1);
-                }
-                else if (map[65]) { // a
-                    e.preventDefault();
-                    gca_hotkey.navigateToProvinciarumArena();
-                }
-                else if (map[71]) { // g
-                    e.preventDefault();
-                    gca_hotkey.navigateToGeneralMerchant();
-                }
-
-
-                if (map[81]) { // Q
-
-                    if (pageParams.mod == "location") {
-                        gca_hotkey.attackExpedition(2);
-                    }
-                    else if (pageParams.mod == "dungeon") {
-                        if (gca_hotkey.shouldEnterDungeon()) {
-                            // gca_hotkey.enterDungeon();
-                        }
-                        else {
-                            gca_hotkey.attackDungeon();
-                        }
-                    }
-                    else if (pageParams.mod == "arena" && pageParams.submod == "serverArena") {
-                        gca_hotkey.attackServerArenaPlayer(1);
-                    }
-                    else if (pageParams.mod == "forge" && pageParams.submod == "storage") {
-                        gca_hotkey.storeResources();
-                    }
-                    else if (pageParams.mod == "forge" && pageParams.submod == "smeltery") {
-                        gca_hotkey.sendAllAsPackage();
-                    }
-                    else if (pageParams.mod == "packages") {
-                        gca_hotkey.moveFirstPackageToInventory();
-                    }
-                    else if (pageParams.mod == "auction") {
-                        gca_hotkey.highlightAuctionItems();
-                        // gca_hotkey.hideBadPricedItems();
-                    }
-                    else if (pageParams.mod == "inventory") {
-                        gca_hotkey.highlightMerchantItems();
-                    }
-                }
+                gca_hotkey.executeAltCombo(e);
             }
             else {
-
                 if (map[16]) { // Shift
-                    if (map[9]) { // Tab
-                        // if(pageParams.mod == "overview" || pageParams.mod == "player"){
-                        //     e.preventDefault();
-                        //     gca_hotkey.navigateToPreviousMercenary();
-                        // }
-                        if (gca_hotkey.hasInventory()) {
-                            e.preventDefault();
-                            gca_hotkey.navigateToPreviousInventoryTab();
-                        }
-                    }
+                    gca_hotkey.executeShiftCombo(e);
                 }
                 else if (map[9]) { // Tab
                     // if(pageParams.mod == "overview" || pageParams.mod == "player"){
@@ -120,6 +37,95 @@ var gca_hotkey = {
                         gca_hotkey.navigateToNextInventoryTab();
                     }
                 }
+            }
+        }
+    },
+
+    executeAltCombo: function (e) {
+        if (map[49]) { // 1
+            gca_hotkey.navigateToExpedition();
+        }
+        else if (map[50]) { // 2
+            gca_hotkey.navigateToDungeon();
+        }
+        else if (map[51]) { // 3
+            gca_hotkey.navigateToCircusProvinciarum();
+        }
+        else if (map[52]) { // 4
+            gca_hotkey.navigateToHorreum();
+        }
+        else if (map[53]) { // 5
+            gca_hotkey.navigateToSmelter();
+        }
+        else if (map[54]) { // 6
+            gca_hotkey.navigateToWorkbench();
+        }
+        else if (map[83]) { // s
+            e.preventDefault();
+            gca_hotkey.navigateToMessages();
+        }
+        else if (map[69]) { // e
+            e.preventDefault();
+            gca_hotkey.navigateToPackages();
+        }
+        else if (map[67]) { // c
+            e.preventDefault();
+            gca_hotkey.navigateToDoll(1);
+        }
+        else if (map[65]) { // a
+            e.preventDefault();
+            gca_hotkey.navigateToProvinciarumArena();
+        }
+        else if (map[71]) { // g
+            e.preventDefault();
+            gca_hotkey.navigateToGeneralMerchant();
+        }
+
+        if (map[81]) { // Q
+            let pageParams = gca_getPage.parameters();
+            
+            if (pageParams.mod == "location") {
+                gca_hotkey.attackExpedition(2);
+            }
+            else if (pageParams.mod == "dungeon") {
+                if (gca_hotkey.shouldEnterDungeon()) {
+                    // gca_hotkey.enterDungeon();
+                }
+                else {
+                    gca_hotkey.attackDungeon();
+                }
+            }
+            else if (pageParams.mod == "arena" && pageParams.submod == "serverArena") {
+                gca_hotkey.attackServerArenaPlayer(1);
+            }
+            else if (pageParams.mod == "forge" && pageParams.submod == "storage") {
+                gca_hotkey.storeResources();
+            }
+            else if (pageParams.mod == "forge" && pageParams.submod == "smeltery") {
+                gca_hotkey.sendAllAsPackage();
+            }
+            else if (pageParams.mod == "packages") {
+                gca_hotkey.moveFirstPackageToInventory();
+            }
+            else if (pageParams.mod == "auction") {
+                gca_hotkey.highlightAuctionItems();
+                // gca_hotkey.hideBadPricedItems();
+            }
+            else if (pageParams.mod == "inventory") {
+                gca_hotkey.highlightMerchantItems();
+            }
+        }
+    },
+
+    executeShiftCombo: function (e) {
+        if (map[9]) { // Tab
+            // if(pageParams.mod == "overview" || pageParams.mod == "player"){
+            //     e.preventDefault();
+            //     gca_hotkey.navigateToPreviousMercenary();
+            // }
+            if (gca_hotkey.hasInventory()) {
+                e.preventDefault();
+                gca_hotkey.navigateToPreviousInventoryTab();
             }
         }
     },
