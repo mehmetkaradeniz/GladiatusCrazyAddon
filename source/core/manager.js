@@ -10,6 +10,7 @@ var manager = {
 	load : function(){
 		// Global
 		tools.loadScript("source/global.js");
+        tools.loadScript("source/hotkey.js");
 		
 		// Switch mod
 		switch(info.page.queries.mod){
