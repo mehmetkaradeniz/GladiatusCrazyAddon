@@ -5038,6 +5038,7 @@ var itemHighlightKeywords = new Array("Delicacy",
                                     "insanity",
                                     "earth",
                                     "truth",
+                                    "Samnit",
                                     "lucius",
                                     );
 
@@ -5117,10 +5118,12 @@ function registerHotkeyEvents() {
                     moveFirstPackageToInventory();
                 }
                 else if (pageParams.mod == "auction") {
-                    // highlightItems();
+                    // highlightAuctionItems();
                     hideBadPricedItems();
                 }
-
+                else if(pageParams.mod == "inventory"){
+                    highlightMerchantItems();
+                }
             }
         }
         else{
@@ -5318,17 +5321,26 @@ function isCountdownActive() {
     return exists("#content *[data-ticker-type='countdown'");
 }
 
-function highlightItems() {
-    let items = jQuery(".auction_item_div .ui-draggable");
+function highlightAuctionItems() {
+    highlightItems("#auction_table", itemHighlightKeywords);
+}
+
+function highlightMerchantItems() {
+    highlightItems("#shop", itemHighlightKeywords);
+}
+
+function highlightItems(parentSelector, keywordDict) {
+    let items = jQuery(parentSelector + " .ui-draggable");
+
     for (let i = 0; i < items.length; i++) {
         let itemProps = jQuery(items[i]).data().tooltip[0];
         for (let j = 0; j < itemProps.length; j++) {
 
-            for (let k = 0; k < itemHighlightKeywords.length; k++) {
+            for (let k = 0; k < keywordDict.length; k++) {
                 let prop = itemProps[j][0].toString().toLowerCase();
-                let keyword = itemHighlightKeywords[k].toLowerCase();
+                let keyword = keywordDict[k].toLowerCase();
                 if (prop.contains(keyword)) {
-                    jQuery(items[i]).closest(".section-header").css("border", "red solid 4px");
+                    jQuery(items[i]).css("border", "red solid 2px");
                     break;
                 }
             }
