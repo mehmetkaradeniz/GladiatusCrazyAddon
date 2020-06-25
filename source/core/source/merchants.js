@@ -26,11 +26,9 @@ var gca_merchants = {
 		(gca_options.bool("merchants","show_shop_info") &&
 			this.containerItemsInfo.prepare());
 
-        // TODO: highlight good items
-
-		// Double click to sell/buy items
+        // Double click to sell/buy items
 		(gca_options.bool("merchants","double_click_actions") &&
-			this.doubleClickActions.init());
+			this.clickActions.init());
 		
 		// Merchants Search
 		this.merchantsSearch.searchBox();
@@ -287,7 +285,7 @@ var gca_merchants = {
 	},
 
 	// Double click sell/buy
-	doubleClickActions : {
+	clickActions : {
 		init : function(){
 			// Apply item events
 			this.apply();
@@ -337,25 +335,42 @@ var gca_merchants = {
 				// If item cost rubies
 				if (info.price_rubies && info.price_rubies > 0) {
 					// Add rubies event
-					this.addListener('dblclick', that.handler_rubies);
+					this.addListener('click', that.clickRubyHandler);
+					this.addListener('dblclick', that.doubleClickRubyHandler);
 				}
 				else {
 					// Add event
-					this.addListener('dblclick', that.handler);
+					this.addListener('click', that.clickHandler);
+					this.addListener('dblclick', that.doubleClickHandler);
 				}
 			});
 		},
-		handler : function() {
-			if (this.parentNode.id == 'inv') {
-				gca_tools.item.move(this, 'shop');
-			}
-			else if (this.parentNode.id == 'shop') {
-				gca_tools.item.move(this, 'inv');
-			}
+        clickHandler: function (e) {
+            if (!e.ctrlKey)
+                return;
+            
+            gca_merchants.clickActions.moveItem(this);
+        },
+		doubleClickHandler : function() {
+            gca_merchants.clickActions.moveItem(this);
 		},
-		handler_rubies : function() {
+        moveItem: function (item) {
+            if (item.parentNode.id == 'inv') {
+                gca_tools.item.move(item, 'shop');
+            }
+            else if (item.parentNode.id == 'shop') {
+                gca_tools.item.move(item, 'inv');
+            }
+        },
+		clickRubyHandler : function(e) {
+			gca_merchants.clickActions.showRubyNotification();
+		},
+		doubleClickRubyHandler : function() {
+			gca_merchants.clickActions.showRubyNotification();
+		},
+        showRubyNotification: function(){
 			gca_notifications.error(gca_locale.get("global", "item_worth_rubies"));
-		}
+        }
 	}
 };
 

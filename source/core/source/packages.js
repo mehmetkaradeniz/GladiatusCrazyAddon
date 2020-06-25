@@ -765,12 +765,23 @@ var gca_packages = {
 				// Flag as parsed
 				this.dataset.gcaFlag_doubleClickEvent = true;
 				// Add event
-				this.addListener('dblclick', that.handler);
+				this.addListener('click', that.clickHandler);
+				this.addListener('dblclick', that.doubleClickHandler);
 			});
 		},
-		handler : function() {
-			if (this.parentNode.id == 'inv') return;
-			gca_tools.item.move(this,'inv');
+		clickHandler : function(e) {
+            if(!e.ctrlKey) 
+                return;
+			if (this.parentNode.id == 'inv') 
+                return;
+			
+            gca_tools.item.move(this,'inv');
+		},
+		doubleClickHandler : function() {
+			if (this.parentNode.id == 'inv') 
+                return;
+			
+            gca_tools.item.move(this,'inv');
 		}
 	},
 	
