@@ -1,14 +1,47 @@
 // Forge
 var map = {};
 
-var itemHighlightKeywords = new Array("Delicacy",
-    "Táliths",
-    "Damage +1",
-    "insanity",
-    "earth",
-    "truth",
-    "Samnit",
-    "lucius",
+var itemHighlightKeywords = new Array(
+    // General
+    // "Delicacy",
+    // "Táliths",
+    // "Damage +1",
+    // "insanity",
+    // "earth",
+    // // "truth",
+    // "Samnit",
+    "Lucius",
+
+     // Items have to do with "Tincture of Stamina"
+     // source: https://en.gladiatus-tools.com/resources?id=38
+    "Sentarions",
+    "Tantus",
+    "Fernabasts",
+    "Korks",
+    "Leandronimus",
+    "Decimus",
+    "Stoybaers",
+    "Barbekuus",
+    "Anchorons",
+    "Appius",
+    "Trafans",
+    "Ichorus",
+    "Opiehnzas",
+
+    // Items have to do with "Potion of Perception"
+    // source: https://en.gladiatus-tools.com/resources?id=42
+    "Zimbris",
+    "Thorstens",
+    "Cheggovs",
+    "Lucius",
+    "Sphingens",
+    "Appius",
+    "Decimus",
+    "Ichorus",
+    "Opiehnzas",
+    "Stoybaers",
+
+   
 );
 
 var gca_hotkey = {
