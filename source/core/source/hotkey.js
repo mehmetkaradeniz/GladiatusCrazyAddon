@@ -12,36 +12,34 @@ var itemHighlightKeywords = new Array(
     // "Samnit",
     "Lucius",
 
-     // Items have to do with "Tincture of Stamina"
-     // source: https://en.gladiatus-tools.com/resources?id=38
-    "Sentarions",
-    "Tantus",
-    "Fernabasts",
-    "Korks",
-    "Leandronimus",
+    //  // Items have to do with "Tincture of Stamina"
+    //  // source: https://en.gladiatus-tools.com/resources?id=38
+    // "Sentarions",
+    // "Tantus",
+    // "Fernabasts",
+    // "Korks",
+    // "Leandronimus",
+    // "Barbekuus",
+    // "Anchorons",
+    // "Trafans",
+
+    // // Items have to do with "Potion of Perception"
+    // // source: https://en.gladiatus-tools.com/resources?id=42
+    // "Zimbris",
+    // "Thorstens",
+    // "Cheggovs",
+    // "Lucius",
+    // "Sphingens",
+
+
+    // Item have to do with both "Tincture of Stamina" and "Potion of Perception"
     "Decimus",
     "Stoybaers",
-    "Barbekuus",
-    "Anchorons",
     "Appius",
-    "Trafans",
     "Ichorus",
     "Opiehnzas",
 
-    // Items have to do with "Potion of Perception"
-    // source: https://en.gladiatus-tools.com/resources?id=42
-    "Zimbris",
-    "Thorstens",
-    "Cheggovs",
-    "Lucius",
-    "Sphingens",
-    "Appius",
-    "Decimus",
-    "Ichorus",
-    "Opiehnzas",
-    "Stoybaers",
 
-   
 );
 
 var gca_hotkey = {
