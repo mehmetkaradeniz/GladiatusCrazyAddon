@@ -64,6 +64,11 @@ var gca_hotkey = {
         }
     },
 
+
+
+    // KEY HANDLING
+    //--------------------------------------------------
+
     executeAltCombo: function (e) {
         e.preventDefault();
         if (map[81]) { // q
@@ -118,6 +123,10 @@ var gca_hotkey = {
         if (pageParams.mod == "auction") {
             this.hideBadPricedItems();
         }
+        else if (pageParams.mod == "packages") {
+            this.filterPackages();
+        }
+
     },
 
 
@@ -182,6 +191,10 @@ var gca_hotkey = {
         }
     },
 
+
+
+    // ACTIONS
+    //--------------------------------------------------
     navigateToNextMercenary: function () {
         let currentIndex = this.getActiveMercenaryIndex();
         let nextIndex = (currentIndex + 1) % 6;
@@ -376,10 +389,19 @@ var gca_hotkey = {
         jQuery(".auction_bid_div:not(:has(.gca-auction-good-price))").closest("td").hide()
     },
 
+    filterPackages: function() {
+        window.location = gca_getPage.link({ "mod": "packages", "fq": "0", "qry": "", "page": "1" });
+    },
+
     exists: function (selector) {
         return jQuery(selector).length > 0;
     }
 };
+
+
+
+
+
 
 // Onload Handler
 (function () {
