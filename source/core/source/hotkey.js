@@ -56,109 +56,130 @@ var gca_hotkey = {
             if (map[18]) { // Alt
                 gca_hotkey.executeAltCombo(e);
             }
-            else {
-                if (map[16]) { // Shift
-                    gca_hotkey.executeShiftCombo(e);
-                }
-                else if (map[9]) { // Tab
-                    // if(pageParams.mod == "overview" || pageParams.mod == "player"){
-                    //     e.preventDefault();
-                    //     gca_hotkey.navigateToNextMercenary();
-                    // }
-                    if (gca_hotkey.hasInventory()) {
-                        e.preventDefault();
-                        gca_hotkey.navigateToNextInventoryTab();
-                    }
-                }
+            else if (map[16]) { // Shift
+                gca_hotkey.executeShiftCombo(e);
+            }
+            else { // Non combo stuff
+                gca_hotkey.executeNonCombo(e);
+
             }
         }
     },
 
     executeAltCombo: function (e) {
+        e.preventDefault();
+        if (map[81]) { // q
+            this.executePrimaryAction(e);
+        }
+        else if (map[69]) { // e
+            this.executeSecondaryAction(e);
+        }
+        else {
+            this.executeOtherAction(e);
+        }
+    },
+
+    executePrimaryAction: function (e) {
+        let pageParams = gca_getPage.parameters();
+
+        if (pageParams.mod == "location") {
+            this.attackExpedition(2);
+        }
+        else if (pageParams.mod == "dungeon") {
+            if (this.shouldEnterDungeon()) {
+                // this.enterDungeon();
+            }
+            else {
+                this.attackDungeon();
+            }
+        }
+        else if (pageParams.mod == "arena" && pageParams.submod == "serverArena") {
+            this.attackServerArenaPlayer(1);
+        }
+        else if (pageParams.mod == "forge" && pageParams.submod == "storage") {
+            this.storeResources();
+        }
+        else if (pageParams.mod == "forge" && pageParams.submod == "smeltery") {
+            this.sendAllAsPackage();
+        }
+        else if (pageParams.mod == "packages") {
+            this.moveFirstPackageToInventory();
+        }
+        else if (pageParams.mod == "auction") {
+            this.highlightAuctionItems();
+            // this.hideBadPricedItems();
+        }
+        else if (pageParams.mod == "inventory") {
+            this.highlightMerchantItems();
+        }
+    },
+
+    executeSecondaryAction: function (e) {
+        let pageParams = gca_getPage.parameters();
+
+        if (pageParams.mod == "auction") {
+            this.hideBadPricedItems();
+        }
+    },
+
+
+    executeOtherAction: function (e) {
+        let pageParams = gca_getPage.parameters();
+
         if (map[49]) { // 1
-            gca_hotkey.navigateToExpedition();
+            this.navigateToExpedition();
         }
         else if (map[50]) { // 2
-            gca_hotkey.navigateToDungeon();
+            this.navigateToDungeon();
         }
         else if (map[51]) { // 3
-            gca_hotkey.navigateToCircusProvinciarum();
+            this.navigateToCircusProvinciarum();
         }
         else if (map[52]) { // 4
-            gca_hotkey.navigateToHorreum();
+            this.navigateToHorreum();
         }
         else if (map[53]) { // 5
-            gca_hotkey.navigateToSmelter();
+            this.navigateToSmelter();
         }
         else if (map[54]) { // 6
-            gca_hotkey.navigateToWorkbench();
+            this.navigateToWorkbench();
         }
         else if (map[83]) { // s
             e.preventDefault();
-            gca_hotkey.navigateToMessages();
+            this.navigateToMessages();
         }
-        else if (map[69]) { // e
+        else if (map[68]) { // d
             e.preventDefault();
-            gca_hotkey.navigateToPackages();
+            this.navigateToPackages();
         }
         else if (map[67]) { // c
             e.preventDefault();
-            gca_hotkey.navigateToDoll(1);
+            this.navigateToDoll(1);
         }
         else if (map[65]) { // a
             e.preventDefault();
-            gca_hotkey.navigateToProvinciarumArena();
+            this.navigateToProvinciarumArena();
         }
         else if (map[71]) { // g
             e.preventDefault();
-            gca_hotkey.navigateToGeneralMerchant();
-        }
-
-        if (map[81]) { // Q
-            let pageParams = gca_getPage.parameters();
-            
-            if (pageParams.mod == "location") {
-                gca_hotkey.attackExpedition(2);
-            }
-            else if (pageParams.mod == "dungeon") {
-                if (gca_hotkey.shouldEnterDungeon()) {
-                    // gca_hotkey.enterDungeon();
-                }
-                else {
-                    gca_hotkey.attackDungeon();
-                }
-            }
-            else if (pageParams.mod == "arena" && pageParams.submod == "serverArena") {
-                gca_hotkey.attackServerArenaPlayer(1);
-            }
-            else if (pageParams.mod == "forge" && pageParams.submod == "storage") {
-                gca_hotkey.storeResources();
-            }
-            else if (pageParams.mod == "forge" && pageParams.submod == "smeltery") {
-                gca_hotkey.sendAllAsPackage();
-            }
-            else if (pageParams.mod == "packages") {
-                gca_hotkey.moveFirstPackageToInventory();
-            }
-            else if (pageParams.mod == "auction") {
-                gca_hotkey.highlightAuctionItems();
-                // gca_hotkey.hideBadPricedItems();
-            }
-            else if (pageParams.mod == "inventory") {
-                gca_hotkey.highlightMerchantItems();
-            }
+            this.navigateToGeneralMerchant();
         }
     },
 
     executeShiftCombo: function (e) {
         if (map[9]) { // Tab
-            // if(pageParams.mod == "overview" || pageParams.mod == "player"){
-            //     e.preventDefault();
-            //     gca_hotkey.navigateToPreviousMercenary();
-            // }
-            if (gca_hotkey.hasInventory()) {
+            if (this.hasInventory()) {
                 e.preventDefault();
-                gca_hotkey.navigateToPreviousInventoryTab();
+                this.navigateToPreviousInventoryTab();
+            }
+        }
+    },
+
+    executeNonCombo: function (e) {
+        if (map[9]) { // Tab
+            if (this.hasInventory()) {
+                e.preventDefault();
+                this.navigateToNextInventoryTab();
             }
         }
     },
