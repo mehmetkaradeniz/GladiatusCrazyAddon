@@ -85,7 +85,10 @@ var gca_hotkey = {
     executePrimaryAction: function (e) {
         let pageParams = gca_getPage.parameters();
 
-        if (pageParams.mod == "location") {
+        if (pageParams.mod == "overview") {
+            this.highlightInventoryItems();
+        }
+        else if (pageParams.mod == "location") {
             this.attackExpedition(2);
         }
         else if (pageParams.mod == "dungeon") {
@@ -364,6 +367,10 @@ var gca_hotkey = {
 
     highlightMerchantItems: function () {
         this.highlightItems("#shop", itemHighlightKeywords);
+    },
+
+    highlightInventoryItems: function () {
+        this.highlightItems("#inv", itemHighlightKeywords);
     },
 
     highlightItems: function (parentSelector, keywordDict) {
