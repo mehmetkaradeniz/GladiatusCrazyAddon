@@ -48,7 +48,7 @@ var gca_hotkey = {
             // this.highlightInventoryItems();
         }
         else if (pageParams.mod == "location") {
-            this.attackExpedition(2);
+            this.attackExpedition(1);
         }
         else if (pageParams.mod == "dungeon") {
             if (this.shouldEnterDungeon()) {
@@ -71,8 +71,7 @@ var gca_hotkey = {
             this.moveFirstPackageToInventory();
         }
         else if (pageParams.mod == "auction") {
-            this.highlightAuctionItems();
-            // this.hideBadPricedItems();
+            this.hideBadPricedItems();
         }
         else if(pageParams.mod == "player"){
             this.showPlayerItemNames();
@@ -86,7 +85,7 @@ var gca_hotkey = {
             this.highlightInventoryItems();
         }
         else if (pageParams.mod == "auction") {
-            this.hideBadPricedItems();
+            this.highlightAuctionItems();
         }
         else if (pageParams.mod == "packages") {
             // this.filterPackages();
@@ -95,6 +94,9 @@ var gca_hotkey = {
         }
         else if (pageParams.mod == "inventory") {
             this.highlightShopItems();
+            this.highlightInventoryItems();
+        }
+        else if(pageParams.mod == "forge"){
             this.highlightInventoryItems();
         }
     },
@@ -409,6 +411,7 @@ var gca_hotkey = {
         jQuery("#char > .ui-droppable > .ui-droppable").each(function(){
             var itemName = jQuery(this).data().tooltip[0][0][0];
             console.log(itemName);
+            jQuery(this).css("background-image", "none");
             jQuery(this).parent().prepend("<div style='position: absolute; color: red; font-weight:600;'> " + itemName + "</div>");
         });
     },
