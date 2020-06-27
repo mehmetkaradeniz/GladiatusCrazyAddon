@@ -86,7 +86,7 @@ var gca_hotkey = {
         let pageParams = gca_getPage.parameters();
 
         if (pageParams.mod == "overview") {
-            this.highlightInventoryItems();
+            // this.highlightInventoryItems();
         }
         else if (pageParams.mod == "location") {
             this.attackExpedition(2);
@@ -123,11 +123,15 @@ var gca_hotkey = {
     executeSecondaryAction: function (e) {
         let pageParams = gca_getPage.parameters();
 
-        if (pageParams.mod == "auction") {
+        if (pageParams.mod == "overview") {
+            this.highlightInventoryItems();
+        }
+        else if (pageParams.mod == "auction") {
             this.hideBadPricedItems();
         }
         else if (pageParams.mod == "packages") {
-            this.filterPackages();
+            // this.filterPackages();
+            this.highlightPackageItems(); 1
         }
 
     },
@@ -373,6 +377,10 @@ var gca_hotkey = {
         this.highlightItems("#inv", itemHighlightKeywords);
     },
 
+    highlightPackageItems: function () {
+        this.highlightItems("#packages", itemHighlightKeywords);
+    },
+
     highlightItems: function (parentSelector, keywordDict) {
         let items = jQuery(parentSelector + " .ui-draggable");
 
@@ -396,7 +404,7 @@ var gca_hotkey = {
         jQuery(".auction_bid_div:not(:has(.gca-auction-good-price))").closest("td").hide()
     },
 
-    filterPackages: function() {
+    filterPackages: function () {
         window.location = gca_getPage.link({ "mod": "packages", "fq": "0", "qry": "", "page": "1" });
     },
 
