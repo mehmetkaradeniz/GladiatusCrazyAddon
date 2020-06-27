@@ -603,7 +603,11 @@ gca_options.data = {
 		"muted" : false,
 		// Volume scale
 		"volume" : 0.8
-	}
+	},
+
+    "hotkey" : {
+        "keywordHighlightModel" : ""
+    }
 };
 
 // Load Stuff

@@ -1,47 +1,6 @@
 // Forge
 var map = {};
 
-var itemHighlightKeywords = new Array(
-    // General
-    // "Delicacy",
-    // "Táliths",
-    // "Damage +1",
-    // "insanity",
-    // "earth",
-    // // "truth",
-    // "Samnit",
-    "Lucius",
-
-    //  // Items have to do with "Tincture of Stamina"
-    //  // source: https://en.gladiatus-tools.com/resources?id=38
-    // "Sentarions",
-    // "Tantus",
-    // "Fernabasts",
-    // "Korks",
-    // "Leandronimus",
-    // "Barbekuus",
-    // "Anchorons",
-    // "Trafans",
-
-    // // Items have to do with "Potion of Perception"
-    // // source: https://en.gladiatus-tools.com/resources?id=42
-    // "Zimbris",
-    // "Thorstens",
-    // "Cheggovs",
-    // "Lucius",
-    // "Sphingens",
-
-
-    // Item have to do with both "Tincture of Stamina" and "Potion of Perception"
-    "Decimus",
-    "Stoybaers",
-    "Appius",
-    "Ichorus",
-    "Opiehnzas",
-
-
-);
-
 var gca_hotkey = {
 
     inject: function () {
@@ -115,9 +74,6 @@ var gca_hotkey = {
             this.highlightAuctionItems();
             // this.hideBadPricedItems();
         }
-        else if (pageParams.mod == "inventory") {
-            this.highlightMerchantItems();
-        }
     },
 
     executeSecondaryAction: function (e) {
@@ -131,9 +87,13 @@ var gca_hotkey = {
         }
         else if (pageParams.mod == "packages") {
             // this.filterPackages();
-            this.highlightPackageItems(); 1
+            this.highlightInventoryItems();
+            this.highlightPackageItems();
         }
-
+        else if (pageParams.mod == "inventory") {
+            this.highlightShopItems();
+            this.highlightInventoryItems();
+        }
     },
 
 
@@ -365,39 +325,81 @@ var gca_hotkey = {
         return this.exists("#content *[data-ticker-type='countdown'");
     },
 
-    highlightAuctionItems: function () {
-        this.highlightItems("#auction_table", itemHighlightKeywords);
-    },
-
-    highlightMerchantItems: function () {
-        this.highlightItems("#shop", itemHighlightKeywords);
-    },
-
     highlightInventoryItems: function () {
-        this.highlightItems("#inv", itemHighlightKeywords);
+        this.highlightItems("inv");
     },
 
     highlightPackageItems: function () {
-        this.highlightItems("#packages", itemHighlightKeywords);
+        this.highlightItems("packages");
     },
 
-    highlightItems: function (parentSelector, keywordDict) {
-        let items = jQuery(parentSelector + " .ui-draggable");
+    highlightAuctionItems: function () {
+        this.highlightItems("auction");
+    },
 
-        for (let i = 0; i < items.length; i++) {
-            let itemProps = jQuery(items[i]).data().tooltip[0];
-            for (let j = 0; j < itemProps.length; j++) {
+    highlightShopItems: function () {
+        this.highlightItems("shop");
+    },
 
-                for (let k = 0; k < keywordDict.length; k++) {
-                    let prop = itemProps[j][0].toString().toLowerCase();
-                    let keyword = keywordDict[k].toLowerCase();
-                    if (prop.contains(keyword)) {
-                        jQuery(items[i]).css("border", "red solid 2px");
-                        break;
-                    }
-                }
-            }
+    highlightItems: function (type) {
+        let model = gca_data.section.get("hotkey", "keywordHighlightModelWrapper");
+
+        switch (type) {
+            case "inv":
+                this.doHighlightItems("#inv", model.inv);
+                break;
+
+            case "packages":
+                this.doHighlightItems("#packages", model.packages);
+                break;
+
+            case "auction":
+                this.doHighlightItems("#auction_table", model.auction);
+                break;
+
+            case "shop":
+                this.doHighlightItems("#shop", model.shop);
+                break;
+
+            default:
+                break;
         }
+    },
+
+    doHighlightItems: function (containerSelector, keywordHighlightModel) {
+        let that = this;
+
+        jQuery(containerSelector + " .ui-draggable").each(function () {
+            let item = this;
+
+            jQuery(this).data().tooltip[0].forEach(prop => {
+
+                keywordHighlightModel.forEach(khm => {
+                    if (prop[0].toString().toLowerCase().contains(khm.keyword.toString().toLowerCase())) {
+                        that.highlightItem(item, khm.priority);
+                    }
+                });
+            });
+        });
+    },
+
+    highlightItem: function (item, priority) {
+        let borderCss = "";
+        switch (priority) {
+            case "H":
+                borderCss = "red solid 3px";
+                break;
+
+            case "M":
+                borderCss = "orange solid 3px";
+                break;
+
+            default:
+                borderCss = "green solid 3px";
+                break;
+        }
+
+        jQuery(item).css("border", borderCss);
     },
 
     hideBadPricedItems: function () {

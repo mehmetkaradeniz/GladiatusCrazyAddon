@@ -41,6 +41,9 @@ var gca_global = {
 				document.documentElement.className += " ";
 			document.documentElement.className += "gca_mobile_device";
 		}
+
+        this.hotkey.preLoad();
+
 	},
 	// Inject Code
 	inject : function(){
@@ -5009,7 +5012,131 @@ var gca_global = {
 				gca_tools.item.drag(item, null, e.clientX + window.scrollX, e.clientY + window.scrollY);
 			}
 		}
-	}
+	},
+
+    hotkey: {
+        preLoad: function () {
+            let crafting = [
+                // Items have to do with "Tincture of Stamina"
+                // source: https://en.gladiatus-tools.com/resources?id=38
+                {
+                    keyword: "Sentarions",
+                    priority: "H"
+                },
+                {
+                    keyword: "Tantus",
+                    priority: "H"
+                },
+                {
+                    keyword: "Fernabasts",
+                    priority: "H"
+                },
+                {
+                    keyword: "Korks",
+                    priority: "H"
+                },
+                {
+                    keyword: "Leandronimus",
+                    priority: "M"
+                },
+                {
+                    keyword: "Barbekuus",
+                    priority: "M"
+                },
+                {
+                    keyword: "Anchorons",
+                    priority: "M"
+                },
+                {
+                    keyword: "Trafans",
+                    priority: "M"
+                },
+
+                // Items have to do with "Potion of Perception"
+                // source: https://en.gladiatus-tools.com/resources?id=42
+                {
+                    keyword: "Zimbris",
+                    priority: "H"
+                },
+                {
+                    keyword: "Thorstens",
+                    priority: "H"
+                },
+                {
+                    keyword: "Cheggovs",
+                    priority: "H"
+                },
+                {
+                    keyword: "Lucius",
+                    priority: "M"
+                },
+                {
+                    keyword: "Sphingens",
+                    priority: "M"
+                },
+
+
+                // Item have to do with both "Tincture of Stamina" and "Potion of Perception"
+                {
+                    keyword: "Decimus",
+                    priority: "M"
+                },
+                {
+                    keyword: "Stoybaers",
+                    priority: "M"
+                },
+                {
+                    keyword: "Appius",
+                    priority: "M"
+                },
+                {
+                    keyword: "Ichorus",
+                    priority: "M"
+                },
+                {
+                    keyword: "Opiehnzas",
+                    priority: "M"
+                },
+
+            ];
+
+            let buying = [
+
+                // General
+                {
+                    keyword: "Lucius",
+                    priority: "H"
+                },
+                {
+                    keyword: "Antonius",
+                    priority: "H"
+                },
+                {
+                    keyword: "Ichorus",
+                    priority: "H"
+                },
+                {
+                    keyword: "Cleverness",
+                    priority: "H"
+                },
+                {
+                    keyword: "Marcus",
+                    priority: "H"
+                }
+            ];
+
+            let model = {
+                inv : crafting,
+                packages : crafting,
+                auction : buying,
+                shop : buying
+            };
+
+            gca_data.section.set("hotkey", "keywordHighlightModelWrapper", model);
+
+        },
+
+    }
 };
 
 // Onload Handler
