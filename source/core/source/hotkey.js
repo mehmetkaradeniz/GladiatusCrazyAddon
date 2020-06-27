@@ -74,6 +74,9 @@ var gca_hotkey = {
             this.highlightAuctionItems();
             // this.hideBadPricedItems();
         }
+        else if(pageParams.mod == "player"){
+            this.showPlayerItemNames();
+        }
     },
 
     executeSecondaryAction: function (e) {
@@ -400,6 +403,14 @@ var gca_hotkey = {
         }
 
         jQuery(item).css("border", borderCss);
+    },
+
+    showPlayerItemNames : function(){
+        jQuery("#char > .ui-droppable > .ui-droppable").each(function(){
+            var itemName = jQuery(this).data().tooltip[0][0][0];
+            console.log(itemName);
+            jQuery(this).parent().prepend("<div style='position: absolute; color: red; font-weight:600;'> " + itemName + "</div>");
+        });
     },
 
     hideBadPricedItems: function () {
