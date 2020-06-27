@@ -5116,10 +5116,6 @@ var gca_global = {
                     priority: "H"
                 },
                 {
-                    keyword: "Cleverness",
-                    priority: "H"
-                },
-                {
                     keyword: "Marcus",
                     priority: "H"
                 }
