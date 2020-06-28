@@ -73,9 +73,6 @@ var gca_hotkey = {
         else if (pageParams.mod == "auction") {
             this.hideBadPricedItems();
         }
-        else if(pageParams.mod == "player"){
-            this.showPlayerItemNames();
-        }
     },
 
     executeSecondaryAction: function (e) {
@@ -96,7 +93,7 @@ var gca_hotkey = {
             this.highlightShopItems();
             this.highlightInventoryItems();
         }
-        else if(pageParams.mod == "forge"){
+        else if (pageParams.mod == "forge") {
             this.highlightInventoryItems();
         }
     },
@@ -405,15 +402,6 @@ var gca_hotkey = {
         }
 
         jQuery(item).css("border", borderCss);
-    },
-
-    showPlayerItemNames : function(){
-        jQuery("#char > .ui-droppable > .ui-droppable").each(function(){
-            var itemName = jQuery(this).data().tooltip[0][0][0];
-            console.log(itemName);
-            jQuery(this).css("background-image", "none");
-            jQuery(this).parent().prepend("<div style='position: absolute; color: red; font-weight:600;'> " + itemName + "</div>");
-        });
     },
 
     hideBadPricedItems: function () {

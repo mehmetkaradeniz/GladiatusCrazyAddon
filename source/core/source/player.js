@@ -30,6 +30,8 @@ var gca_player = {
 		// TODO : add option
 		if (this.doll === 1 &&
 			this.more_info.show());
+
+        this.gear_info.show();
 	},
 
 	// Resolve Page
@@ -428,6 +430,40 @@ var gca_player = {
 		}
 	},
 
+    gear_info: {
+
+        show: function () {
+            debugger;
+            let wrapper = this.createWrapper();
+            let info = this.getInfo();
+            jQuery(wrapper).find(".bbcode_area").first().html(info);
+            jQuery("#content").prepend(wrapper);
+        },
+
+        createWrapper: function () {
+            let wrapper = jQuery(".section-header:contains('Character description')").first().parent().clone();
+            jQuery(wrapper).find(".section-header").text("Gear");
+            let desc = jQuery(wrapper).find(".bbcode_area");
+            jQuery(desc).html("");
+
+            return wrapper;
+        },
+
+        getInfo: function () {
+            let info = "";
+
+            jQuery("#char > .ui-droppable > .ui-droppable").each(function () {
+                let data = jQuery(this).data();
+                let name = data.tooltip[0][0][0];
+                let color = data.tooltip[0][0][1].split(';')[0];
+
+                info += "<span style='color: " + color + ";'>" + name + "</span>";
+                info += "<br/>";
+            });
+
+            return info;
+        }
+    },
 	// Show more info about the player
 	more_info : {
 		show : function() {
