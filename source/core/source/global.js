@@ -5116,8 +5116,16 @@ var gca_global = {
                     priority: "H"
                 },
                 {
-                    keyword: "Marcus",
+                    keyword: "Solitude",
                     priority: "H"
+                },
+                {
+                    keyword: "of dragon",
+                    priority: "H"
+                },
+                {
+                    keyword: "Marcus",
+                    priority: "M"
                 }
             ];
 
