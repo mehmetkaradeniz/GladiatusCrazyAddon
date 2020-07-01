@@ -48,7 +48,7 @@ var gca_hotkey = {
             // this.highlightInventoryItems();
         }
         else if (pageParams.mod == "location") {
-            this.attackExpedition(2);
+            this.attackExpedition(4);
         }
         else if (pageParams.mod == "dungeon") {
             if (this.shouldEnterDungeon()) {

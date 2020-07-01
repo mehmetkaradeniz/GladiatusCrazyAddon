@@ -5017,6 +5017,25 @@ var gca_global = {
     hotkey: {
         preLoad: function () {
             let crafting = [
+
+                // General
+                {
+                    keyword: "Lucius",
+                    priority: "H"
+                },
+                {
+                    keyword: "Antonius",
+                    priority: "H"
+                },
+                {
+                    keyword: "Ichorus",
+                    priority: "H"
+                },
+                {
+                    keyword: "of the dragon",
+                    priority: "H"
+                },
+
                 // Items have to do with "Tincture of Stamina"
                 // source: https://en.gladiatus-tools.com/resources?id=38
                 {
@@ -5115,13 +5134,17 @@ var gca_global = {
                     keyword: "Ichorus",
                     priority: "H"
                 },
-                {
-                    keyword: "Solitude",
-                    priority: "H"
-                },
+                // {
+                //     keyword: "Solitude",
+                //     priority: "H"
+                // },
                 {
                     keyword: "of dragon",
                     priority: "H"
+                },
+                {
+                    keyword: "Opiehnzas",
+                    priority: "M"
                 },
                 {
                     keyword: "Marcus",
