@@ -130,7 +130,8 @@ var gca_hotkey = {
         }
         else if (map[67]) { // c
             e.preventDefault();
-            this.navigateToDoll(1);
+            // this.navigateToDoll(1);
+            this.navigateToOverview();
         }
         else if (map[65]) { // a
             e.preventDefault();
@@ -234,6 +235,10 @@ var gca_hotkey = {
 
     navigateToDoll: function (dollNo) {
         window.location = gca_getPage.link({ "mod": "overview", "doll": dollNo });
+    },
+
+    navigateToOverview: function () {
+        window.location = gca_getPage.link({ "mod": "overview"});
     },
 
     navigateToProvinciarumArena: function () {
