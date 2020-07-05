@@ -5035,6 +5035,11 @@ var gca_global = {
                     keyword: "of the dragon",
                     priority: "H"
                 },
+                {
+                    keyword: "Decimus",
+                    priority: "H"
+                },
+
 
                 // Items have to do with "Tincture of Stamina"
                 // source: https://en.gladiatus-tools.com/resources?id=38
@@ -5116,6 +5121,10 @@ var gca_global = {
                     keyword: "Opiehnzas",
                     priority: "M"
                 },
+                  {
+                    keyword: "Gaius",
+                    priority: "H"
+                },
 
             ];
 
@@ -5134,6 +5143,16 @@ var gca_global = {
                     keyword: "Ichorus",
                     priority: "H"
                 },
+                {
+                    keyword: "Gaius",
+                    priority: "H"
+                },
+
+                {
+                    keyword: "Decimus",
+                    priority: "H"
+                },
+
                 // {
                 //     keyword: "Solitude",
                 //     priority: "H"
