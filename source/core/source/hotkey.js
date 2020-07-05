@@ -141,6 +141,11 @@ var gca_hotkey = {
             e.preventDefault();
             this.navigateToGeneralMerchant();
         }
+        else if (map[88]) { // x
+            e.preventDefault();
+            this.navigateToPantheon();
+        }
+
     },
 
     executeShiftCombo: function (e) {
@@ -247,6 +252,10 @@ var gca_hotkey = {
 
     navigateToGeneralMerchant: function () {
         window.location = gca_getPage.link({ "mod": "inventory", "sub": "3", "subsub": "2" });
+    },
+    
+    navigateToPantheon: function () {
+        window.location = gca_getPage.link({ "mod": "quests" });
     },
 
     attackExpedition: function (monsterNo) {
