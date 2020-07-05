@@ -73,6 +73,10 @@ var gca_hotkey = {
         else if (pageParams.mod == "auction") {
             this.hideBadPricedItems();
         }
+        else if (pageParams.mod == "quests") {
+            this.completeQuest();
+        }
+
     },
 
     executeSecondaryAction: function (e) {
@@ -421,6 +425,10 @@ var gca_hotkey = {
 
     hideBadPricedItems: function () {
         jQuery(".auction_bid_div:not(:has(.gca-auction-good-price))").closest("td").hide()
+    },
+
+    completeQuest: function () {
+        window.location = jQuery(".quest_slot_button.quest_slot_button_finish").first().attr("href");
     },
 
     filterPackages: function () {
