@@ -73,6 +73,9 @@ var gca_overview = {
 		(!isUnderworld && this.doll == 1 && gca_options.bool("overview", "double_click_consume") && 
 			this.doubleClickToConsume.init());
 
+        // Switch to food bag
+        this.switchToFoodBag();
+
 		// Setting Link
 		gca_tools.create.settingsLink("overview");
 	},
@@ -1755,6 +1758,10 @@ var gca_overview = {
 			gca_tools.item.move(this, 'avatar');
 		}
 	},
+
+    switchToFoodBag : function(){
+        jQuery("#inventory_nav .awesome-tabs")[2].click();
+    }
 };
 
 // Onload Handler
