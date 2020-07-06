@@ -46,6 +46,7 @@ var gca_hotkey = {
 
         if (pageParams.mod == "overview") {
             // this.highlightInventoryItems();
+            this.eatBestFood();
         }
         else if (pageParams.mod == "location") {
             this.attackExpedition(4);
@@ -268,6 +269,10 @@ var gca_hotkey = {
     
     navigateToPantheon: function () {
         window.location = gca_getPage.link({ "mod": "quests" });
+    },
+
+    eatBestFood: function () {
+        gca_tools.item.move(jQuery(".best-food")[0], 'avatar');
     },
 
     attackExpedition: function (monsterNo) {

@@ -1090,6 +1090,7 @@ var gca_overview = {
 			// Add attribute if food exist
 			if(food){
 				food.style.webkitFilter = 'drop-shadow(black 0px 0px 1px) drop-shadow(yellow 0px 0px 3px) drop-shadow(yellow 0px 0px 3px)';
+                food.classList.add("best-food");
 			}
 		},
 
