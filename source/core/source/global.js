@@ -5091,10 +5091,6 @@ var gca_global = {
                     priority: "H"
                 },
                 {
-                    keyword: "Lucius",
-                    priority: "M"
-                },
-                {
                     keyword: "Sphingens",
                     priority: "M"
                 },
