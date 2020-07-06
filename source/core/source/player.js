@@ -433,7 +433,6 @@ var gca_player = {
     gear_info: {
 
         show: function () {
-            debugger;
             let wrapper = this.createWrapper();
             let info = this.getInfo();
             jQuery(wrapper).find(".bbcode_area").first().html(info);
