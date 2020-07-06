@@ -145,6 +145,10 @@ var gca_hotkey = {
             e.preventDefault();
             this.navigateToGeneralMerchant();
         }
+        else if (map[90]) { // z
+            e.preventDefault();
+            this.navigateToAuctionAmulet();
+        }
         else if (map[88]) { // x
             e.preventDefault();
             this.navigateToPantheon();
@@ -256,6 +260,10 @@ var gca_hotkey = {
 
     navigateToGeneralMerchant: function () {
         window.location = gca_getPage.link({ "mod": "inventory", "sub": "3", "subsub": "2" });
+    },
+    
+    navigateToAuctionAmulet: function () {
+        window.location = gca_getPage.link({ "mod": "auction", "qry": "", "itemLevel": "63", "itemType": "9", "itemQuality": "-1", "ttype": "3" });
     },
     
     navigateToPantheon: function () {
