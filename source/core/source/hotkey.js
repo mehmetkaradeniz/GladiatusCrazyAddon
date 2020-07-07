@@ -76,6 +76,7 @@ var gca_hotkey = {
         }
         else if (pageParams.mod == "quests") {
             this.completeQuest();
+            this.restartQuest();
         }
 
     },
@@ -442,6 +443,10 @@ var gca_hotkey = {
 
     completeQuest: function () {
         window.location = jQuery(".quest_slot_button.quest_slot_button_finish").first().attr("href");
+    },
+    
+    restartQuest: function () {
+        window.location = jQuery(".quest_slot_button.quest_slot_button_restart").first().attr("href");
     },
 
     filterPackages: function () {
