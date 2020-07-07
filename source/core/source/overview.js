@@ -74,7 +74,10 @@ var gca_overview = {
 			this.doubleClickToConsume.init());
 
         // Switch to food bag
-        this.switchToFoodBag();
+        let pageParams = gca_getPage.parameters();
+        if (pageParams.doll == "1"){
+            this.switchToFoodBag();
+        }
 
 		// Setting Link
 		gca_tools.create.settingsLink("overview");
