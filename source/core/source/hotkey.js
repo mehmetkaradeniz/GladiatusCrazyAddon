@@ -75,8 +75,7 @@ var gca_hotkey = {
             this.hideBadPricedItems();
         }
         else if (pageParams.mod == "quests") {
-            this.completeQuest();
-            this.restartQuest();
+            this.handleQuest();
         }
 
     },
@@ -441,8 +440,16 @@ var gca_hotkey = {
         jQuery(".auction_bid_div:not(:has(.gca-auction-good-price))").closest("td").hide()
     },
 
-    completeQuest: function () {
-        window.location = jQuery(".quest_slot_button.quest_slot_button_finish").first().attr("href");
+    handleQuest: function () {
+        let acceptSelector = ".quest_slot_button.quest_slot_button_finish";
+        let restartSelector = ".quest_slot_button.quest_slot_button_restart";
+
+        if(this.exists(acceptSelector)){
+            window.location = jQuery(acceptSelector).first().attr("href");
+        }
+        else if(this.exists(restartSelector)){
+            window.location = jQuery(restartSelector).first().attr("href");
+        }
     },
     
     restartQuest: function () {
