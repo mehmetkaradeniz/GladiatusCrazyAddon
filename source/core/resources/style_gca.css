@@ -109,6 +109,8 @@
 	.cross-icon:hover{background: transparent url('buttons/main_buttons.png') -195px -25px no-repeat;}
 	.market-icon{background: transparent url('buttons/main_buttons.png') -220px 0px no-repeat;}
 	.market-icon:hover{background: transparent url('buttons/main_buttons.png') -220px -25px no-repeat;}
+	.general-market-icon{background: transparent url('buttons/main_buttons.png') -231px -50px no-repeat; border: 1px solid orange;}
+	/* .general-market-icon:hover{background: transparent url('buttons/main_buttons.png') -220px -25px no-repeat;} */
 	.notebook-icon{background: transparent url('buttons/main_buttons.png') -245px 0px no-repeat;}
 	.notebook-icon:hover{background: transparent url('buttons/main_buttons.png') -245px -25px no-repeat;}
 	.online-icon{background: transparent url('buttons/main_buttons.png') -270px 0px no-repeat;}
