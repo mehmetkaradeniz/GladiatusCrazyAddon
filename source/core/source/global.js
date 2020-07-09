@@ -831,17 +831,6 @@ var gca_global = {
 						}, false);
 					}
 					
-                    // Create a Link to general market
-                    button = document.createElement('div');
-                    button.className = "icon-out";
-                    link = document.createElement('a');
-                    link.className = "icon general-market-icon";
-                    link.href = gca_getPage.link({"mod":"market", "fl": "0", "fq" : "-1", "f": "7", "s":"p", "p": "1"});
-                    link.title = "Market";
-                    button.appendChild(link);
-                    shortcutsBar.appendChild(button);
-                
-
 					// Links not During traveling
 					if( !gca_global.isTraveling ){
 
@@ -980,6 +969,7 @@ var gca_global = {
 					}
 				}
 
+
 				// Link to the simulator page
 				if(activeButtons.indexOf("sim") >= 0){
 					button = document.createElement('div');
@@ -1056,8 +1046,30 @@ var gca_global = {
 					}, false);
 				}
 
-				document.getElementById('header_game').appendChild(shortcutsBar);
-			},
+                // Create a Link to general market
+                button = document.createElement('div');
+                button.className = "icon-out";
+                link = document.createElement('a');
+                link.className = "icon general-market-icon";
+                link.href = gca_getPage.link({ "mod": "market", "fl": "0", "fq": "-1", "f": "7", "s": "p", "p": "1" });
+                link.title = "Market";
+                button.appendChild(link);
+                shortcutsBar.appendChild(button);
+                document.getElementById('header_game').appendChild(shortcutsBar);
+
+                // Create a Link to pacts
+                button = document.createElement('div');
+                button.className = "icon-out";
+                // button.textContent = "P";
+                link = document.createElement('a');
+                link.className = "icon cross-icon";
+                link.href = gca_getPage.link({ "mod": "powerups" });
+                link.title = "Pacts";
+                button.appendChild(link);
+                shortcutsBar.appendChild(button);
+            },
+
+           
 
 			// Hide/Display Online Friends
 			online_friends : {
