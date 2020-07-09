@@ -1051,7 +1051,7 @@ var gca_global = {
                 button.className = "icon-out";
                 link = document.createElement('a');
                 link.className = "icon general-market-icon";
-                link.href = gca_getPage.link({ "mod": "market", "fl": "0", "fq": "-1", "f": "7", "s": "p", "p": "1" });
+                link.href = gca_getPage.link({ "mod": "market", "fl": "0", "fq": "-1", "f": "0", "s": "pd", "p": "1" });
                 link.title = "Market";
                 button.appendChild(link);
                 shortcutsBar.appendChild(button);
