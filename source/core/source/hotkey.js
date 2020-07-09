@@ -49,7 +49,7 @@ var gca_hotkey = {
             this.eatBestFood();
         }
         else if (pageParams.mod == "location") {
-            this.attackExpedition(4);
+            this.attackExpedition(2);
         }
         else if (pageParams.mod == "dungeon") {
             if (this.shouldEnterDungeon()) {
