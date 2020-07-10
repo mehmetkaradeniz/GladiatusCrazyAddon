@@ -72,7 +72,7 @@ var gca_hotkey = {
             this.moveFirstPackageToInventory();
         }
         else if (pageParams.mod == "auction") {
-            this.hideBadPricedItems();
+            this.toggleGoodPricedItems();
         }
         else if (pageParams.mod == "quests") {
             this.handleQuest();
@@ -436,8 +436,8 @@ var gca_hotkey = {
         jQuery(item).css("border", borderCss);
     },
 
-    hideBadPricedItems: function () {
-        jQuery(".auction_bid_div:not(:has(.gca-auction-good-price))").closest("td").hide()
+    toggleGoodPricedItems: function () {
+        jQuery(".gca-auction-show-hide-button").first().click();
     },
 
     handleQuest: function () {

@@ -126,7 +126,7 @@ var gca_auction = {
 	itemsValuesShow : function() {
 		// Create show/hide button
 		let filters = document.getElementsByTagName("section")[1];
-		let button = document.createElement("a");
+		let button = document.createElement("button");
 		button.className = "gca-auction-show-hide-button";
 		button.dataset.tooltip = '[[["'+ gca_locale.get("auction", "hide_your_gold_here") +'","#fff;font-size:12px;"]]]';
 		button.addEventListener('click', function(){
