@@ -816,7 +816,7 @@ var gca_global = {
 						link = document.createElement('a');
 						link.className = 'icon message-icon';
 						link.href = gca_getPage.link({"mod":"guild","submod":"adminMail"});
-						link.title = gca_locale.get("global", "message_guild_write");
+						// link.title = gca_locale.get("global", "message_guild_write");
 
 						button.appendChild(link);
 						button.appendChild(instant_message_div);
