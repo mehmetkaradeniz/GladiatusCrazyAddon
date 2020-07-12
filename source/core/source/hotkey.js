@@ -307,8 +307,8 @@ var gca_hotkey = {
         }
 
         if (this.dungeonBossExists()) {
-            // this.attackDungeonBoss();
-            gca_notifications.warning("Boss!");
+            this.attackDungeonBoss();
+            // gca_notifications.warning("Boss!");
         }
         else {
             this.attackDungeonMinion();
