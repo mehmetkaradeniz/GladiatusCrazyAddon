@@ -1,4 +1,3 @@
-// Forge
 var map = {};
 
 var gca_hotkey = {
@@ -6,6 +5,11 @@ var gca_hotkey = {
     inject: function () {
 
         onkeydown = onkeyup = function (e) {
+            
+            if(jQuery("#gca_shortcuts_bar .instant_message_div").is(":visible")){
+                return;
+            }
+
             e = e || event; // to deal with IE
             map[e.keyCode] = e.type == 'keydown';
             let pageParams = gca_getPage.parameters();
@@ -31,10 +35,10 @@ var gca_hotkey = {
     executeAltCombo: function (e) {
         e.preventDefault();
         if (map[81]) { // q
-            this.executePrimaryAction(e);
+            // this.executePrimaryAction(e);
         }
         else if (map[69]) { // e
-            this.executeSecondaryAction(e);
+            // this.executeSecondaryAction(e);
         }
         else {
             this.executeOtherAction(e);
@@ -167,7 +171,14 @@ var gca_hotkey = {
     },
 
     executeNonCombo: function (e) {
-        if (map[9]) { // Tab
+        e.preventDefault();
+        if (map[81]) { // q
+            this.executePrimaryAction(e);
+        }
+        else if (map[69]) { // e
+            this.executeSecondaryAction(e);
+        }
+        else if (map[9]) { // Tab
             if (this.hasInventory()) {
                 e.preventDefault();
                 this.navigateToNextInventoryTab();
