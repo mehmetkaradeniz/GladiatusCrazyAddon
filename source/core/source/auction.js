@@ -542,6 +542,14 @@ var gca_auction = {
 				display: locale.threat,
 				pattern: /-?\d+/,
 			}
+			// value
+			let val = "value";
+			this.sortKeywordMap[val] = {
+				name: val,
+				display: "Value",
+				pattern: /[+-]?\d+(\.\d+)?/g,
+			}
+
 		}else{
 			locale.level = jQuery('#icon_level').data().tooltip[0][0][0];
 		}
