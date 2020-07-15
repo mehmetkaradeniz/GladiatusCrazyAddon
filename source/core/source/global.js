@@ -5134,10 +5134,6 @@ var gca_global = {
                     priority: "M"
                 },
                 {
-                    keyword: "Ichorus",
-                    priority: "M"
-                },
-                {
                     keyword: "Opiehnzas",
                     priority: "M"
                 },
@@ -5167,7 +5163,6 @@ var gca_global = {
                     keyword: "Gaius",
                     priority: "H"
                 },
-
                 {
                     keyword: "Decimus",
                     priority: "H"
