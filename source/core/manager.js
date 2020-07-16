@@ -152,6 +152,11 @@ var manager = {
 				case "guildStorage":
 					this.section.storage();
 					break;
+					
+				// War Camp
+				case "guild_warcamp":
+					this.section.warcamp();
+					break;
 			// Events
 			// 
 				// Craps (Dices)
@@ -373,6 +378,11 @@ var manager = {
 		// Guild Storage section
 		storage : function() {
 			tools.loadScript("source/guild.storage.js");
+		},
+		
+		// Guild Warcamp section
+		warcamp : function() {
+			tools.loadScript("source/guild.warcamp.js");
 		},
 
 		// Events

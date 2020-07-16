@@ -47,6 +47,11 @@ var gca_reports = {
 					this.itemShadow());
 			}
 
+			if (this.combatReport != "reportCircusTurma" && this.combatReport != "reportDungeon") {
+				// Save reports locale/translations
+				this.saveReportsLocale();
+			}
+
 			// If arena attacked right now
 			if (this.combatReport == "reportArena" && this.referrer.mod == "arena") {
 				this.attacked.arena();
@@ -54,7 +59,6 @@ var gca_reports = {
 
 			// Fire reports info updated
 			gca_tools.event.fireOnce("arena-info-update");
-
 		}
 		
 		// Report Lists
@@ -123,6 +127,52 @@ var gca_reports = {
 
 			else this.combatReport = "reportExpedition";
 		}
+	},
+
+	// Save Reports Locale/Translations
+	saveReportsLocale : function(){
+		
+		let locale = gca_data.section.get('cache', 'reports_locale', null);
+		if( locale && locale.all_translated == 1 )
+			return;
+		
+		// Default values
+		locale = {
+			winner : document.getElementById("reportHeader").getElementsByTagName("td")[1].textContent.match(/([^:]+)+:/i)[1],
+			stats : document.getElementsByTagName("h2")[1].textContent.match(/([^-]+)-/i)[1].trim(),
+			battle_report : document.getElementsByTagName("h2")[2].textContent.match(/([^-]+)-/i)[1].trim(),
+			name : document.getElementsByClassName("dungeon_report_statistic")[0].getElementsByTagName("td")[0].textContent,
+			guild : document.getElementsByClassName("dungeon_report_statistic")[0].getElementsByTagName("td")[1].textContent,
+			hitpoints : document.getElementsByClassName("dungeon_report_statistic")[0].getElementsByTagName("td")[2].textContent,
+			life_points : document.getElementsByClassName("dungeon_report_statistic")[0].getElementsByTagName("td")[3].textContent,
+			round : document.getElementsByClassName("table_border_bottom")[1].textContent.replace('1','').trim(),
+			miss : "misses",
+			block : "blocked",
+			all_translated : 0
+		};
+		
+		// Get values
+		let report_table_rows = document.getElementsByClassName("table_border_bottom")[0].getElementsByTagName("tr");
+		let translated = [false, false];
+		for(let i = 0; i < report_table_rows.length; i++) {
+			if( report_table_rows[i].style.backgroundColor != "rgb(181, 171, 131)" ){
+				if ( report_table_rows[i].getElementsByTagName("td")[1].getElementsByTagName("font").length == 0 ){
+					locale.miss = report_table_rows[i].getElementsByTagName("td")[1].textContent.trim();
+					translated[0] = true;
+				}else{
+					if ( report_table_rows[i].getElementsByTagName("td")[1].getElementsByTagName("font")[0].color == "dimgray" && !report_table_rows[i].getElementsByTagName("td")[1].getElementsByTagName("font")[0].textContent.match(/\d+/i) ){
+						locale.block = report_table_rows[i].getElementsByTagName("td")[1].getElementsByTagName("font")[0].textContent.trim();
+						translated[1] = true;
+					}
+				}
+			}
+		}
+		
+		if ( translated[0] == true && translated[1] == true )
+			locale.all_translated = 1;
+		
+		// Save
+		gca_data.section.set('cache', 'reports_locale', locale);
 	},
 
 	// Log items found for statistics
@@ -514,8 +564,126 @@ var gca_reports = {
 			jQuery('.dungeon_report_statistic:eq(1) table th.table_border_bottom').each((index, element) => {
 				this.parseRound(element.parentNode, element, index);
 			});
+			
+			// Show more stats
+			this.moreStats();
 		},
+		
+		moreStats : function() {
+			
+			let points_sum = 0;
+			let points = null;
+			// If winner points are shown (Turma fight and not dungeon)
+			if ( document.getElementsByClassName("standalone").length > 0 )
+				points = document.getElementsByClassName("standalone")[0].textContent.match(/\d+/gi);
+			
+			// Parse each player
+			jQuery('.dungeon_report_statistic:eq(0) table tr').each((index, element) => {
+				
+				// Get name
+				let player_name = element.getElementsByTagName("th")[0].textContent.trim().replace(/\s\(\d+\)/i,"").trim();
+				let array_index = -1;
+				// Find in gathered stats
+				let found = this.players.some(
+					function (item, position) {
+						if ( item[0] === player_name ) {
+							array_index = position;
+							return true;
+						}
 
+						return false;
+					}
+				);
+				
+				// If player in stats
+				if( found ){
+					
+					let hits = this.players[array_index][7];
+					let heals = this.players[array_index][8];
+					let misses = this.players[array_index][9];
+					let got_hit = this.players[array_index][10];
+					let dodge = this.players[array_index][11];
+					let total_damage = parseInt( element.getElementsByTagName("td")[0].textContent );
+					let total_heal = parseInt( element.getElementsByTagName("td")[2].textContent );
+					let number_of_players = this.players[array_index][4];
+					
+					let font_style = "font-size: 0.8em;color: #717171;";
+					// We can display stats only for non merged players
+					if ( number_of_players > 1 )
+						font_style += "text-decoration: line-through;";
+					
+					// Damage done
+					let br = document.createElement("br");
+					element.getElementsByTagName("td")[0].appendChild(br);
+					let span = document.createElement("span");
+					span.style = font_style;
+					span.textContent = '⚔ '+hits+' / '+(hits+misses)+' ('+ ((hits+misses > 0) ? Math.round(hits/(hits+misses)*100) : '--')+'%)';
+					span.dataset.tooltip = '[[["'+gca_locale.get("reports", "hits")+' / '+gca_locale.get("reports", "total_hits")+'","white"]]]';
+					element.getElementsByTagName("td")[0].appendChild(span);
+					br = document.createElement("br");
+					element.getElementsByTagName("td")[0].appendChild(br);
+					span = document.createElement("span");
+					span.style = font_style;
+					span.textContent = '⦰ '+ ((hits > 0) ? Math.round(total_damage/hits) : 0);
+					span.dataset.tooltip = '[[["'+gca_locale.get("reports", "avg_damage")+'","white"]]]';
+					element.getElementsByTagName("td")[0].appendChild(span);
+					
+					// Damage Taken
+					br = document.createElement("br");
+					element.getElementsByTagName("td")[1].appendChild(br);
+					span = document.createElement("span");
+					span.style = font_style;
+					span.textContent = '⚔ '+got_hit+' / '+(dodge+got_hit)+' ('+ ((dodge+got_hit>0) ? Math.round(got_hit/(dodge+got_hit)*100) : '--')+'%)';
+					span.dataset.tooltip = '[[["'+gca_locale.get("reports", "hits")+' / '+gca_locale.get("reports", "total_hits")+'","white"]]]';
+					element.getElementsByTagName("td")[1].appendChild(span);
+					
+					br = document.createElement("br");
+					element.getElementsByTagName("td")[1].appendChild(br);
+					span = document.createElement("span");
+					span.style = font_style;
+					span.textContent = '✖ '+dodge+' / '+(dodge+got_hit)+' ('+ ((dodge+got_hit>0) ? Math.round(dodge/(dodge+got_hit)*100) : '--')+'%)';
+					span.dataset.tooltip = '[[["'+gca_locale.get("reports", "dodge")+' / '+gca_locale.get("reports", "total_hits")+'","white"]]]';
+					element.getElementsByTagName("td")[1].appendChild(span);
+					
+					// Heal done
+					br = document.createElement("br");
+					element.getElementsByTagName("td")[2].appendChild(br);
+					span = document.createElement("span");
+					span.style = font_style;
+					span.textContent = '⟳ '+heals;
+					element.getElementsByTagName("td")[2].appendChild(span);
+					br = document.createElement("br");
+					element.getElementsByTagName("td")[2].appendChild(br);
+					span = document.createElement("span");
+					span.style = font_style;
+					span.textContent = '⦰ '+ ((heals > 0) ? Math.round(total_heal/heals) : 0);
+					span.dataset.tooltip = '[[["'+gca_locale.get("reports", "avg_heal")+'","white"]]]';
+					element.getElementsByTagName("td")[2].appendChild(span);
+					
+					// Points
+					if (points){
+						let points_index = (points[0] > points_sum ? 0 : 1);
+						points_sum += total_damage + total_heal / 2;
+						let td = document.createElement("td");
+						td.style = 'text-align:center;';
+						if ( element.getElementsByTagName("td")[0].className == 'table_border_top' )
+							td.className = 'table_border_top';
+						td.textContent = ((points[points_index]>0) ? Math.round((total_damage + total_heal / 2)/points[points_index]*100) : '--')+'%';
+						element.appendChild(td);
+					}
+				}else{
+					// Points
+					if ( points && element.getElementsByTagName("th")[0].getAttribute('rowspan') ){
+						let th = document.createElement("th");
+						th.setAttribute('rowspan',2);
+						th.className = 'table_border_bottom';
+						th.textContent = gca_locale.get("reports", "points");
+						element.appendChild(th);
+					}
+				}
+			});
+		},
+		
 		// Parse round by index
 		parseRound : function(round_row, round_title, index) {
 			// Player life change on this round init
@@ -699,6 +867,9 @@ var gca_reports = {
 					totalThreat += players[i][6];
 			}
 			
+			// Threat translation
+			let threat_translation = document.getElementById("charstatsCombat").getElementsByClassName("charstats_value21")[8].textContent;
+			
 			// Create each player row
 			for (let i = 0; i < players.length; i++) {
 				
@@ -751,7 +922,7 @@ var gca_reports = {
 
 				let threat = document.createElement('span');
 				threat.className = 'charstats_text';
-				threat.textContent = "Threat";
+				threat.textContent = threat_translation;
 				threat.style = "font-size: .8em;margin-top: 8px;";
 				row.appendChild(threat);
 				

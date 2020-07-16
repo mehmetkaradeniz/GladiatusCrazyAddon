@@ -348,7 +348,13 @@ gca_options.data = {
 		"show_forge_info" : 0,
 		
 		// Minimum durability alert
-		"min_durability" : 25
+		"min_durability" : 25,
+		
+		// Show mercenaries real name
+		"show_mercenaries_real_name" : false,
+		
+		// Global Arena timer
+		"global_arena_timer" : true
 	},
 
 	// Overview Options
@@ -426,7 +432,7 @@ gca_options.data = {
 		// Show item's price
 		"item_price" : false,
 		// Special category features
-		"special_category_features" : true,
+		"special_category_features" : 0,
 		// Open packets with double click
 		"double_click_open" : true,
 		// Advance packet filter
@@ -542,7 +548,9 @@ gca_options.data = {
 		// Double click to select
 		"double_click_select" : true,
 		// Item sell warning icons
-		"sell_warning_icons" : true
+		"sell_warning_icons" : true,
+		// Sell with enter
+		"sell_with_enter" : true
 	},
 
 	// Expedition Options

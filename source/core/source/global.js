@@ -113,13 +113,16 @@ var gca_global = {
 		(!this.isTraveling && gca_options.bool("global","merchants_timer") &&
 			this.display.merchants_timer.inject(this));
 
+		// Global Arena Timer
+		(gca_options.bool("global","global_arena_timer") &&
+			this.display.global_arena.inject());
+
 		// Inventory options group
 		(gca_options.bool("global","inventory_options_group") &&
 			this.display.inventoryOptionsGroup.create());
 		// Inventory info box
 		(gca_options.bool("global","inventory_gold_info") &&
 			this.display.inventoryInfo.prepare());
-
 
 		// Daily Bonus Log
 		(gca_options.bool("overview", "daily_bonus_log") && 
@@ -186,6 +189,10 @@ var gca_global = {
 		// Show forge info
 		(!this.isTraveling && gca_data.section.get("global", "show_forge_info", 0) != 0 && 
 			this.display.analyzeItems.itemForgeInfo.init());
+		
+		// Edit Mercenaries tooltips
+		(gca_options.bool("global","show_mercenaries_real_name") &&
+			this.display.analyzeItems.mercenaries.init());
 
 		// Mobile item move helper - Run on mobiles
 		(this.isMobile &&
@@ -1368,7 +1375,7 @@ var gca_global = {
 								name.href = gca_getPage.link({"mod":"player","p":player_list[i].id});
 								name.style.color = "black";
 								name.style.fontFamily = "century gothic";
-								name.dataset.tooltip = '[[["Test","white"]]]';
+								//name.dataset.tooltip = '[[["Test","white"]]]';
 								name.textContent = player_list[i].name;
 								name.title = player_list[i].time;
 								parent.appendChild(name);
@@ -1471,9 +1478,8 @@ var gca_global = {
 				create : function(){
 					// Get stats
 					var stats = gca_data.section.get("stats", "player", false);
-					// Clear table
+					// Get Container
 					var statsHtmlTable = document.getElementById("gca_player_stats_table");
-					statsHtmlTable.innerHTML = "";
 
 					var tr, td;
 					// If stats are saved
@@ -1489,6 +1495,8 @@ var gca_global = {
 							"damage"
 						];
 
+						var new_table = document.createElement("table");
+						new_table.id = "gca_player_stats_table";
 						for(var i = 0; i < attributes.length; i++){
 							tr = document.createElement("tr");
 							td = document.createElement("td");
@@ -1501,8 +1509,9 @@ var gca_global = {
 							td.className = "cssAlign";
 							td.textContent = stats[attributes[i]][1];
 							tr.appendChild(td);
-							statsHtmlTable.appendChild(tr);
+							new_table.appendChild(tr);
 						}
+						statsHtmlTable.parentNode.replaceChild(new_table, statsHtmlTable);
 						
 						var chartFunction = function(){
 							new Chart(document.getElementById("stats_canvas"), {
@@ -1536,11 +1545,15 @@ var gca_global = {
 					}
 					// Stats not saved
 					else {
+						let statsHtmlTable = document.getElementById("gca_player_stats_table");
+						new_table = document.createElement("table");
+						new_table.id = "gca_player_stats_table";
 						tr = document.createElement("tr");
 						td = document.createElement("td");
 						td.textContent = gca_locale.get("general", "no_data");
 						tr.appendChild(td);
-						statsHtmlTable.appendChild(tr);
+						new_table.appendChild(tr);
+						statsHtmlTable.parentNode.replaceChild(new_table, statsHtmlTable);
 					}
 				},
 				// loading
@@ -1551,18 +1564,20 @@ var gca_global = {
 					if(this.loading) return;
 					this.loading = true;
 
-					// Clear table
+					// Get Container
 					var statsHtmlTable = document.getElementById("gca_player_stats_table");
-					statsHtmlTable.innerHTML = "";
 
 					// Display loading
+					var new_table = document.createElement("table");
+					new_table.id = "gca_player_stats_table";
 					var tr = document.createElement("tr");
 					var td = document.createElement("td");
 					var span = document.createElement("span");
 					span.className = "loading";
 					td.appendChild(span);
 					tr.appendChild(td);
-					statsHtmlTable.appendChild(tr);
+					new_table.appendChild(tr);
+					statsHtmlTable.parentNode.replaceChild(new_table, statsHtmlTable);
 
 					// Save instance
 					var self = this;
@@ -1590,14 +1605,18 @@ var gca_global = {
 						
 						else{
 							// Error
-							statsHtmlTable.innerHTML = "";
+							statsHtmlTable = document.getElementById("gca_player_stats_table");
+							var new_table = document.createElement("table");
+							new_table.id = "gca_player_stats_table";
 							var tr = document.createElement("tr");
 							var td = document.createElement("td");
 							var span = document.createElement("span");
-							span.className = gca_locale.get("general", "error");
+							span.textContent = gca_locale.get("general", "error");
+							span.style.color = "red";
 							td.appendChild(span);
 							tr.appendChild(td);
-							statsHtmlTable.appendChild(tr);
+							new_table.appendChild(tr);
+							statsHtmlTable.parentNode.replaceChild(new_table, statsHtmlTable);
 						}
 					});
 				},
@@ -2525,6 +2544,104 @@ var gca_global = {
 
 				// Display the values
 				this.questTimeElement.textContent = '(' + minutes + ':' + seconds + ')';
+			}
+		},
+		
+		// Global Arena
+		global_arena : {
+			inject : function(){
+				// Do not run while traveling
+				//if (gca_global.isTraveling) return;
+				
+				// if Quests wait for update event
+				/*
+				if (gca_section.mod == 'arena' && gca_section.submod == null) {
+					gca_tools.event.addListener("quest-info-update", () => {
+						this.display();
+					});
+					return;
+				}*/
+
+				this.display();
+			},
+
+			// Display timer
+			display : function(){
+				// Time when ready to attack
+				var nextAvailable = parseInt(gca_data.section.get("timers", 'global_arena', 0), 10);
+				// Time difference
+				this.timer = (nextAvailable - new Date().getTime());
+				// Global Arena Position
+				this.global_arena_position = gca_data.section.get("timers", 'global_arena_position', 'n/a');
+				if ( isNaN(this.global_arena_position) || this.global_arena_position <= 0 )
+					this.global_arena_position = 'n/a';
+
+				// Change Style
+				document.getElementById('header_game').className += " gca-global-arena-timer-on";
+
+				// Create timer
+				let gaCooldownBar = document.createElement("div");
+				gaCooldownBar.id = "cooldown_bar_ga";
+				gaCooldownBar.className = "cooldown_bar global_arena_global_timer";
+				gaCooldownBar.dataset.tooltip = '[[["'+gca_locale.get("arena", "global_arena_title")+' : '+this.global_arena_position+'","white"]]]';
+								
+				this.globalArenaCooldownProgressBar = document.createElement("div");
+				this.globalArenaCooldownProgressBar.className = "cooldown_bar_fill cooldown_bar_fill_"+( this.timer <= 0 ? "ready" : "progress" );
+				this.globalArenaCooldownProgressBar.id = "cooldown_bar_fill_ga";
+				this.globalArenaCooldownProgressBar.style = "width: 100%;";
+				gaCooldownBar.appendChild(this.globalArenaCooldownProgressBar);
+				this.globalArenaCooldownText = document.createElement("div");
+				this.globalArenaCooldownText.className = "cooldown_bar_text";
+				this.globalArenaCooldownText.id = "cooldown_bar_text_ga";
+				this.globalArenaCooldownText.textContent = gca_global.isTraveling ? "-" : gca_locale.get("arena", "global_arena_title");
+				gaCooldownBar.appendChild(this.globalArenaCooldownText);
+				let a = document.createElement("a");
+				a.className = "cooldown_bar_link";
+				a.href = gca_getPage.link({"mod":"arena"})+"#global_arena_box";
+				gaCooldownBar.appendChild(a);
+				document.getElementById('header_game').appendChild(gaCooldownBar);
+				
+				// Check if the time has finished
+				if(this.timer > 0){
+					// Time has NOT finished
+					
+					// Refresh the countdown
+					this.countdown_started = new Date().getTime();
+					this.countdown_interval = setInterval(() => {
+						this.countdown();
+					}, 500);
+					this.countdown();
+				}
+			},
+
+			// Count Down
+			countdown_started : null,
+			countdown_interval : null,
+			countdown : function(){
+				var timer = this.timer - (new Date().getTime() - this.countdown_started);
+				
+				// If ready
+				if (timer < 0) {
+					this.globalArenaCooldownText.textContent = gca_locale.get("arena", "global_arena_title");
+					this.globalArenaCooldownProgressBar.className = "cooldown_bar_fill cooldown_bar_fill_ready";
+
+					// Clear timer
+					clearInterval(this.countdown_interval);
+					return;
+				}
+				
+				this.globalArenaCooldownProgressBar.style = "width: "+ (1-timer/(10*60*1000))*100 +"%;";
+
+				// Convert milliseconds to Minutes:Seconds
+				var date = new Date(timer);
+				var minutes = date.getMinutes();
+				var seconds = date.getSeconds();
+				// Format to 01:04
+				if(minutes < 10){minutes = '0'+minutes;}
+				if(seconds < 10){seconds = '0'+seconds;}
+
+				// Display the values
+				this.globalArenaCooldownText.textContent = '0:' + minutes + ':' + seconds;
 			}
 		},
 
@@ -3604,6 +3721,96 @@ var gca_global = {
 
 					return info;
 				}
+			},
+			
+			// Add mercenaries types
+			mercenaries : {
+				// Load
+				init : function(self){
+					// Get data
+					this.showMerchenaryType();
+					
+					// Exit if no inventory
+					if(!document.getElementById("inv")) return;
+
+					// Add event
+					gca_tools.event.bag.onBagOpen(() => {
+						this.showMerchenaryType();
+					});
+
+					// If bag not already loaded
+					if (document.getElementById("inv").className.match("unavailable")) {
+						// Wait first bag
+						gca_tools.event.bag.waitBag(() => {
+							this.showMerchenaryType();
+						});
+					}
+
+					// If in packets
+					if (gca_section.mod === "packages") {
+						// On item get
+						gca_tools.event.request.onAjaxResponse((response) => {
+							// If package load request
+							if(response.data.newPackages && response.data.pagination && response.data.worthTotal){
+								this.showMerchenaryType();
+							}
+						});
+						// On new packet page
+						gca_tools.event.addListener("packages_page_loaded", () => {
+							this.showMerchenaryType();
+						});
+					}
+				},
+				
+				names : [
+					"Hoplomachus",//1
+					"Medicus",//2
+					"Thracian",//3
+					"Murmillo",//4
+					"Samnit",//5
+					"Elite Spear Carrier",//6
+					"Medicine Man",//7
+					"Archer",//8
+					"Experienced Archer",//9
+					"Sword Wolf",//10
+					"Eagle Wing",//11
+					"Herbalist",//12
+					"Bear Warrior",//13
+					"Scorpion Warrior",
+					"Axe Warrior",//15
+					"Grandmaster",//16
+					"Druid Master",//17
+					"The Ranger",//18
+					"Axe Thrower",//19
+					"Chariot Driver"//20
+				],
+
+				// Show if scroll is Learned
+				showMerchenaryType : function(){
+					// For each item
+					jQuery(".ui-draggable").each((i, item) => {
+						// If already parsed
+						if(item.dataset.gcaFlag_isMerchenaryType) return;
+						// Flag as parsed
+						item.dataset.gcaFlag_isMerchenaryType = true;
+
+						// Get hash
+						let hash = gca_tools.item.hash(item);
+						if (!hash) return;
+						
+						// Check if item is a mercenary
+						if (hash.category!=15) return;
+						
+						let original_name = ( hash.subcategory <= this.names.length ) ? this.names[hash.subcategory-1] : "n/a" ;
+						jQuery(item).data("tooltip")[0].splice(1, 0, [ gca_locale.get("global", "merchenary_type", {name:original_name, number:hash.subcategory}), "gray; font-size: 0.8em;"]);
+						
+						// Remove all last gray rows of tooltips
+						for(let i = 0; i < 2; i++){
+							if( jQuery(item).data("tooltip")[0][jQuery(item).data("tooltip")[0].length-1][1]=="#808080" )
+								jQuery(item).data("tooltip")[0].pop()
+						}
+					});
+				}
 			}
 		}
 	},
@@ -4124,18 +4331,31 @@ var gca_global = {
 						serverDate
 					];
 
-					// If no last data
+					// First time saving data
 					if (!data.length) {
-						console.log('GCA: Collected first gold and exp data.', newData);
+						console.log('GCA: Collected gold and exp data for the first time.', newData);
 						gca_data.section.set('data', 'gold_exp_data', [newData]);
 						return;
 					}
 
 					// Get last saved data
 					var lastData = data[data.length - 1];
-					if (lastData[0] != newData[0] && lastData[1] != newData[1]) {
+					if (lastData[0] != newData[0] || lastData[1] != newData[1]) {
 						console.log('GCA: Collected more gold and exp data.', newData);
+						// Push data
 						data.push(newData);
+						
+						// Toss old data
+						let clear_data = [];
+						let seventh_day_timestamp = serverDate - 6048e5; // Server time - 7 days (7 days = 7*24*60*60*1000 = 604800000 ms)
+						for (let i = 0; i < data.length; i++) {
+							// If time is in the last 7 days
+							if(data[i][2] >= seventh_day_timestamp)
+								clear_data.push(data[i]);
+						}
+						data = clear_data;
+						
+						// Save data
 						gca_data.section.set('data', 'gold_exp_data', data);
 						return;
 					}
@@ -4149,7 +4369,8 @@ var gca_global = {
 					}
 
 					// Else
-					//console.log('GCA: No new gold and exp data.', newData);
+					console.log('GCA: No new gold and exp data.', newData);
+					//console.log('Saved data:', data);
 				});
 			},
 			
@@ -4356,9 +4577,11 @@ var gca_global = {
 					newdata.push(data[i-1]);
 					
 					// Save only last 7 days data
+					/* now done when data are saved
 					if (newdata.length > 1) {
 						gca_data.section.set("data", "gold_exp_data", newdata);
 					}
+					*/
 					
 					// If there are no data
 					if(expData.length<1 || goldData.length<1){

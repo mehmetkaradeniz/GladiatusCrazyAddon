@@ -74,7 +74,7 @@ gca_languages["en"] = {
 			guild_arenareports_goto : "Go to guild's arena battle reports",
 			guild_jail_goto : "Go to guild's jail",
 			guild_library_goto : "Go to guild's library",
-			guild_templum_goto : "Go to guild's templum",
+			guild_templum_goto : "Go to guild's temple",
 			guild_medic_goto : "Go to guild's medic center",
 			simulator_goto : "Go to simulator",
 			stats_display : "Display my stats",
@@ -105,7 +105,7 @@ gca_languages["en"] = {
 			notification_guild_application : "There is a pending guild application!",
 			notification_guild_attack_ready : "Guild war attack cooldown is over!",
 			low_durability_items : "There are {{number}} item(s) with durability under {{percent}}%",
-			item_worth_rubies : "That item woth rubies!",
+			item_worth_rubies : "That item worth rubies!",
 
 			// Gold - Exp data
 			gold_exp_data : "Gold and Experience Data",
@@ -117,6 +117,9 @@ gca_languages["en"] = {
 			gold_exp_data_measurements : "Measurements",
 			gold_exp_data_total_exp : "Total experience",
 			gold_exp_data_total_gold : "Total gold",
+			
+			// Items
+			merchenary_type : "Type: {{name}} ({{number}})",
 		},
 
 		// Overview
@@ -180,7 +183,10 @@ gca_languages["en"] = {
 			attack_player : "Click to attack “{{name}}”",
 			fight_won : "You won the fight!",
 			fight_lost : "You lost the fight...",
-			player_tired : "You are tired. You need to rest."
+			player_tired : "You are tired; you need to wait.",
+			player1_hits_player2 : "{{name1}} hits {{name2}}",
+			player_takes_x_damage :"{{name}} takes {{number}} damage",
+			player_dies :"{{name}} dies"
 		},
 
 		// Training section
@@ -224,7 +230,8 @@ gca_languages["en"] = {
 			item_is_soulbound : "This item is soulbound.",
 			item_cant_buy_back : "You will not be able to buy back this item.",
 			// Are you sure
-			are_you_sure_you_want_to_buy : "Do you really want to buy this item?"
+			are_you_sure_you_want_to_buy : "Do you really want to buy this item?",
+			click_enter_to_sell : "press enter ⏎ to sell"
 		},
 		
 		// Forge
@@ -249,6 +256,16 @@ gca_languages["en"] = {
 			advance_filters_apply : "Apply filters",
 			advance_filters_clear : "Clear filters",
 			advance_filters_found : "(found {{items}})"
+		},
+		
+		// Report
+		reports : {
+			avg_damage : "Average damage",
+			avg_heal : "Average heal",
+			total_hits : "Total hits",
+			hits : "Hits",
+			dodge : "Dodges or Blocks",
+			points : "Points"
 		},
 
 		// Cross-Browser Sync
@@ -322,6 +339,8 @@ gca_languages["en"] = {
 			category_global$show_durability : "Display durability on item's bottom-left corner",
 			category_global$min_durability : "Notification for items with durability+conditioning under _% (move to 0 to disable it)",
 			category_global$show_forge_info : "Display item's forge materials on tooltips",
+			category_global$show_mercenaries_real_name : "Display mercenaries real names (type) on tooltips",
+			category_global$global_arena_timer : "Display Global Arena timer",
 			// Settings - Overview
 			category_overview$analyze_items : "Analyze items stats (needed for training)",
 			category_overview$food_life_gain : "Show life gain from foods",
@@ -357,7 +376,7 @@ gca_languages["en"] = {
 			category_packages$load_more_pages : "Load more pages",
 			category_packages$pages_to_load : "Number of pages to load",
 			category_packages$item_price : "Show items' price",
-			category_packages$special_category_features : "Enable special features per category",
+			category_packages$special_category_features : "Enable special features per category\n•Show if scrolls are know/unknown\n•Show scroll icon item's prefix/suffix is unknown",
 			category_packages$double_click_open : "Double click packets to open them",
 			category_packages$advance_filter : "Advance packages filters",
 			// Settings - Pantheon
@@ -408,6 +427,7 @@ gca_languages["en"] = {
 			category_market$remember_sort : "Remember last sort order",
 			category_market$double_click_select : "Select item with double click",
 			category_market$sell_warning_icons : "Warning icon when selling items",
+			category_market$sell_with_enter : "Sell items by pressing ENTER ⏎",
 			// Settings - Expedition
 			category_expedition$show_enemy_drops : "Show crafting materials each enemy drops",
 			category_expedition$underworld_layout : "Show underworld's enemies layout like expedition's",
@@ -418,7 +438,7 @@ gca_languages["en"] = {
 			category_guild$library_tooltip_data : "Add more data on library's tooltips",
 			category_guild$bank_donate_layout : "Improve bank's donate layout",
 			category_guild$bank_book_layout : "Improve bank's book layout",
-			category_guild$bank_book_show_changes : "Show donation changes since last visit on bank's book",
+			category_guild$bank_book_show_changes : "Show donation variations since last visit on bank's book",
 			category_guild$medic_layout : "Improve medic's layout",
 			// Settings - Auction
 			category_auction$items_counters : "Count items and bidden items",
@@ -428,7 +448,7 @@ gca_languages["en"] = {
 			category_auction$x3_items_per_line : "Change layout to 3 items per line",
 			category_auction$multi_bids : "Bid many items without page refresh",
 			category_auction$extra_item_stats : "Show extra stats on item images",
-			category_auction$save_last_state : "Implemented auction save seach and load it by default",
+			category_auction$save_last_state : "Implemented auction save search and load it by default",
 			// Settings - Events
 			category_events$craps_timer : "Display dice event's timer on top",
 			category_events$server_quest_timer : "Display server-quest or location event's timer on top",
@@ -443,7 +463,7 @@ gca_languages["en"] = {
 			category_data$clear_data : "Clear all addon's data",
 			category_data$clear_cache_data : "Clear addon's cache data",
 			category_data$cross_browser_login : "Cross browser login sync",
-			category_data$export_error_player_settings : "Export usererror's settings data to file",
+			category_data$export_error_player_settings : "Export user error's settings data to file",
 
 			// Buttons
 			save : "Save",
@@ -454,6 +474,9 @@ gca_languages["en"] = {
 			do_not_show : "Do not show",
 			show_as : "Show as",
 			show_info : "Show information",
+			each_category : "Run on target category",
+			all_category : "Run on target category & all",
+			do_not_run : "Do not run",
 
 			// Info
 			translated_percent : "Translated percent: {{number}}%",
@@ -461,6 +484,7 @@ gca_languages["en"] = {
 			reset_settings_confirm : "Are you sure you want to reset addon's settings?",
 			clear_data_confirm : "Are you sure you want to clear all the addon's data?",
 			data_exported_save_the_file : "Data were exported. Save the file.",
+			missing_translations : "Missing translations",
 
 			// Notifications
 			notification_reload : "Reload the page for the changes to take effect",

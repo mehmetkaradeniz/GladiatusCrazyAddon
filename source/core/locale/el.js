@@ -117,6 +117,9 @@ gca_languages["gr"] = {
 			gold_exp_data_measurements : "Μετρήσεις",
 			gold_exp_data_total_exp : "Συνολική εμπειρία",
 			gold_exp_data_total_gold : "Συνολικός χρυσός",
+			
+			// Items
+			merchenary_type : "Τύπος: {{name}} ({{number}})",
 		},
 
 		// Overview
@@ -178,6 +181,12 @@ gca_languages["gr"] = {
 			error_blocked_access : "Κάτι μπλοκάρει την πρόσβαση στον διακομιστή του GCA ({{url}})",
 			error_connection : "Σφάλμα σύνδεσης",
 			attack_player : "Επίθεση στον “{{name}}”",
+			fight_won : "Νίκησες τη μάχη!",
+			fight_lost : "Έχασες τη μάχη...",
+			player_tired : "Είσαι κουρασμένος, πρέπει να περιμένεις.",
+			player1_hits_player2 : "Ο {{name1}} χτυπά τον {{name2}}",
+			player_takes_x_damage :"Ο {{name}} δέχεται {{number}} ζημιά",
+			player_dies :"Ο {{name}} πέθανε"
 		},
 
 		// Training section
@@ -221,7 +230,8 @@ gca_languages["gr"] = {
 			item_is_soulbound : "Αυτό το αντικείμενο είναι ψυχικά δεμένο.",
 			item_cant_buy_back : "Δεν θα μπορείς να αγοράσεις πίσω αυτό το αντικείμενο.",
 			// Are you sure
-			are_you_sure_you_want_to_buy : "Θέλεις πραγματικά να αγοράσεις αυτό το αντικείμενο;"
+			are_you_sure_you_want_to_buy : "Θέλεις πραγματικά να αγοράσεις αυτό το αντικείμενο;",
+			click_enter_to_sell : "πατήστε enter ⏎ για πώληση"
 		},
 		
 		// Forge
@@ -247,7 +257,17 @@ gca_languages["gr"] = {
 			advance_filters_clear : "Απαλοιφή φίλτρων",
 			advance_filters_found : "(βρέθηκαν {{items}})"
 		},
-
+		
+		// Report
+		reports : {
+			avg_damage : "Μέση ζημιά",
+			avg_heal : "Μέση θεραπεία",
+			total_hits : "Συνολικά χτυπήματα",
+			hits : "Χτυπήματα",
+			dodge : "Αποφυγή ή Μπλοκ",
+			points : "Πόντοι"
+		},
+		
 		// Cross-Browser Sync
 		sync : {
 			are_you_sure : "Είσαι σίγουρος πως θες να συνδεθείς σαν τον μονομάχο {{name}};",
@@ -319,6 +339,8 @@ gca_languages["gr"] = {
 			category_global$show_durability : "Εμφάνιση της ανθεκτικότητας των αντικειμένων στην κάτω αριστερή τους γωνία",
 			category_global$min_durability : "Ειδοποίηση όταν η ανθεκτικότητα+εξευγενισμός είναι κάτω από μια τιμή % (επιλέξτε 0 για απενεργοποίηση)",
 			category_global$show_forge_info : "Εμφάνιση των πρώτων υλών του αντικειμένου στο tooltip",
+			category_global$show_mercenaries_real_name : "Εμφάνιση του πραγματικού ονόματος (τύπος) μισθοφόρου στα tooltip",
+			category_global$global_arena_timer : "Προβολή του χρονομέτρου της Παγκόσμιας Αρένας",
 			// Settings - Overview
 			category_overview$analyze_items: "Ανάλυση των αντικειμένων του παίκτη",
 			category_overview$food_life_gain : "Εμφάνιση των πόντων ζωής που δίνει το κάθε αναλώσιμο",
@@ -354,7 +376,7 @@ gca_languages["gr"] = {
 			category_packages$load_more_pages : "Φόρτωση περισσοτέρων σελίδων",
 			category_packages$pages_to_load: "Μέγιστος αριθμός σελίδων που φορτώνονται",
 			category_packages$item_price : "Εμφάνιση του κόστους κάθε αντικειμένου",
-			category_packages$special_category_features : "Ενεργοποίηση ειδικών λειτουργιών ανά κατηγορία",
+			category_packages$special_category_features : "Ενεργοποίηση ειδικών λειτουργιών ανά κατηγορία\n• Εμφάνιση εάν ο πάπυρος είναι γνωστός/άγνωστος\n• Εμφάνιση εικονιδίου εάν το πρόθεμα/επίθεμα του αντικειμένου είναι άγνωστο",
 			category_packages$double_click_open : "Άνοιγμα πακέτων με διπλό κλικ",
 			category_packages$advance_filter : "Φίλτρα πακέτων για προχωρημένους",
 			// Settings - Pantheon
@@ -364,12 +386,12 @@ gca_languages["gr"] = {
 			category_pantheon$gods_show_points_percent : "Εμφάνιση των πόντων θεών τοις εκατό",
 			category_pantheon$open_many_mysteryboxes : "Άνοιγμα πολλαπλών σεντουκιών",
 			category_pantheon$show_mysterybox_rewards_rubies : "Εμφάνιση τις αξίας των ανταμοιβών από τα σεντούκια σε ρουμπίνια",
-			category_pantheon$show_mysterybox_rewards_owned : "Εμφάνιση της ποστητας των ανταμοιβών από τα σεντούκια που έχεις ήδη",
+			category_pantheon$show_mysterybox_rewards_owned : "Εμφάνιση της ποσότητας των ανταμοιβών από τα σεντούκια που έχεις ήδη",
 			// Settings - Reports
 			category_reports$style_change: "Βελτίωση του interface της λίστας αναφορών",
 			category_reports$load_loot_tooltips : "Φόρτωση των ανταμοιβών τις κάθε αναφοράς",
 			category_reports$found_items : "Συλλογή δεδομένων από τα αντικείμενα που πέφτουν",
-			category_reports$battle_analyzer : "Ανάλυση αναφορας και εμφάνιση στατιστικών ζωής",
+			category_reports$battle_analyzer : "Ανάλυση αναφοράς και εμφάνιση στατιστικών ζωής",
 			// Settings - Training
 			category_training$show_discount : "Εμφάνιση έκπτωσης εκπαίδευσης",
 			category_training$show_basics_in_bars : "Εμφάνιση βασικών εκπαιδεύσεων στις μπάρες",
@@ -401,10 +423,11 @@ gca_languages["gr"] = {
 			category_market$cancel_all_button : "Εμφάνιση κουμπιού ακύρωσης όλων",
 			category_market$remember_sell_duration : "Να θυμάται το πρόσθετο την τελευταία επιλεγμένη διάρκεια πώλησης",
 			category_market$sell_duration : "Ορισμός προεπιλεγμένης διάρκειας πώλησης",
-			category_market$one_gold_mode : "Επιλογή για σταθερή τιμή πώλησης στο 1 χρυσό",
+			category_market$one_gold_mode : "Επιλογή για σταθερή τιμή πώλησης 1ος χρυσού",
 			category_market$remember_sort : "Να θυμάται το πρόσθετο την τελευταία ταξινόμηση",
 			category_market$double_click_select : "Επιλογή αντικειμένου με διπλό κλικ",
 			category_market$sell_warning_icons : "Προειδοποιητικά εικονίδια πώλησης αντικειμένου",
+			category_market$sell_with_enter : "Πώληση αντικειμένων πατώντας ENTER ⏎",
 			// Settings - Expedition
 			category_expedition$show_enemy_drops : "Εμφάνιση των υλών σιδηρουργείου που δίνει ο κάθε εχθρός",
 			category_expedition$underworld_layout : "Μετατροπή της εμφάνισης των εχθρών του κάτω κόσμου όπως στις εξορμήσεις",
@@ -415,6 +438,7 @@ gca_languages["gr"] = {
 			category_guild$library_tooltip_data : "Εισαγωγή περισσοτέρων πληροφοριών στα tooltip της βιβλιοθήκης",
 			category_guild$bank_donate_layout: "Βελτίωση του interface της τράπεζας",
 			category_guild$bank_book_layout: "Βελτίωση του interface του βιβλίου δωρεών της τράπεζας",
+			category_guild$bank_book_show_changes : "Εμφάνιση μεταβολής των δωρεών από την τελευταία επίσκεψη",
 			category_guild$medic_layout: "Βελτίωση του interface του ιατρικού κέντρου",
 			// Settings - Auction
 			category_auction$items_counters: "Εμφάνιση του αριθμού των αντικειμένων",
@@ -423,7 +447,7 @@ gca_languages["gr"] = {
 			category_auction$item_level: "Προβολή του επιπέδου του κάθε αντικειμένου",
 			category_auction$x3_items_per_line: "Προβολή 3ων αντικειμένων ανά γραμμή",
 			category_auction$multi_bids: "Ενεργοποίηση πολλαπλών δημοπρατήσεων (χωρίς ανανέωση)",
-			category_auction$extra_item_stats : "Εμφάνιση επιπλέων στατιστικών πάνω στις εικόνες των αντικειμένων",
+			category_auction$extra_item_stats : "Εμφάνιση επιπλέον στατιστικών πάνω στις εικόνες των αντικειμένων",
 			category_auction$save_last_state : "Αποθήκευση της τελευταίας αναζήτησης και φόρτωμα της σαν αρχική",
 			// Settings - Events
 			category_events$craps_timer : "Εμφάνιση χρονομέτρου για τα event ζαριών στην κορυφή",
@@ -437,7 +461,8 @@ gca_languages["gr"] = {
 			category_data$import_settings : "Εισαγωγή των δεδομένων ρυθμίσεων από αρχείο",
 			category_data$reset_settings : "Επαναφορά των ρυθμίσεων του προσθέτου",
 			category_data$clear_data : "Εκκαθάριση όλων των δεδομένων του προσθέτου",
-			category_data$cross_browser_login : "Ταυτόχρονη δύνδεση σε πολλαπλούς περιηγητές",
+			category_data$clear_cache_data : "Εκκαθάριση δεδομένων προσθέτου",
+			category_data$cross_browser_login : "Ταυτόχρονη σύνδεση σε πολλαπλούς περιηγητές",
 
 			// Buttons
 			save: "Αποθήκευση",
@@ -448,12 +473,17 @@ gca_languages["gr"] = {
 			do_not_show : "Να μην φαίνεται",
 			show_as : "Εμφάνιση ως",
 			show_info : "Εμφάνιση πληροφοριών",
+			each_category : "Ενεργό στην κάθε κατηγορία",
+			all_category : "Ενεργό στην κάθε κατηγορία & στην Όλα",
+			do_not_run : "Απενεργοποίηση",
 
 			// Info
 			translated_percent : "Μεταφρασμένα τοις εκατό: {{number}}%",
 			translated_by : "Μετάφραση από: {{string}}",
 			reset_settings_confirm : "Είστε σίγουρος πως θέλετε να επαναφέρετε τις ρυθμίσεις του πρόσθετου;",
 			clear_data_confirm : "Είστε σίγουρος πως θέλετε να εκκαθαρίσετε τις ρυθμίσεις του πρόσθετου;",
+			data_exported_save_the_file : "Τα δεδομένα εξήχθησαν. Αποθηκεύστε το αρχείο.",
+			missing_translations : "Ελλιπείς μεταφράσεις",
 
 			// Notifications
 			notification_reload: "Επαναφορτώστε την σελίδα για να ενεργοποιηθούν οι αλλαγές"

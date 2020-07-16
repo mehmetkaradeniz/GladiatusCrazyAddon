@@ -111,16 +111,22 @@ var gca_overview = {
 			}
 
 			if (player_id > 0) {
+				// Create player id cookie
 				var cookie_name = "Gca_" + gca_section.country + "_" + gca_section.server;
 				var cookie_value = player_id + "_" + gca_section.sh.substring(0, gca_section.sh.length/4);
 				var cookie_expire_days = 364;
 
+				// Create player id cookies
 				var d = new Date();
 				d.setTime(d.getTime() + (cookie_expire_days*24*60*60*1000));
 				var cookie_expires = "expires="+ d.toUTCString();
 				document.cookie = cookie_name + "=" + cookie_value + ";" + cookie_expires + ";path=/";
 				
+				// Update player id
 				gca_section.resolvePlayerId();
+			}
+			else {
+				console.error("Failed to detect player's id.");
 			}
 		}
 
@@ -397,6 +403,8 @@ var gca_overview = {
 			stats.armour = spans[1].textContent.trim();
 			stats.damage = spans[2].textContent.trim();
 			stats.healing = spans[3].textContent.trim();
+			if ( !stats.threat )
+				stats.threat = 'Threat'; // Set default value for threat
 			gca_data.section.set("overview", "stats_locale", stats);
 		}
 		else if (this.doll == 2) {

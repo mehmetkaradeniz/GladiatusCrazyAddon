@@ -41,12 +41,16 @@ var gca_markets = {
 			}
 			
 			// Special category features
-			(gca_options.bool("packages", "special_category_features") && 
+			(gca_data.section.get("packages", "special_category_features", 0) != 2 &&
 				this.specialCategory.resolve(this));
 
 			this.layout.changeSortArrows();
 		}
 		
+		// Trigger sell with enter
+		(gca_options.bool("market", "sell_with_enter") && 
+			this.enterTriggerSell());
+
 		// Insert sort options in POST-URL on sell form
 		this.sortOptionsOnSell();
 		
@@ -69,6 +73,31 @@ var gca_markets = {
 
 		// Setting Link
 		gca_tools.create.settingsLink("market");
+	},
+
+	// Trigger sell with {enter}
+	enterTriggerSell : function() {
+		jQuery(document).ready(function() {
+			// Monitor key events
+			jQuery(document).keyup(function(event) {
+				// Check if ENTER
+				if (event.keyCode === 13) {
+					// Check if there is an item to sell
+					if ( document.getElementById("market_sell").getElementsByClassName("ui-draggable").length > 0 ){
+						//console.log("Item in sell position found");
+						let focus = document.activeElement.type
+						if ( focus != "textarea" && focus != "text")
+							document.getElementsByName("anbieten")[0].click();
+							//console.log("Not a text area:"+document.activeElement.type);
+					}
+				}
+			});
+			
+			let span = document.createElement("span");
+			span.textContent = "("+gca_locale.get("markets", "click_enter_to_sell")+")";//"(click enter to sell)";
+			span.style = "font-size: 0.8em;font-style: italic;"
+			document.getElementById("market_sell_box").getElementsByTagName("section")[0].appendChild(span);
+		});
 	},
 
 	// Add shadow on items
@@ -533,6 +562,10 @@ var gca_markets = {
 		resolve : function(self){
 			var category = parseInt(document.getElementsByName("f")[0].value);
 			switch(category){
+				case 0: // All
+					if(gca_data.section.get("packages", "special_category_features", 0) == 1)
+						this.categories.scroll.loadData(self);
+					break;
 				case 20:
 					this.categories.scroll.loadData(self);
 					break;

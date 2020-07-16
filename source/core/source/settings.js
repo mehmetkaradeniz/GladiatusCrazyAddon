@@ -326,10 +326,17 @@ var gca_settings = {
 			wrapper.appendChild(document.createTextNode(' by '));
 			wrapper.appendChild(gca_tools.create.link(gca_links.get('williaf@reddit'), 'Williaf', {target: '_blank'}));
 			group.appendChild(wrapper);
-
+			
+			/*
 			wrapper = document.createElement('div');
 			wrapper.appendChild(document.createTextNode('Discord Server of Gladiatus Reddit : '));
 			wrapper.appendChild(gca_tools.create.link(gca_links.get('reddit-discord'), gca_links.get('reddit-discord'), {target: '_blank'}));
+			group.appendChild(wrapper);
+			*/
+			
+			wrapper = document.createElement('div');
+			wrapper.appendChild(document.createTextNode('Official Gladiatus Discord Server : '));
+			wrapper.appendChild(gca_tools.create.link(gca_links.get('official-discord'), gca_links.get('official-discord'), {target: '_blank'}));
 			group.appendChild(wrapper);
 
 			box.appendChild(group);
@@ -415,6 +422,7 @@ var gca_settings = {
 							// Create refresh info function
 							data.refreshInfo = function() {
 								var lang = gca_languages[data.select.value];
+								gca_languages._active = data.select.value;
 								var info = "";
 
 								// Completed percent
@@ -439,6 +447,12 @@ var gca_settings = {
 								}
 								info = Math.round(translated_items * 100 / data.translated_items);
 								data.info_completed.textContent = gca_locale.get("settings", "translated_percent", {number: info});
+								
+								if( translated_items < data.translated_items ){
+									data.show.style.display = "block";
+									//data.select.value
+								}else
+									data.show.style.display = "none";
 
 								// Translators
 								info = "";
@@ -462,10 +476,21 @@ var gca_settings = {
 							data.info_completed.className = "translate-percent";
 							data.info_translators = document.createElement("div");
 							data.info_translators.className = "translated-by";
+							
+							// Create missing translation button
+							data.show = document.createElement("input");
+							data.show.setAttribute("type", "button");
+							data.show.className = "awesome-button";
+							data.show.style.float = "left";
+							data.show.value = gca_locale.get("settings", "missing_translations");
+							data.show.addEventListener("click", () => {
+								gca_settings.translation_help.show();
+							}, false);
+							
 							data.refreshInfo();
 							// Add change event
 							data.select.addEventListener("change", data.refreshInfo, false);
-							return [data.select, clearboth, data.info_translators, data.info_completed];
+							return [data.select, clearboth, data.info_translators, data.info_completed, data.show];
 						},
 						"save" : function(data){
 							if (!gca_languages.hasOwnProperty(data.select.value) || !gca_languages[data.select.value].hasOwnProperty('name')) return;
@@ -665,6 +690,12 @@ var gca_settings = {
 					};
 					return scheme;
 				})(),
+				
+				// Show mercenaries real name
+				"show_mercenaries_real_name" : false,
+				
+				// Attacked Timer
+				"global_arena_timer" : true,
 			},
 
 			// Overview Options
@@ -742,7 +773,32 @@ var gca_settings = {
 				// Show item's price
 				"item_price" : false,
 				// Special category features
-				"special_category_features" : true,
+				"special_category_features" : (function(){
+					var scheme = {
+						"type" : "custom",
+						"dom" : function(data, title, wrapper){
+							if(wrapper.className.length > 0) wrapper.className += " ";
+							wrapper.className += "gca_settings_select";
+							// Create select
+							data.select = document.createElement("select");
+							// Create a list
+							let options = [gca_locale.get("settings",'each_category'), gca_locale.get("settings",'all_category'), gca_locale.get("settings",'do_not_run')];
+							for (let i = 0; i < options.length; i++) {
+								let option = document.createElement("option");
+								option.value = i;
+								option.textContent = options[i];
+								data.select.appendChild(option);
+							}
+							data.select.selectedIndex = gca_data.section.get("packages", "special_category_features", 0);
+							return data.select;
+						},
+						"save" : function(data){
+							gca_data.section.set("packages", "special_category_features", data.select.value);
+						}
+					};
+					return scheme;
+				})(),
+				
 				// Open packets with double click
 				"double_click_open" : true,
 				// Advance packet filter
@@ -855,7 +911,7 @@ var gca_settings = {
 							wrapper.className += "sell_duration_select";
 							// Create select
 							data.select = document.createElement("select");
-							// Create a list of languages
+							// Create a list of durations
 							let durations = ['2h','8h','24h','48h'];
 							for (let i = 0; i < durations.length; i++) {
 								let option = document.createElement("option");
@@ -874,12 +930,14 @@ var gca_settings = {
 				})(),
 				// 1 gold mode
 				"one_gold_mode" : true,
-				// Remember sorting 
+				// Remember sorting
 				"remember_sort" : false,
 				// Double click to select
 				"double_click_select" : true,
 				// Item sell warning icons
-				"sell_warning_icons" : true
+				"sell_warning_icons" : true,
+				// Sell with enter
+				"sell_with_enter" : true
 			},
 			
 			// Expedition Options
@@ -963,7 +1021,7 @@ var gca_settings = {
 							for (let channel in channels) {
 								if (channels.hasOwnProperty(channel)) {
 									let div = document.createElement('div');
-									div.innerHTML = channel;
+									div.textContent = channel;
 									section.appendChild(div);
 								}
 							}
@@ -1444,7 +1502,7 @@ var gca_settings = {
 		activeTab : null,
 		openTab : function(tabname, title){
 			// Clear tab
-			this.tab_div.innerHTML = "";
+			this.tab_div.textContent = '';
 
 			// If tabname not exist
 			if(!tabname || !this.scheme[tabname]){
@@ -2264,6 +2322,73 @@ var gca_settings = {
 			this.wrapper.appendChild(document.createElement('br'));
 
 			jQuery(qrcode).qrcode({width: 180, height: 180, text: url});
+
+			input.addEventListener('click', function(){
+				this.select();
+			}, false);
+		}
+
+	},
+	
+	translation_help : {
+		show : function() {
+			this.wrapper = document.createElement('div');
+			this.wrapper.textContent = 'Loading ...';
+			// Create confirm modal
+			var modal = new gca_tools.Modal(
+				gca_locale.get('settings', 'missing_translations'),
+				this.wrapper,
+				() => {modal.destroy();},
+				() => {modal.destroy();}
+			);
+			
+			modal.button(gca_locale.get('general', 'ok'), true);
+			modal.window.style.marginTop = '-225px';
+			modal.body_wrapper.style.height = '200px';
+			modal.show();
+			this.modal = modal;
+			this.displayInfo();
+		},
+
+		displayInfo : function() {
+			// Select language
+			let l = gca_languages._active;
+			let missing_translations = "/*\n\tMissing translations for "+gca_languages[l].name+" ("+l+")\n\tAdd these values in the existing file or\n\ttranslate them and send them at:\n\thttps://github.com/DinoDevs/GladiatusCrazyAddon/issues/new?template=translation.md\n*/\n";
+			// create an array of the keys in the locale object
+			let main_keys = Object.keys(gca_languages['en'].locale);
+			// loop through the array of object keys
+			for (let i = 0; i < main_keys.length; i++) {
+				let keys = Object.keys(gca_languages['en'].locale[main_keys[i]]);
+				
+				if ( !gca_languages[l].locale[main_keys[i]] )
+					missing_translations += "\n"+main_keys[i]+" : {\n\t/* ALL TRANSLATIONS IN THIS SECTION ARE MISSING, copy them from en.js */\n} ";
+				else{
+					let translations = "";
+					for (let j = 0; j < keys.length; j++) {
+						if ( !gca_languages[l].locale[main_keys[i]][keys[j]] ){
+							translations += "\n\t"+keys[j]+ " : \""+gca_languages['en'].locale[main_keys[i]][keys[j]]+"\",";
+						}
+					}
+					if ( translations != "" )
+						missing_translations += "\n"+main_keys[i]+" : {"+translations.slice(0, -1)+"\n}";
+				}
+			}
+			
+			this.wrapper.textContent = '';
+			this.wrapper.style.textAlign = 'left';
+			this.wrapper.style.height = '186px';
+
+			let code = document.createElement('div');
+			code.style.float = 'right';
+			this.wrapper.appendChild(code);
+
+			let input = document.createElement('textarea');
+			input.value = missing_translations;
+			input.style.width = '100%';
+			input.style.height = '94%';
+			this.wrapper.appendChild(input);
+
+			this.wrapper.appendChild(document.createElement('br'));
 
 			input.addEventListener('click', function(){
 				this.select();
