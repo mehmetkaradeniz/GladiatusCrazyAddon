@@ -172,11 +172,9 @@ var gca_hotkey = {
 
     executeNonCombo: function (e) {
         if (map[81]) { // q
-            e.preventDefault();
             this.executePrimaryAction(e);
         }
         else if (map[69]) { // e
-            e.preventDefault();
             this.executeSecondaryAction(e);
         }
         else if (map[9]) { // Tab
