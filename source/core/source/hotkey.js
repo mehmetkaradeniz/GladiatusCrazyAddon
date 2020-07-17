@@ -63,7 +63,7 @@ var gca_hotkey = {
             }
         }
         else if (pageParams.mod == "arena" && pageParams.submod == "serverArena") {
-            let index = 1;
+            let index = 0;
             if(this.hasPlayerTarget()){
                 index = this.getFirstPlayerTargetIndex();
             }
