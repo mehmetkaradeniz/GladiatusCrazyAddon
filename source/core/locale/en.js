@@ -60,7 +60,7 @@ gca_languages["en"] = {
 			// Button bar - Message
 			message_private_write : "Write private message",
 			message_guild_write : "Write guild message",
-			message_send : "(╯°□°)╯︵ ┻━┻",
+			message_send : "Send",
 			message_sent_success : "Message was sent successfully",
 			message_sent_failed : "Failed to sent message",
 			message_empty : "The message is empty",
