@@ -63,7 +63,11 @@ var gca_hotkey = {
             }
         }
         else if (pageParams.mod == "arena" && pageParams.submod == "serverArena") {
-            this.attackServerArenaPlayer(1);
+            let index = 1;
+            if(this.hasPlayerTarget()){
+                index = this.getFirstPlayerTargetIndex();
+            }
+            this.attackServerArenaPlayer(index);
         }
         else if (pageParams.mod == "forge" && pageParams.submod == "storage") {
             this.storeResources();
@@ -332,9 +336,17 @@ var gca_hotkey = {
         jQuery("#content img[src*='combatloc.gif']").last().click()
     },
 
-    attackServerArenaPlayer: function (playerNo) {
-        if (playerNo < 1 || playerNo > 5) {
-            gca_notifications.error("Invalid player no");
+    hasPlayerTarget: function(){
+        return this.exists("#own2 a.gca-player-target");
+    },
+
+    getFirstPlayerTargetIndex: function(){
+        return jQuery("#own2 a").index(jQuery("#own2 a.gca-player-target").first());
+    },
+
+    attackServerArenaPlayer: function (index) {
+        if (index < 0 || index > 4) {
+            gca_notifications.error("Invalid player index");
             return;
         }
 
@@ -343,7 +355,7 @@ var gca_hotkey = {
             return;
         }
 
-        jQuery("#content article table > tbody > tr:nth-child(" + (playerNo + 1) + ") > td:nth-child(4) > div")[0].click();
+        jQuery("#content article table > tbody > tr:nth-child(" + (index + 2) + ") > td:nth-child(4) > div")[0].click();
     },
 
     storeResources: function () {

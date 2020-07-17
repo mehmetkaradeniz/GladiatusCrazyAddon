@@ -1062,6 +1062,8 @@ var gca_arena = {
 			if (info && targets.hasOwnProperty(info[2] + '@' + info[1])) {
 				let id = info[2] + '@' + info[1];
 				links[i].style.textShadow = '0px 0px 2px ' + targets[id][3];
+				links[i].classList.add("gca-player-target");
+
 			}
 		}
 	}
