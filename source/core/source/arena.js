@@ -309,7 +309,7 @@ var gca_arena = {
 			this.cooldown(json.cooldown ? json.cooldown : false);
 			
 			// Create rankings header
-			if( json.level_list.length > 0){
+			if( json.level_list ){
 				this.rankings_table.style.display = "block";
 				let rankings_header = document.createElement("tr");
 				this.rankings_table.appendChild(rankings_header);
@@ -403,7 +403,7 @@ var gca_arena = {
 					
 					td = document.createElement('td');
 					td.style.textAlign = 'center';
-					td.textContent = player.level >= 5 ? player.level : 'n/a' ;
+					td.textContent = player.level >= 1 ? player.level : 'n/a' ;
 					row.appendChild(td);
 					
 					td = document.createElement('td');
@@ -508,7 +508,7 @@ var gca_arena = {
 				
 				td = document.createElement('td');
 				td.style.textAlign = 'center';
-				td.textContent = player.level >= 5 ? player.level : 'n/a' ;
+				td.textContent = player.level >= 1 ? player.level : 'n/a' ;
 				row.appendChild(td);
 				
 				td = document.createElement('td');
