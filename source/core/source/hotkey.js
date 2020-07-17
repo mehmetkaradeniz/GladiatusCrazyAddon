@@ -49,8 +49,7 @@ var gca_hotkey = {
         let pageParams = gca_getPage.parameters();
 
         if (pageParams.mod == "overview") {
-            // this.highlightInventoryItems();
-            this.eatBestFood();
+            // this.eatBestFood();
         }
         else if (pageParams.mod == "location") {
             this.attackExpedition(4);
