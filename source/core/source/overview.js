@@ -81,6 +81,8 @@ var gca_overview = {
 
 		// Setting Link
 		gca_tools.create.settingsLink("overview");
+
+        this.foodStuff.worstFood();
 	},
 
 	// Resolve Page
@@ -961,6 +963,7 @@ var gca_overview = {
 					if(vitality > 0){
 						// Save vitality
 						items[i].dataset.vitality = vitality;
+						items[i].dataset.isFood = true;
 
 						// Attach events
 						if(!items[i].dataset.vitalityPatch){
@@ -1056,6 +1059,34 @@ var gca_overview = {
 				that.findBestFood();
 			});
 		},
+
+		worstFood : function(){
+			this.initLifeData();
+			var that = this;
+
+			gca_tools.event.bag.onBagOpen(function(tab){
+				that.findWorstFood();
+			});
+
+			gca_tools.event.bag.waitBag(function(){
+				that.findWorstFood();
+			});
+
+			this.keepLifeDataUpdated(function(){
+				that.findWorstFood();
+			});
+		},
+
+        findWorstFood: function () {
+            let worstFood = jQuery("#inv > div[data-is-food=true]").sort(function (a, b) {
+                let aVit = jQuery(a).data().vitality;
+                let bVit = jQuery(b).data().vitality;
+
+                return aVit > bVit ? 1 : -1;
+            }).first();
+
+            jQuery(worstFood).css('border', "green solid 3px");
+        },
 
 		// Find best food
 		bestFoodElement : null,
