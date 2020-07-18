@@ -138,7 +138,7 @@ var gca_arena = {
 			// Add text
 			let description = document.createElement('p');
 			description.textContent = gca_locale.get("arena", "global_arena_description")+" ";
-			description.style="text-align: justify;";
+			description.style = "text-align: justify;";
 			box.appendChild(description);
 
 			// Add link to highscore
@@ -189,6 +189,7 @@ var gca_arena = {
 			
 			let table = document.createElement("table");
 			table.width = "100%";
+			table.style.border = "0px";
 			table.style.marginBottom = '15px';
 			box.appendChild(table);
 			this.table = table;
@@ -301,6 +302,7 @@ var gca_arena = {
 			// Empty rankings_table
 			this.rankings_table.textContent = '';
 			// Empty table
+			this.table.style.border = '';
 			this.table.textContent = '';
 			// Disable load list
 			this.load_btn.disabled = true;
@@ -318,7 +320,7 @@ var gca_arena = {
 				rankings_th.textContent = this.info.locale_best.replace("5",json.level_list.length) + " (" + this.info.locale_level + " " + (Math.floor(this.level/5)*5+5) +"-"+ (Math.floor(this.level/5)*5) +")";
 				rankings_th.width = "100%";
 				rankings_th.style.textAlign = 'center';
-				rankings_th.setAttribute('colspan','7');
+				rankings_th.setAttribute('colspan','6');
 				rankings_header.appendChild(rankings_th);
 				
 				rankings_header = document.createElement("tr");
@@ -326,7 +328,7 @@ var gca_arena = {
 				
 				rankings_th = document.createElement("th");
 				rankings_th.textContent = this.info.locale_position;
-				rankings_th.width = "10%";
+				rankings_th.width = "15%";
 				rankings_th.style.textAlign = 'center';
 				rankings_header.appendChild(rankings_th);
 				
@@ -338,7 +340,7 @@ var gca_arena = {
 				rankings_th = document.createElement("th");
 				rankings_th.textContent = this.info.locale_guild;
 				rankings_th.style.fontSize = 'font-size: 0.8em;';
-				rankings_th.width = "20%";
+				rankings_th.width = "25%";
 				rankings_header.appendChild(rankings_th);
 				
 				rankings_th = document.createElement("th");
@@ -358,12 +360,6 @@ var gca_arena = {
 				rankings_th.style.textAlign = 'center';
 				rankings_header.appendChild(rankings_th);
 				
-				rankings_th = document.createElement("th");
-				rankings_th.width = "10%";
-				rankings_th.textContent = " ";
-				rankings_th.style.textAlign = 'center';
-				rankings_header.appendChild(rankings_th);
-				
 				// For each player on the list
 				json.level_list.forEach((player) => {
 					let isGuildMate = (player.server == gca_section.server && player.country == gca_section.country && this.info.guild_name == player.guild) ? true : false;
@@ -371,7 +367,7 @@ var gca_arena = {
 					this.rankings_table.appendChild(row);
 
 					let th = document.createElement('th');
-					th.textContent = player.position;
+					th.textContent = player.position + " ("+ player.real_position +")";
 					th.style.textAlign = 'center';
 					th.style.padding = '5px 0px';
 					row.appendChild(th);
@@ -418,17 +414,13 @@ var gca_arena = {
 					td.textContent = player.server;
 					td.style.textAlign = 'center';
 					row.appendChild(td);
-					
-					td = document.createElement('td');
-					td.textContent = " ";
-					td.style.textAlign = 'center';
-					row.appendChild(td);
 				});
 			}
 			
 			// Create table header
 			let header = document.createElement("tr");
 			this.table.appendChild(header);
+			this.table.style.display = "block";
 			
 			let th = document.createElement("th");
 			th.textContent = this.info.locale_position;
@@ -560,6 +552,11 @@ var gca_arena = {
 			
 			th = document.createElement("th");
 			th.textContent = this.info.guild_name;
+			tr.appendChild(th);
+			
+			th = document.createElement("th");
+			th.style.textAlign = 'center';
+			th.textContent = document.getElementById('header_values_level').textContent;
 			tr.appendChild(th);
 			
 			th = document.createElement("th");
