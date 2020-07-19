@@ -5263,28 +5263,43 @@ var gca_global = {
 
     hotkey: {
         preLoad: function () {
-            let crafting = [
 
-                // General
+            let shared = [
                 {
-                    keyword: "Lucius",
+                    keyword: "Lucius", // block, crit, atk, armor
                     priority: "H"
                 },
                 {
-                    keyword: "Antonius",
+                    keyword: "Antonius", // atk
                     priority: "H"
                 },
                 {
-                    keyword: "Ichorus",
+                    keyword: "Ichorus", // atk
                     priority: "H"
                 },
                 {
-                    keyword: "of the dragon",
+                    keyword: "Gaius", // atk
                     priority: "H"
                 },
+                {
+                    keyword: "Marcus", // crit heal, heal
+                    priority: "H"
+                },
+                {
+                    keyword: "Solitude", // int , heal
+                    priority: "H"
+                }
+               
+            ];
+
+            let crafting = [
                 {
                     keyword: "Decimus",
-                    priority: "H"
+                    priority: "M"
+                },
+                {
+                    keyword: "Táliths",
+                    priority: "M"
                 },
 
 
@@ -5292,34 +5307,18 @@ var gca_global = {
                 // source: https://en.gladiatus-tools.com/resources?id=38
                 {
                     keyword: "Sentarions",
-                    priority: "H"
+                    priority: "M"
                 },
                 {
                     keyword: "Tantus",
-                    priority: "H"
+                    priority: "M"
                 },
                 {
                     keyword: "Fernabasts",
-                    priority: "H"
+                    priority: "M"
                 },
                 {
                     keyword: "Korks",
-                    priority: "H"
-                },
-                {
-                    keyword: "Leandronimus",
-                    priority: "M"
-                },
-                {
-                    keyword: "Barbekuus",
-                    priority: "M"
-                },
-                {
-                    keyword: "Anchorons",
-                    priority: "M"
-                },
-                {
-                    keyword: "Trafans",
                     priority: "M"
                 },
 
@@ -5327,45 +5326,14 @@ var gca_global = {
                 // source: https://en.gladiatus-tools.com/resources?id=42
                 {
                     keyword: "Zimbris",
-                    priority: "H"
+                    priority: "M"
                 },
                 {
                     keyword: "Thorstens",
-                    priority: "H"
+                    priority: "M"
                 },
                 {
                     keyword: "Cheggovs",
-                    priority: "H"
-                },
-                {
-                    keyword: "Sphingens",
-                    priority: "M"
-                },
-
-
-                // Item have to do with both "Tincture of Stamina" and "Potion of Perception"
-                {
-                    keyword: "Decimus",
-                    priority: "M"
-                },
-                {
-                    keyword: "Stoybaers",
-                    priority: "M"
-                },
-                {
-                    keyword: "Appius",
-                    priority: "M"
-                },
-                {
-                    keyword: "Opiehnzas",
-                    priority: "M"
-                },
-                  {
-                    keyword: "Gaius",
-                    priority: "H"
-                },
-                {
-                    keyword: "Marcus",
                     priority: "M"
                 }
 
@@ -5373,51 +5341,13 @@ var gca_global = {
 
             let buying = [
 
-                // General
-                {
-                    keyword: "Lucius",
-                    priority: "H"
-                },
-                {
-                    keyword: "Antonius",
-                    priority: "H"
-                },
-                {
-                    keyword: "Ichorus",
-                    priority: "H"
-                },
-                {
-                    keyword: "Gaius",
-                    priority: "H"
-                },
-                {
-                    keyword: "Decimus",
-                    priority: "H"
-                },
-
-                // {
-                //     keyword: "Solitude",
-                //     priority: "H"
-                // },
-                {
-                    keyword: "of dragon",
-                    priority: "H"
-                },
-                {
-                    keyword: "Opiehnzas",
-                    priority: "M"
-                },
-                {
-                    keyword: "Marcus",
-                    priority: "M"
-                }
             ];
 
             let model = {
-                inv : crafting,
-                packages : crafting,
-                auction : buying,
-                shop : buying
+                inv: shared.concat(crafting),
+                packages: shared.concat(crafting),
+                auction: shared.concat(buying),
+                shop: shared.concat(buying)
             };
 
             gca_data.section.set("hotkey", "keywordHighlightModelWrapper", model);
