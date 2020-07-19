@@ -73,16 +73,13 @@ var gca_overview = {
 		(!isUnderworld && this.doll == 1 && gca_options.bool("overview", "double_click_consume") && 
 			this.doubleClickToConsume.init());
 
-        // Switch to food bag
-        // let pageParams = gca_getPage.parameters();
-        // if (pageParams.doll == "1"){
-        //     this.switchToFoodBag();
-        // }
-
 		// Setting Link
 		gca_tools.create.settingsLink("overview");
 
         this.foodStuff.worstFood();
+
+        if(this.doll == 1)
+            this.durability.highlightLowDurabilityOrConditionItems();
 	},
 
 	// Resolve Page
@@ -1802,8 +1799,26 @@ var gca_overview = {
 		}
 	},
 
-    switchToFoodBag : function(){
-        jQuery("#inventory_nav .awesome-tabs")[2].click();
+    durability:{
+        highlightLowDurabilityOrConditionItems: function(){
+            let wearedItems = jQuery("#char .ui-draggable")
+            .not("[data-container-number=12],[data-container-number=13],[data-container-number=14],[data-container-number=15]");
+
+            for (let i = 0; i < wearedItems.length; i++) {
+                let item = wearedItems[i];
+                let conditionPercentage = this.getConditionPercentage(item);
+                if(conditionPercentage < 25)
+                    jQuery(item).css("border", "red solid 3px");
+            }
+        },
+
+        getConditionPercentage: function (item) {
+            let tooltip = jQuery(item).data().tooltip
+            let tooltipText = JSON.stringify(tooltip);
+            let conditionPercentage = tooltipText.match(/Conditioning.*?\(\d+\%\)/)[0].match(/\d+%/)[0].replace('%', '');
+
+            return parseInt(conditionPercentage);
+        }
     }
 };
 
