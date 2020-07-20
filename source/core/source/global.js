@@ -5286,10 +5286,6 @@ var gca_global = {
                     priority: "H"
                 },
                 {
-                    keyword: "Solitude", // int , heal
-                    priority: "H"
-                },
-                {
                     keyword: "Clever", // int , heal
                     priority: "H"
                 },
