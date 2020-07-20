@@ -5345,6 +5345,19 @@ var gca_global = {
             ];
 
             let buying = [
+                {
+                    keyword: "Samnit",
+                    priority: "M"
+                },
+                {
+                    keyword: "Grandmaster",
+                    priority: "M"
+                },
+                {
+                    keyword: "Elite Spear Carrier",
+                    priority: "M"
+                },
+
 
             ];
 
