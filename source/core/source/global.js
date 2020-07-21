@@ -5289,6 +5289,11 @@ var gca_global = {
                     keyword: "Clever", // int , heal
                     priority: "H"
                 },
+                {
+                    keyword: "Vergilius", // heal, crit heal
+                    priority: "H"
+                },
+
 
                
             ];
