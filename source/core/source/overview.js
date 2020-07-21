@@ -79,7 +79,7 @@ var gca_overview = {
         this.foodStuff.worstFood();
 
         if(this.doll == 1)
-            this.durability.highlightLowDurabilityOrConditionItems();
+            this.durability.highlightLowItems();
 	},
 
 	// Resolve Page
@@ -1800,14 +1800,14 @@ var gca_overview = {
 	},
 
     durability:{
-        highlightLowDurabilityOrConditionItems: function(){
+        highlightLowItems: function(){
             let wearedItems = jQuery("#char .ui-draggable")
             .not("[data-container-number=12],[data-container-number=13],[data-container-number=14],[data-container-number=15]");
 
             for (let i = 0; i < wearedItems.length; i++) {
                 let item = wearedItems[i];
                 let conditionPercentage = this.getConditionPercentage(item);
-                if(conditionPercentage < 25)
+                if(conditionPercentage < 30)
                     jQuery(item).css("border", "red solid 3px");
             }
         },
