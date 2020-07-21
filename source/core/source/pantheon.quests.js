@@ -24,6 +24,8 @@ var gca_pantheon_quests = {
 
 		// Setting Link
 		gca_tools.create.settingsLink("pantheon");
+
+        this.highlightExpeditionBossQuests();
 	},
 
 	// Quests Categories
@@ -157,7 +159,17 @@ var gca_pantheon_quests = {
 		gca_data.section.set("timers", 'quests_free_slots', max_quests - taken_quests);
 		// Fire quest info updated
 		gca_tools.event.fireOnce("quest-info-update");
-	}
+	},
+
+
+    highlightExpeditionBossQuests: function(){
+        let questTitles = jQuery(".quest_slot_title");
+        for (let i = 0; i < questTitles.length; i++) {
+            if (jQuery(questTitles[i]).text().match(/boss in this territory/i))
+                jQuery(questTitles[i]).parent().css("border", "red solid 3px");
+
+        }
+    }
 };
 
 // Onload Handler
