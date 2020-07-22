@@ -67,6 +67,10 @@ var gca_hotkey = {
             if(this.hasPlayerTarget()){
                 index = this.getFirstPlayerTargetIndex();
             }
+            else{
+                index = this.getHighestProvinceIndex();
+            }
+            
             this.attackServerArenaPlayer(index);
         }
         else if (pageParams.mod == "forge" && pageParams.submod == "storage") {
@@ -342,6 +346,23 @@ var gca_hotkey = {
 
     getFirstPlayerTargetIndex: function(){
         return jQuery("#own2 a").index(jQuery("#own2 a.gca-player-target").first());
+    },
+
+    getHighestProvinceIndex: function(){
+        let playerRows = jQuery("#own2 tbody tr").slice(1);
+        let maxProv = 0;
+        let maxProvIndex = 0;
+
+        for (let i = 0; i < playerRows.length; i++) {
+            const row = playerRows[i];
+            let currentProv = parseInt(jQuery(row).find("td:nth-child(2)").text().trim());
+            if(currentProv > maxProv){
+                maxProv = currentProv;
+                maxProvIndex = i;
+            }
+        }
+        
+        return maxProvIndex;
     },
 
     attackServerArenaPlayer: function (index) {
