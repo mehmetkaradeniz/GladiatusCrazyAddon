@@ -162,11 +162,21 @@ var gca_pantheon_quests = {
 	},
 
 
-    highlightExpeditionBossQuests: function(){
+    highlightExpeditionBossQuests: function () {
         let questTitles = jQuery(".quest_slot_title");
         for (let i = 0; i < questTitles.length; i++) {
-            if (jQuery(questTitles[i]).text().match(/boss in this territory/i))
-                jQuery(questTitles[i]).parent().css("border", "red solid 3px");
+            let isExpeditionBossQuest = jQuery(questTitles[i]).text().match(/boss in this territory/i);
+            if (isExpeditionBossQuest) {
+                let borderCss = "";
+                let hasItemReward = jQuery(questTitles[i]).parent().find(".quest_slot_reward.quest_slot_reward_item img").length > 0;
+                if (hasItemReward)
+                    borderCss = "red solid 3px";
+                else
+                    borderCss = "orange solid 3px";
+
+                jQuery(questTitles[i]).parent().css("border", borderCss);
+
+            }
 
         }
     }
