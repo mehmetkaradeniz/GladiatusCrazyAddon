@@ -5307,6 +5307,11 @@ var gca_global = {
                     keyword: "Táliths",
                     priority: "M"
                 },
+                {
+                    keyword: "Jennifers",
+                    priority: "M"
+                },
+
 
 
                 // Items have to do with "Tincture of Stamina"
