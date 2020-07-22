@@ -355,7 +355,7 @@ var gca_hotkey = {
 
         for (let i = 0; i < playerRows.length; i++) {
             const row = playerRows[i];
-            let currentProv = parseInt(jQuery(row).find("td:nth-child(2)").text().trim());
+            let currentProv = parseInt(jQuery(row).find("td:nth-child(3)").text().trim());
             if(currentProv > maxProv){
                 maxProv = currentProv;
                 maxProvIndex = i;
