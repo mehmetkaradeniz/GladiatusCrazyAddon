@@ -5293,6 +5293,15 @@ var gca_global = {
                     keyword: "Vergilius", // heal, crit heal
                     priority: "H"
                 },
+                {
+                    keyword: "Mandalus", // heal, crit heal lv: 95
+                    priority: "M"
+                },
+                {
+                    keyword: "Medonis", // heal, crit heal
+                    priority: "M"
+                },
+
 
 
                
