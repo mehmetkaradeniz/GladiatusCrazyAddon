@@ -6,9 +6,8 @@ var gca_hotkey = {
 
         onkeydown = onkeyup = function (e) {
             
-            if(jQuery("#gca_shortcuts_bar .instant_message_div").is(":visible")){
+            if(["INPUT","SELECT","TEXTAREA"].contains(document.activeElement.tagName))
                 return;
-            }
 
             e = e || event; // to deal with IE
             map[e.keyCode] = e.type == 'keydown';
