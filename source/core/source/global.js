@@ -5297,10 +5297,6 @@ var gca_global = {
                     keyword: "Mandalus", // heal, crit heal lv: 95
                     priority: "M"
                 },
-                {
-                    keyword: "Medonis", // heal, crit heal
-                    priority: "M"
-                },
 
 
 
