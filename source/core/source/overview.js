@@ -78,7 +78,7 @@ var gca_overview = {
 
         this.foodStuff.worstFood();
 
-        if(this.doll == 1)
+        if([1,2].contains(this.doll))
             this.durability.highlightLowItems();
 	},
 
