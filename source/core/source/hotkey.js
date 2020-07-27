@@ -164,6 +164,10 @@ var gca_hotkey = {
             e.preventDefault();
             this.navigateToPantheon();
         }
+        else if (map[84]) { // t
+            e.preventDefault();
+            this.navigateToTraining();
+        }
 
     },
 
@@ -285,6 +289,10 @@ var gca_hotkey = {
     
     navigateToPantheon: function () {
         window.location = gca_getPage.link({ "mod": "quests" });
+    },
+    
+    navigateToTraining: function () {
+        window.location = gca_getPage.link({ "mod": "training" });
     },
 
     eatBestFood: function () {
