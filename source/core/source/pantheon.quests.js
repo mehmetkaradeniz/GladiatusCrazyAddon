@@ -175,6 +175,7 @@ var gca_pantheon_quests = {
                     borderCss = "orange solid 3px";
 
                 jQuery(questTitles[i]).parent().css("border", borderCss);
+                jQuery(questTitles[i]).parent().addClass("important-quest");
 
             }
 

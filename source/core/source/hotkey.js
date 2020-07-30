@@ -111,6 +111,9 @@ var gca_hotkey = {
         else if (pageParams.mod == "forge") {
             this.highlightInventoryItems();
         }
+        else if (pageParams.mod == "quests") {
+            this.newQuests();
+        }
     },
 
 
@@ -490,19 +493,28 @@ var gca_hotkey = {
     },
 
     handleQuest: function () {
-        let acceptSelector = ".quest_slot_button.quest_slot_button_finish";
-        let restartSelector = ".quest_slot_button.quest_slot_button_restart";
+        const acceptSelector = ".quest_slot_button.quest_slot_button_accept";
+        const finishSelector = ".quest_slot_button.quest_slot_button_finish";
+        const restartSelector = ".quest_slot_button.quest_slot_button_restart";
+        const importantQuestAcceptSelector = ".important-quest " + acceptSelector;
 
-        if(this.exists(acceptSelector)){
-            window.location = jQuery(acceptSelector).first().attr("href");
+        if(this.exists(finishSelector)){
+            window.location = jQuery(finishSelector).first().attr("href");
         }
         else if(this.exists(restartSelector)){
             window.location = jQuery(restartSelector).first().attr("href");
+        }
+        else if(this.exists(importantQuestAcceptSelector)){
+            window.location = jQuery(importantQuestAcceptSelector).first().attr("href");
         }
     },
     
     restartQuest: function () {
         window.location = jQuery(".quest_slot_button.quest_slot_button_restart").first().attr("href");
+    },
+
+    newQuests: function(){
+        jQuery("#quest_footer_reroll input[type='button']").first().click();
     },
 
     filterPackages: function () {
