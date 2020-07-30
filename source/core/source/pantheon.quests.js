@@ -26,6 +26,7 @@ var gca_pantheon_quests = {
 		gca_tools.create.settingsLink("pantheon");
 
         this.highlightExpeditionBossQuests();
+        this.showItemRewardNames();
 	},
 
 	// Quests Categories
@@ -181,6 +182,16 @@ var gca_pantheon_quests = {
             }
 
         }
+    },
+
+    showItemRewardNames: function(){
+        jQuery(".quest_slot_reward.quest_slot_reward_item img").each(function(){
+            const name = jQuery(this).data().tooltip[0][0][0];    
+            jQuery(this)
+                .closest(".contentboard_slot")
+                .find(".quest_slot_title")
+                .append("<span style='color:red;'> (" + name + ")</span>");
+        });
     }
 };
 
