@@ -1064,6 +1064,26 @@ var gca_global = {
                 shortcutsBar.appendChild(button);
                 document.getElementById('header_game').appendChild(shortcutsBar);
 
+                // Create a amulet auction
+                button = document.createElement('div');
+                button.className = "icon-out";
+                link = document.createElement('a');
+                link.className = "icon amulet-icon";
+                link.href = gca_getPage.link({ "mod": "auction", "qry": "", "itemLevel": "63", "itemType": "9", "itemQuality": "-1", "ttype": "3" });
+                link.title = "Amulet Auction";
+                button.appendChild(link);
+                shortcutsBar.appendChild(button);
+
+                // Create a ring auction
+                button = document.createElement('div');
+                button.className = "icon-out";
+                link = document.createElement('a');
+                link.className = "icon ring-icon";
+                link.href = gca_getPage.link({ "mod": "auction", "qry": "", "itemLevel": "63", "itemType": "6", "itemQuality": "-1", "ttype": "3" });
+                link.title = "Ring Auction";
+                button.appendChild(link);
+                shortcutsBar.appendChild(button);
+
                 // Create a Link to pacts
                 button = document.createElement('div');
                 button.className = "icon-out";
@@ -1074,6 +1094,7 @@ var gca_global = {
                 link.title = "Pacts";
                 button.appendChild(link);
                 shortcutsBar.appendChild(button);
+
             },
 
            
