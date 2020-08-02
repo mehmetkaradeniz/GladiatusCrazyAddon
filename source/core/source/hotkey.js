@@ -1,34 +1,80 @@
 var map = {};
+const SHIFT_KEY_CODE = 16;
+const CTRL_KEY_CODE = 17;
+const ALT_KEY_CODE = 18;
 
 var gca_hotkey = {
 
     inject: function () {
 
-        onkeydown = onkeyup = function (e) {
-            
-            if(["INPUT","SELECT","TEXTAREA"].contains(document.activeElement.tagName))
+        onkeydown = function (e) {
+
+            if (gca_hotkey.isSkip(e))
                 return;
 
             e = e || event; // to deal with IE
-            map[e.keyCode] = e.type == 'keydown';
-            let pageParams = gca_getPage.parameters();
+            map[e.keyCode] = true;
 
-            if (map[18]) { // Alt
-                gca_hotkey.executeAltCombo(e);
+            const isComboKeyActive = gca_hotkey.isComboKeyActive();
+            const isNonComboKeyActive = gca_hotkey.isNonComboKeyActive();
+            if (isComboKeyActive && isNonComboKeyActive) { // e.g. Alt + 1
+                if (map[SHIFT_KEY_CODE]) {
+                    gca_hotkey.executeShiftCombo(e);
+                }
+                else if (map[CTRL_KEY_CODE]) {
+
+                }
+                else if (map[ALT_KEY_CODE]) {
+                    gca_hotkey.executeAltCombo(e);
+                }
+
+                gca_hotkey.unSetAllKeys();
             }
-            else if (map[16]) { // Shift
-                gca_hotkey.executeShiftCombo(e);
-            }
-            else { // Non combo stuff
+            else if (!isComboKeyActive && isNonComboKeyActive) { // e.g. Q
                 gca_hotkey.executeNonCombo(e);
+                map[e.keyCode] = false;
+            }
+        };
 
+    },
+
+    isSkip: function (e) {
+        let skip = false;
+
+        if (["INPUT", "SELECT", "TEXTAREA"].contains(document.activeElement.tagName))
+            skip = true;
+
+        return skip;
+    },
+
+    isComboKeyActive: function () {
+        return map[SHIFT_KEY_CODE] || map[CTRL_KEY_CODE] || map[ALT_KEY_CODE];
+    },
+
+    isNonComboKeyActive: function () {
+        for (var key in map) {
+            if (map.hasOwnProperty(key) && !this.isComboKey(parseInt(key)) && map[key]) {
+                return true;
+            }
+        }
+
+        return false;
+    },
+
+    isComboKey: function (keyCode) {
+        return [SHIFT_KEY_CODE, CTRL_KEY_CODE, ALT_KEY_CODE].contains(keyCode);
+    },
+
+    unSetAllKeys: function () {
+        for (var key in map) {
+            if (map.hasOwnProperty(key)) {
+                map[key] = false;
             }
         }
     },
 
 
-
-    // KEY HANDLING
+    // EXECUTES
     //--------------------------------------------------
 
     executeAltCombo: function (e) {
@@ -50,8 +96,21 @@ var gca_hotkey = {
         if (pageParams.mod == "overview") {
             // this.eatBestFood();
         }
-        else if (pageParams.mod == "location") {
-            this.attackExpedition(4);
+        else if (pageParams.mod == "location") { // expedition
+            if (this.isCountdownActive()) {
+                const hourglassCount = this.getHourglassCount();
+                if (hourglassCount > 0) {
+                    const isConfirmed = window.confirm("Use hourglass? Have: " + hourglassCount);
+                    if (isConfirmed)
+                        this.attackExpedition(4);
+                }
+                else {
+                    gca_notifications.warning("Wait for countdown");
+                }
+            }
+            else {
+                this.attackExpedition(4);
+            }
         }
         else if (pageParams.mod == "dungeon") {
             if (this.shouldEnterDungeon()) {
@@ -63,13 +122,13 @@ var gca_hotkey = {
         }
         else if (pageParams.mod == "arena" && pageParams.submod == "serverArena") {
             let index = 0;
-            if(this.hasPlayerTarget()){
+            if (this.hasPlayerTarget()) {
                 index = this.getFirstPlayerTargetIndex();
             }
-            else{
+            else {
                 index = this.getHighestProvinceIndex();
             }
-            
+
             this.attackServerArenaPlayer(index);
         }
         else if (pageParams.mod == "forge" && pageParams.submod == "storage") {
@@ -112,7 +171,7 @@ var gca_hotkey = {
             this.highlightInventoryItems();
         }
         else if (pageParams.mod == "quests") {
-            this.newQuests();
+            // this.newQuests();
         }
     },
 
@@ -275,7 +334,7 @@ var gca_hotkey = {
     },
 
     navigateToOverview: function () {
-        window.location = gca_getPage.link({ "mod": "overview"});
+        window.location = gca_getPage.link({ "mod": "overview" });
     },
 
     navigateToProvinciarumArena: function () {
@@ -285,15 +344,15 @@ var gca_hotkey = {
     navigateToGeneralMerchant: function () {
         window.location = gca_getPage.link({ "mod": "inventory", "sub": "3", "subsub": "2" });
     },
-    
+
     navigateToAuctionAmulet: function () {
         window.location = gca_getPage.link({ "mod": "auction", "qry": "", "itemLevel": "63", "itemType": "9", "itemQuality": "-1", "ttype": "3" });
     },
-    
+
     navigateToPantheon: function () {
         window.location = gca_getPage.link({ "mod": "quests" });
     },
-    
+
     navigateToTraining: function () {
         window.location = gca_getPage.link({ "mod": "training" });
     },
@@ -308,12 +367,12 @@ var gca_hotkey = {
             return;
         }
 
-        if (this.isCountdownActive()) {
-            gca_notifications.warning("Wait for countdown");
-            return;
-        }
-
         jQuery("#expedition_list .expedition_box:nth-child(" + monsterNo + ") .expedition_button")[0].click();
+    },
+
+    getHourglassCount: function () {
+        const c = jQuery(".expedition_cooldown_reduce img").first().data().tooltip[0][1][0].split(" ")[1].trim();
+        return parseInt(c);
     },
 
     attackDungeon: function () {
@@ -350,15 +409,15 @@ var gca_hotkey = {
         jQuery("#content img[src*='combatloc.gif']").last().click()
     },
 
-    hasPlayerTarget: function(){
+    hasPlayerTarget: function () {
         return this.exists("#own2 a.gca-player-target");
     },
 
-    getFirstPlayerTargetIndex: function(){
+    getFirstPlayerTargetIndex: function () {
         return jQuery("#own2 a").index(jQuery("#own2 a.gca-player-target").first());
     },
 
-    getHighestProvinceIndex: function(){
+    getHighestProvinceIndex: function () {
         let playerRows = jQuery("#own2 tbody tr").slice(1);
         let maxProv = 0;
         let maxProvIndex = 0;
@@ -366,12 +425,12 @@ var gca_hotkey = {
         for (let i = 0; i < playerRows.length; i++) {
             const row = playerRows[i];
             let currentProv = parseInt(jQuery(row).find("td:nth-child(3)").text().trim());
-            if(currentProv > maxProv){
+            if (currentProv > maxProv) {
                 maxProv = currentProv;
                 maxProvIndex = i;
             }
         }
-        
+
         return maxProvIndex;
     },
 
@@ -498,22 +557,22 @@ var gca_hotkey = {
         const restartSelector = ".quest_slot_button.quest_slot_button_restart";
         const importantQuestAcceptSelector = ".important-quest " + acceptSelector;
 
-        if(this.exists(finishSelector)){
+        if (this.exists(finishSelector)) {
             window.location = jQuery(finishSelector).first().attr("href");
         }
-        else if(this.exists(restartSelector)){
+        else if (this.exists(restartSelector)) {
             window.location = jQuery(restartSelector).first().attr("href");
         }
-        else if(this.exists(importantQuestAcceptSelector)){
+        else if (this.exists(importantQuestAcceptSelector)) {
             window.location = jQuery(importantQuestAcceptSelector).first().attr("href");
         }
     },
-    
+
     restartQuest: function () {
         window.location = jQuery(".quest_slot_button.quest_slot_button_restart").first().attr("href");
     },
 
-    newQuests: function(){
+    newQuests: function () {
         jQuery("#quest_footer_reroll input[type='button']").first().click();
     },
 
