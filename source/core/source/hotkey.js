@@ -77,16 +77,75 @@ var gca_hotkey = {
     // EXECUTES
     //--------------------------------------------------
 
+    executeShiftCombo: function (e) {
+        if (map[9]) { // Tab
+            if (this.hasInventory()) {
+                e.preventDefault();
+                this.navigateToPreviousInventoryTab();
+            }
+        }
+    },
+
     executeAltCombo: function (e) {
         e.preventDefault();
+
+        if (map[49]) { // 1
+            this.navigateToExpedition();
+        }
+        else if (map[50]) { // 2
+            this.navigateToDungeon();
+        }
+        else if (map[51]) { // 3
+            this.navigateToCircusProvinciarum();
+        }
+        else if (map[52]) { // 4
+            this.navigateToHorreum();
+        }
+        else if (map[53]) { // 5
+            this.navigateToSmelter();
+        }
+        else if (map[54]) { // 6
+            this.navigateToWorkbench();
+        }
+        else if (map[83]) { // s
+            this.navigateToMessages();
+        }
+        else if (map[68]) { // d
+            this.navigateToPackages();
+        }
+        else if (map[67]) { // c
+            // this.navigateToDoll(1);
+            this.navigateToOverview();
+        }
+        else if (map[65]) { // a
+            this.navigateToProvinciarumArena();
+        }
+        else if (map[71]) { // g
+            this.navigateToGeneralMerchant();
+        }
+        else if (map[90]) { // z
+            this.navigateToAuctionAmulet();
+        }
+        else if (map[88]) { // x
+            this.navigateToPantheon();
+        }
+        else if (map[84]) { // t
+            this.navigateToTraining();
+        }
+    },
+
+    executeNonCombo: function (e) {
         if (map[81]) { // q
-            // this.executePrimaryAction(e);
+            this.executePrimaryAction(e);
         }
         else if (map[69]) { // e
-            // this.executeSecondaryAction(e);
+            this.executeSecondaryAction(e);
         }
-        else {
-            this.executeOtherAction(e);
+        else if (map[9]) { // Tab
+            if (this.hasInventory()) {
+                e.preventDefault();
+                this.navigateToNextInventoryTab();
+            }
         }
     },
 
@@ -174,89 +233,6 @@ var gca_hotkey = {
             // this.newQuests();
         }
     },
-
-
-    executeOtherAction: function (e) {
-        let pageParams = gca_getPage.parameters();
-
-        if (map[49]) { // 1
-            this.navigateToExpedition();
-        }
-        else if (map[50]) { // 2
-            this.navigateToDungeon();
-        }
-        else if (map[51]) { // 3
-            this.navigateToCircusProvinciarum();
-        }
-        else if (map[52]) { // 4
-            this.navigateToHorreum();
-        }
-        else if (map[53]) { // 5
-            this.navigateToSmelter();
-        }
-        else if (map[54]) { // 6
-            this.navigateToWorkbench();
-        }
-        else if (map[83]) { // s
-            e.preventDefault();
-            this.navigateToMessages();
-        }
-        else if (map[68]) { // d
-            e.preventDefault();
-            this.navigateToPackages();
-        }
-        else if (map[67]) { // c
-            e.preventDefault();
-            // this.navigateToDoll(1);
-            this.navigateToOverview();
-        }
-        else if (map[65]) { // a
-            e.preventDefault();
-            this.navigateToProvinciarumArena();
-        }
-        else if (map[71]) { // g
-            e.preventDefault();
-            this.navigateToGeneralMerchant();
-        }
-        else if (map[90]) { // z
-            e.preventDefault();
-            this.navigateToAuctionAmulet();
-        }
-        else if (map[88]) { // x
-            e.preventDefault();
-            this.navigateToPantheon();
-        }
-        else if (map[84]) { // t
-            e.preventDefault();
-            this.navigateToTraining();
-        }
-
-    },
-
-    executeShiftCombo: function (e) {
-        if (map[9]) { // Tab
-            if (this.hasInventory()) {
-                e.preventDefault();
-                this.navigateToPreviousInventoryTab();
-            }
-        }
-    },
-
-    executeNonCombo: function (e) {
-        if (map[81]) { // q
-            this.executePrimaryAction(e);
-        }
-        else if (map[69]) { // e
-            this.executeSecondaryAction(e);
-        }
-        else if (map[9]) { // Tab
-            if (this.hasInventory()) {
-                e.preventDefault();
-                this.navigateToNextInventoryTab();
-            }
-        }
-    },
-
 
 
     // ACTIONS
@@ -389,6 +365,7 @@ var gca_hotkey = {
             this.attackDungeonMinion();
         }
     },
+
     shouldEnterDungeon: function () {
         return this.exists(".button1[value=Normal]");
     },
@@ -584,7 +561,6 @@ var gca_hotkey = {
         return jQuery(selector).length > 0;
     }
 };
-
 
 
 
