@@ -15,9 +15,9 @@ var gca_hotkey = {
             e = e || event; // to deal with IE
             map[e.keyCode] = true;
 
-            const isComboKeyActive = gca_hotkey.isComboKeyActive();
-            const isNonComboKeyActive = gca_hotkey.isNonComboKeyActive();
-            if (isComboKeyActive && isNonComboKeyActive) { // e.g. Alt + 1
+            const isModifierKeyActive = gca_hotkey.isModifierKeyActive();
+            const isNonModifierKeyActive = gca_hotkey.isNonModifierKeyActive();
+            if (isModifierKeyActive && isNonModifierKeyActive) { // e.g. Alt + 1
                 if (map[SHIFT_KEY_CODE]) {
                     gca_hotkey.executeShiftCombo(e);
                 }
@@ -30,7 +30,7 @@ var gca_hotkey = {
 
                 gca_hotkey.unSetAllKeys();
             }
-            else if (!isComboKeyActive && isNonComboKeyActive) { // e.g. Q
+            else if (!isModifierKeyActive && isNonModifierKeyActive) { // e.g. Q
                 gca_hotkey.executeNonCombo(e);
                 map[e.keyCode] = false;
             }
@@ -47,13 +47,13 @@ var gca_hotkey = {
         return skip;
     },
 
-    isComboKeyActive: function () {
+    isModifierKeyActive: function () {
         return map[SHIFT_KEY_CODE] || map[CTRL_KEY_CODE] || map[ALT_KEY_CODE];
     },
 
-    isNonComboKeyActive: function () {
+    isNonModifierKeyActive: function () {
         for (var key in map) {
-            if (map.hasOwnProperty(key) && !this.isComboKey(parseInt(key)) && map[key]) {
+            if (map.hasOwnProperty(key) && !this.isModifierKey(parseInt(key)) && map[key]) {
                 return true;
             }
         }
@@ -61,7 +61,7 @@ var gca_hotkey = {
         return false;
     },
 
-    isComboKey: function (keyCode) {
+    isModifierKey: function (keyCode) {
         return [SHIFT_KEY_CODE, CTRL_KEY_CODE, ALT_KEY_CODE].contains(keyCode);
     },
 
