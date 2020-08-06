@@ -184,6 +184,7 @@ var gca_arena = {
 			rankings_table.width = "100%";
 			rankings_table.style.display = "none";
 			rankings_table.style.marginBottom = '15px';
+			rankings_table.style.wordBreak = 'break-word';
 			box.appendChild(rankings_table);
 			this.rankings_table = rankings_table;
 			
@@ -191,6 +192,7 @@ var gca_arena = {
 			table.width = "100%";
 			table.style.border = "0px";
 			table.style.marginBottom = '15px';
+			table.style.wordBreak = 'break-word';
 			box.appendChild(table);
 			this.table = table;
 			
@@ -317,7 +319,7 @@ var gca_arena = {
 				this.rankings_table.appendChild(rankings_header);
 				
 				let rankings_th = document.createElement("th");
-				rankings_th.textContent = this.info.locale_best.replace("5",json.level_list.length) + " (" + this.info.locale_level + " " + (Math.floor(this.level/5)*5+5) +"-"+ (Math.floor(this.level/5)*5) +")";
+				rankings_th.textContent = this.info.locale_best.replace("5",json.level_list.length) + " (" + this.info.locale_level + " " + (Math.floor(this.level/5)*5) +"-"+ (Math.floor(this.level/5)*5+5) +")";
 				rankings_th.width = "100%";
 				rankings_th.style.textAlign = 'center';
 				rankings_th.setAttribute('colspan','6');
