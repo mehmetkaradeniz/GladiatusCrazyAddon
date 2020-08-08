@@ -166,7 +166,7 @@ var gca_hotkey = {
         else if (pageParams.mod == "auction")
             this.auction.toggleGoodPricedItems();
         else if (pageParams.mod == "quests")
-            this.handleQuest();
+            this.pantheon.quests.handleQuest();
 
     },
 
@@ -192,7 +192,7 @@ var gca_hotkey = {
             this.highlighter.highlightInventoryItems();
         }
         else if (pageParams.mod == "quests") {
-            // this.newQuests();
+            // this.pantheon.quests.newQuests();
         }
     },
 
@@ -547,6 +547,29 @@ var gca_hotkey = {
 
     },
 
+    pantheon: {
+        quests: {
+            acceptSelector: ".quest_slot_button.quest_slot_button_accept",
+            finishSelector: ".quest_slot_button.quest_slot_button_finish",
+            restartSelector: ".quest_slot_button.quest_slot_button_restart",
+            importantQuestAcceptSelector: ".important-quest .quest_slot_button.quest_slot_button_accept",
+
+            handleQuest: function () {
+                if (gca_hotkey.utils.exists(finishSelector))
+                    window.location = jQuery(finishSelector).first().attr("href");
+                else if (gca_hotkey.utils.exists(restartSelector))
+                    window.location = jQuery(restartSelector).first().attr("href");
+                else if (gca_hotkey.utils.exists(importantQuestAcceptSelector))
+                    window.location = jQuery(importantQuestAcceptSelector).first().attr("href");
+            },
+
+            newQuests: function () {
+                jQuery("#quest_footer_reroll input[type='button']").first().click();
+            },
+
+        }
+    },
+
     utils: {
         getActiveMercenaryIndex: function () {
             return jQuery(".charmercsel").index(jQuery(".charmercsel.active"));
@@ -569,47 +592,7 @@ var gca_hotkey = {
         }
     },
 
-
-
-
-
-
-
-
-
-    handleQuest: function () {
-        const acceptSelector = ".quest_slot_button.quest_slot_button_accept";
-        const finishSelector = ".quest_slot_button.quest_slot_button_finish";
-        const restartSelector = ".quest_slot_button.quest_slot_button_restart";
-        const importantQuestAcceptSelector = ".important-quest " + acceptSelector;
-
-        if (gca_hotkey.utils.exists(finishSelector)) {
-            window.location = jQuery(finishSelector).first().attr("href");
-        }
-        else if (gca_hotkey.utils.exists(restartSelector)) {
-            window.location = jQuery(restartSelector).first().attr("href");
-        }
-        else if (gca_hotkey.utils.exists(importantQuestAcceptSelector)) {
-            window.location = jQuery(importantQuestAcceptSelector).first().attr("href");
-        }
-    },
-
-    restartQuest: function () {
-        window.location = jQuery(".quest_slot_button.quest_slot_button_restart").first().attr("href");
-    },
-
-    newQuests: function () {
-        jQuery("#quest_footer_reroll input[type='button']").first().click();
-    },
-
-
-
-
-
 };
-
-
-
 
 
 // Onload Handler
