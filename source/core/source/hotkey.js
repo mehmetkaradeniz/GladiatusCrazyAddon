@@ -409,86 +409,6 @@ var gca_hotkey = {
 
     },
 
-    highlighter: {
-        highlightInventoryItems: function () {
-            this.highlightItems("inv");
-        },
-
-        highlightPackageItems: function () {
-            this.highlightItems("packages");
-        },
-
-        highlightAuctionItems: function () {
-            this.highlightItems("auction");
-        },
-
-        highlightShopItems: function () {
-            this.highlightItems("shop");
-        },
-
-        highlightItems: function (type) {
-            let model = gca_data.section.get("hotkey", "keywordHighlightModelWrapper");
-
-            switch (type) {
-                case "inv":
-                    this.doHighlightItems("#inv", model.inv);
-                    break;
-
-                case "packages":
-                    this.doHighlightItems("#packages", model.packages);
-                    break;
-
-                case "auction":
-                    this.doHighlightItems("#auction_table", model.auction);
-                    break;
-
-                case "shop":
-                    this.doHighlightItems("#shop", model.shop);
-                    break;
-
-                default:
-                    break;
-            }
-        },
-
-        doHighlightItems: function (containerSelector, keywordHighlightModel) {
-            let that = this;
-
-            jQuery(containerSelector + " .ui-draggable").each(function () {
-                let item = this;
-
-                jQuery(this).data().tooltip[0].forEach(prop => {
-
-                    keywordHighlightModel.forEach(khm => {
-                        if (prop[0].toString().toLowerCase().contains(khm.keyword.toString().toLowerCase())) {
-                            that.highlightItem(item, khm.priority);
-                        }
-                    });
-                });
-            });
-        },
-
-        highlightItem: function (item, priority) {
-            let borderCss = "";
-            switch (priority) {
-                case "H":
-                    borderCss = "red solid 3px";
-                    break;
-
-                case "M":
-                    borderCss = "orange solid 3px";
-                    break;
-
-                default:
-                    borderCss = "green solid 3px";
-                    break;
-            }
-
-            jQuery(item).css("border", borderCss);
-        },
-
-    },
-
     forge: {
 
         forge: {
@@ -568,6 +488,86 @@ var gca_hotkey = {
             },
 
         }
+    },
+
+    highlighter: {
+        highlightInventoryItems: function () {
+            this.highlightItems("inv");
+        },
+
+        highlightPackageItems: function () {
+            this.highlightItems("packages");
+        },
+
+        highlightAuctionItems: function () {
+            this.highlightItems("auction");
+        },
+
+        highlightShopItems: function () {
+            this.highlightItems("shop");
+        },
+
+        highlightItems: function (type) {
+            let model = gca_data.section.get("hotkey", "keywordHighlightModelWrapper");
+
+            switch (type) {
+                case "inv":
+                    this.doHighlightItems("#inv", model.inv);
+                    break;
+
+                case "packages":
+                    this.doHighlightItems("#packages", model.packages);
+                    break;
+
+                case "auction":
+                    this.doHighlightItems("#auction_table", model.auction);
+                    break;
+
+                case "shop":
+                    this.doHighlightItems("#shop", model.shop);
+                    break;
+
+                default:
+                    break;
+            }
+        },
+
+        doHighlightItems: function (containerSelector, keywordHighlightModel) {
+            let that = this;
+
+            jQuery(containerSelector + " .ui-draggable").each(function () {
+                let item = this;
+
+                jQuery(this).data().tooltip[0].forEach(prop => {
+
+                    keywordHighlightModel.forEach(khm => {
+                        if (prop[0].toString().toLowerCase().contains(khm.keyword.toString().toLowerCase())) {
+                            that.highlightItem(item, khm.priority);
+                        }
+                    });
+                });
+            });
+        },
+
+        highlightItem: function (item, priority) {
+            let borderCss = "";
+            switch (priority) {
+                case "H":
+                    borderCss = "red solid 3px";
+                    break;
+
+                case "M":
+                    borderCss = "orange solid 3px";
+                    break;
+
+                default:
+                    borderCss = "green solid 3px";
+                    break;
+            }
+
+            jQuery(item).css("border", borderCss);
+        },
+
     },
 
     utils: {
