@@ -521,6 +521,11 @@ var gca_hotkey = {
 
     },
 
+    overview: {
+        eatBestFood: function () {
+            gca_tools.item.move(jQuery(".best-food")[0], 'avatar');
+        }
+    },
 
     utils: {
         getActiveMercenaryIndex: function () {
@@ -544,9 +549,8 @@ var gca_hotkey = {
         }
     },
 
-    eatBestFood: function () {
-        gca_tools.item.move(jQuery(".best-food")[0], 'avatar');
-    },
+
+
 
 
     moveFirstPackageToInventory: function () {
