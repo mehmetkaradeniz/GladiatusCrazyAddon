@@ -475,12 +475,12 @@ var gca_hotkey = {
             importantQuestAcceptSelector: ".important-quest .quest_slot_button.quest_slot_button_accept",
 
             handleQuest: function () {
-                if (gca_hotkey.utils.exists(finishSelector))
-                    window.location = jQuery(finishSelector).first().attr("href");
-                else if (gca_hotkey.utils.exists(restartSelector))
-                    window.location = jQuery(restartSelector).first().attr("href");
-                else if (gca_hotkey.utils.exists(importantQuestAcceptSelector))
-                    window.location = jQuery(importantQuestAcceptSelector).first().attr("href");
+                if (gca_hotkey.utils.exists(this.finishSelector))
+                    window.location = jQuery(this.finishSelector).first().attr("href");
+                else if (gca_hotkey.utils.exists(this.restartSelector))
+                    window.location = jQuery(this.restartSelector).first().attr("href");
+                else if (gca_hotkey.utils.exists(this.importantQuestAcceptSelector))
+                    window.location = jQuery(this.importantQuestAcceptSelector).first().attr("href");
             },
 
             newQuests: function () {
