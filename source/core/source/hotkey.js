@@ -354,7 +354,7 @@ var gca_hotkey = {
         },
 
         attackBoss: function () {
-            jQuery(bossSelector).click();
+            jQuery(this.bossSelector).click();
         }
     },
 
