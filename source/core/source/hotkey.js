@@ -163,7 +163,7 @@ var gca_hotkey = {
                 gca_notifications.warning("Attack not allowed.");
         }
         else if (pageParams.mod == "dungeon") {
-            this.attackDungeon();
+            this.dungeon.attack();
         }
         else if (pageParams.mod == "arena" && pageParams.submod == "serverArena") {
             let index = 0;
@@ -360,10 +360,34 @@ var gca_hotkey = {
 
     },
 
+    dungeon: {
+        minionSelector: "#content img[src*='combatloc.gif']",
+        bossSelector: "#content .map_label:contains('Boss')",
+         
+        attack: function () {
+            if (gca_hotkey.isCountdownActive()) {
+                gca_notifications.warning("Wait for countdown");
+                return;
+            }
+
+            if (gca_hotkey.exists(this.bossSelector))
+                this.attackBoss();
+            else
+                this.attackMinion();
+        },
+
+        attackMinion: function () {
+            jQuery(this.minionSelector).last().click();
+        },
+
+        attackBoss: function () {
+            jQuery(bossSelector).click();
+        }
+    },
 
 
 
-// shared
+    // shared
     hasInventory: function () {
         return this.exists(".inventoryBox");
     },
@@ -375,41 +399,6 @@ var gca_hotkey = {
     },
 
 
-
-    attackDungeon: function () {
-        if (this.isCountdownActive()) {
-            gca_notifications.warning("Wait for countdown");
-            return;
-        }
-
-        if (this.dungeonBossExists()) {
-            this.attackDungeonBoss();
-            // gca_notifications.warning("Boss!");
-        }
-        else {
-            this.attackDungeonMinion();
-        }
-    },
-
-    shouldEnterDungeon: function () {
-        return this.exists(".button1[value=Normal]");
-    },
-
-    enterDungeon: function () {
-        jQuery(".button1[value=Normal]").click();
-    },
-
-    dungeonBossExists: function () {
-        return this.exists("#content .map_label:contains('Boss')");
-    },
-
-    attackDungeonBoss: function () {
-        jQuery("#content .map_label:contains('Boss')").click();
-    },
-
-    attackDungeonMinion: function () {
-        jQuery("#content img[src*='combatloc.gif']").last().click()
-    },
 
 
 
