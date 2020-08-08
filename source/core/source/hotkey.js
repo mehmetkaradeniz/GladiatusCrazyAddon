@@ -81,7 +81,7 @@ var gca_hotkey = {
         if (map[9]) { // Tab
             if (this.hasInventory()) {
                 e.preventDefault();
-                this.navigateToPreviousInventoryTab();
+                this.navigation.toPreviousInventoryTab();
             }
         }
     },
@@ -90,47 +90,48 @@ var gca_hotkey = {
         e.preventDefault();
 
         if (map[49]) { // 1
-            this.navigateToExpedition();
+            // this.navigation.toExpedition();
+            this.navigation.toExpedition();
         }
         else if (map[50]) { // 2
-            this.navigateToDungeon();
+            this.navigation.toDungeon();
         }
         else if (map[51]) { // 3
-            this.navigateToCircusProvinciarum();
+            this.navigation.toCircusProvinciarum();
         }
         else if (map[52]) { // 4
-            this.navigateToHorreum();
+            this.navigation.toHorreum();
         }
         else if (map[53]) { // 5
-            this.navigateToSmelter();
+            this.navigation.toSmelter();
         }
         else if (map[54]) { // 6
-            this.navigateToWorkbench();
+            this.navigation.toWorkbench();
         }
         else if (map[83]) { // s
-            this.navigateToMessages();
+            this.navigation.toMessages();
         }
         else if (map[68]) { // d
-            this.navigateToPackages();
+            this.navigation.toPackages();
         }
         else if (map[67]) { // c
-            // this.navigateToDoll(1);
-            this.navigateToOverview();
+            // this.navigation.toDoll(1);
+            this.navigation.toOverview();
         }
         else if (map[65]) { // a
-            this.navigateToProvinciarumArena();
+            this.navigation.toProvinciarumArena();
         }
         else if (map[71]) { // g
-            this.navigateToGeneralMerchant();
+            this.navigation.toGeneralMerchant();
         }
         else if (map[90]) { // z
-            this.navigateToAuctionAmulet();
+            this.navigation.toAuctionAmulet();
         }
         else if (map[88]) { // x
-            this.navigateToPantheon();
+            this.navigation.toPantheon();
         }
         else if (map[84]) { // t
-            this.navigateToTraining();
+            this.navigation.toTraining();
         }
     },
 
@@ -144,7 +145,7 @@ var gca_hotkey = {
         else if (map[9]) { // Tab
             if (this.hasInventory()) {
                 e.preventDefault();
-                this.navigateToNextInventoryTab();
+                this.navigation.toNextInventoryTab();
             }
         }
     },
@@ -156,18 +157,13 @@ var gca_hotkey = {
             // this.eatBestFood();
         }
         else if (pageParams.mod == "location") { // expedition
-            if(this.isAttackAllowed())
+            if (this.isAttackAllowed())
                 this.attackExpedition(3);
             else
                 gca_notifications.warning("Attack not allowed.");
         }
         else if (pageParams.mod == "dungeon") {
-            if (this.shouldEnterDungeon()) {
-                // this.enterDungeon();
-            }
-            else {
-                this.attackDungeon();
-            }
+            this.attackDungeon();
         }
         else if (pageParams.mod == "arena" && pageParams.submod == "serverArena") {
             let index = 0;
@@ -227,17 +223,98 @@ var gca_hotkey = {
 
     // ACTIONS
     //--------------------------------------------------
-    navigateToNextMercenary: function () {
-        let currentIndex = this.getActiveMercenaryIndex();
-        let nextIndex = (currentIndex + 1) % 6;
-        jQuery(".charmercsel")[nextIndex].click();
+
+    navigation: {
+        toExpedition: function () {
+            window.location = jQuery("#cooldown_bar_expedition .cooldown_bar_link")[0].href;
+        },
+
+        toNextMercenary: function () {
+            let currentIndex = this.getActiveMercenaryIndex();
+            let nextIndex = (currentIndex + 1) % 6;
+            jQuery(".charmercsel")[nextIndex].click();
+        },
+
+        toPreviousMercenary: function () {
+            let currentIndex = this.getActiveMercenaryIndex();
+            let previousIndex = (currentIndex + 5) % 6;
+            jQuery(".charmercsel")[previousIndex].click();
+        },
+
+        toNextInventoryTab: function () {
+            let currentIndex = this.getCurrentInventoryTabIndex();
+            let nextIndex = (currentIndex + 1) % 4;
+            jQuery("#inventory_nav .awesome-tabs")[nextIndex].click();
+        },
+
+        toPreviousInventoryTab: function () {
+            let currentIndex = this.getCurrentInventoryTabIndex();
+            let previousIndex = (currentIndex + 3) % 4;
+            jQuery("#inventory_nav .awesome-tabs")[previousIndex].click();
+        },
+
+        toExpedition: function () {
+            window.location = jQuery("#cooldown_bar_expedition .cooldown_bar_link")[0].href;
+        },
+
+        toDungeon: function () {
+            window.location = jQuery("#cooldown_bar_dungeon .cooldown_bar_link")[0].href;
+        },
+
+        toCircusProvinciarum: function () {
+            window.location = jQuery("#cooldown_bar_ct .cooldown_bar_link")[0].href;
+        },
+
+        toHorreum: function () {
+            window.location = jQuery(".menuitem:contains(Horreum)")[0].href;
+        },
+
+        toSmelter: function () {
+            window.location = jQuery(".menuitem:contains(Smelter)")[0].href;
+        },
+
+        toWorkbench: function () {
+            window.location = jQuery(".menuitem:contains(Workbench)")[0].href;
+        },
+
+        toMessages: function () {
+            window.location = jQuery("#menue_messages").attr("href");
+        },
+
+        toPackages: function () {
+            window.location = jQuery("#menue_packages").attr("href");
+        },
+
+        toDoll: function (dollNo) {
+            window.location = gca_getPage.link({ "mod": "overview", "doll": dollNo });
+        },
+
+        toOverview: function () {
+            window.location = gca_getPage.link({ "mod": "overview" });
+        },
+
+        toProvinciarumArena: function () {
+            window.location = gca_getPage.link({ "mod": "arena", "submod": "serverArena", "Type": "2" });
+        },
+
+        toGeneralMerchant: function () {
+            window.location = gca_getPage.link({ "mod": "inventory", "sub": "3", "subsub": "2" });
+        },
+
+        toAuctionAmulet: function () {
+            window.location = gca_getPage.link({ "mod": "auction", "qry": "", "itemLevel": "63", "itemType": "9", "itemQuality": "-1", "ttype": "3" });
+        },
+
+        toPantheon: function () {
+            window.location = gca_getPage.link({ "mod": "quests" });
+        },
+
+        toTraining: function () {
+            window.location = gca_getPage.link({ "mod": "training" });
+        }
+
     },
 
-    navigateToPreviousMercenary: function () {
-        let currentIndex = this.getActiveMercenaryIndex();
-        let previousIndex = (currentIndex + 5) % 6;
-        jQuery(".charmercsel")[previousIndex].click();
-    },
 
     getActiveMercenaryIndex: function () {
         return jQuery(".charmercsel").index(jQuery(".charmercsel.active"));
@@ -247,80 +324,8 @@ var gca_hotkey = {
         return this.exists(".inventoryBox");
     },
 
-    navigateToNextInventoryTab: function () {
-        let currentIndex = this.getCurrentInventoryTabIndex();
-        let nextIndex = (currentIndex + 1) % 4;
-        jQuery("#inventory_nav .awesome-tabs")[nextIndex].click();
-    },
-
-    navigateToPreviousInventoryTab: function () {
-        let currentIndex = this.getCurrentInventoryTabIndex();
-        let previousIndex = (currentIndex + 3) % 4;
-        jQuery("#inventory_nav .awesome-tabs")[previousIndex].click();
-    },
-
     getCurrentInventoryTabIndex: function () {
         return jQuery("#inventory_nav .awesome-tabs").index(jQuery("#inventory_nav .awesome-tabs.current").first());
-    },
-
-    navigateToExpedition: function () {
-        window.location = jQuery("#cooldown_bar_expedition .cooldown_bar_link")[0].href;
-    },
-
-    navigateToDungeon: function () {
-        window.location = jQuery("#cooldown_bar_dungeon .cooldown_bar_link")[0].href;
-    },
-
-    navigateToCircusProvinciarum: function () {
-        window.location = jQuery("#cooldown_bar_ct .cooldown_bar_link")[0].href;
-    },
-
-    navigateToHorreum: function () {
-        window.location = jQuery(".menuitem:contains(Horreum)")[0].href;
-    },
-
-    navigateToSmelter: function () {
-        window.location = jQuery(".menuitem:contains(Smelter)")[0].href;
-    },
-
-    navigateToWorkbench: function () {
-        window.location = jQuery(".menuitem:contains(Workbench)")[0].href;
-    },
-
-    navigateToMessages: function () {
-        window.location = jQuery("#menue_messages").attr("href");
-    },
-
-    navigateToPackages: function () {
-        window.location = jQuery("#menue_packages").attr("href");
-    },
-
-    navigateToDoll: function (dollNo) {
-        window.location = gca_getPage.link({ "mod": "overview", "doll": dollNo });
-    },
-
-    navigateToOverview: function () {
-        window.location = gca_getPage.link({ "mod": "overview" });
-    },
-
-    navigateToProvinciarumArena: function () {
-        window.location = gca_getPage.link({ "mod": "arena", "submod": "serverArena", "Type": "2" });
-    },
-
-    navigateToGeneralMerchant: function () {
-        window.location = gca_getPage.link({ "mod": "inventory", "sub": "3", "subsub": "2" });
-    },
-
-    navigateToAuctionAmulet: function () {
-        window.location = gca_getPage.link({ "mod": "auction", "qry": "", "itemLevel": "63", "itemType": "9", "itemQuality": "-1", "ttype": "3" });
-    },
-
-    navigateToPantheon: function () {
-        window.location = gca_getPage.link({ "mod": "quests" });
-    },
-
-    navigateToTraining: function () {
-        window.location = gca_getPage.link({ "mod": "training" });
     },
 
     eatBestFood: function () {
@@ -335,7 +340,7 @@ var gca_hotkey = {
             if (hourglassCount > 0)
                 isAllowed = window.confirm("Use hourglass? Have: " + hourglassCount);
         }
-        else 
+        else
             isAllowed = true;
 
         return isAllowed;
@@ -345,9 +350,9 @@ var gca_hotkey = {
         let count = 0;
 
         let hourglassTooltip = jQuery(".expedition_cooldown_reduce img").first().data().tooltip;
-        if(hourglassTooltip)
+        if (hourglassTooltip)
             count = parseInt(hourglassTooltip[0][1][0].split(" ")[1].trim());
-        
+
         return count;
     },
 
