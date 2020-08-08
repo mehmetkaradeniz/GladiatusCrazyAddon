@@ -166,15 +166,7 @@ var gca_hotkey = {
             this.dungeon.attack();
         }
         else if (pageParams.mod == "arena" && pageParams.submod == "serverArena") {
-            let index = 0;
-            if (this.hasPlayerTarget()) {
-                index = this.getFirstPlayerTargetIndex();
-            }
-            else {
-                index = this.getHighestProvinceIndex();
-            }
-
-            this.attackServerArenaPlayer(index);
+            this.arena.attack();
         }
         else if (pageParams.mod == "forge" && pageParams.submod == "storage") {
             this.storeResources();
@@ -363,7 +355,7 @@ var gca_hotkey = {
     dungeon: {
         minionSelector: "#content img[src*='combatloc.gif']",
         bossSelector: "#content .map_label:contains('Boss')",
-         
+
         attack: function () {
             if (gca_hotkey.isCountdownActive()) {
                 gca_notifications.warning("Wait for countdown");
@@ -385,6 +377,56 @@ var gca_hotkey = {
         }
     },
 
+    arena: {
+        playerTargetSelector: "#own2 a.gca-player-target",
+
+        attack: function () {
+            let index = 0;
+
+            if (gca_hotkey.exists(this.playerTargetSelector))
+                index = this.getFirstPlayerTargetIndex();
+            else
+                index = this.getHighestProvinceIndex();
+
+            this.attackPlayer(index);
+        },
+
+        getFirstPlayerTargetIndex: function () {
+            return jQuery("#own2 a").index(jQuery(this.playerTargetSelector).first());
+        },
+
+        getHighestProvinceIndex: function () {
+            let playerRows = jQuery("#own2 tbody tr").slice(1);
+            let maxProv = 0;
+            let maxProvIndex = 0;
+
+            for (let i = 0; i < playerRows.length; i++) {
+                const row = playerRows[i];
+                let currentProv = parseInt(jQuery(row).find("td:nth-child(3)").text().trim());
+                if (currentProv > maxProv) {
+                    maxProv = currentProv;
+                    maxProvIndex = i;
+                }
+            }
+
+            return maxProvIndex;
+        },
+
+        attackPlayer: function (playerIndex) {
+            if (playerIndex < 0 || playerIndex > 4) {
+                gca_notifications.error("Invalid player index");
+                return;
+            }
+
+            if (gca_hotkey.isCountdownActive()) {
+                gca_notifications.warning("Wait for countdown");
+                return;
+            }
+
+            jQuery("#content article table > tbody > tr:nth-child(" + (playerIndex + 2) + ") > td:nth-child(4) > div")[0].click();
+        },
+
+    },
 
 
     // shared
@@ -393,52 +435,8 @@ var gca_hotkey = {
     },
 
 
-
     eatBestFood: function () {
         gca_tools.item.move(jQuery(".best-food")[0], 'avatar');
-    },
-
-
-
-
-
-    hasPlayerTarget: function () {
-        return this.exists("#own2 a.gca-player-target");
-    },
-
-    getFirstPlayerTargetIndex: function () {
-        return jQuery("#own2 a").index(jQuery("#own2 a.gca-player-target").first());
-    },
-
-    getHighestProvinceIndex: function () {
-        let playerRows = jQuery("#own2 tbody tr").slice(1);
-        let maxProv = 0;
-        let maxProvIndex = 0;
-
-        for (let i = 0; i < playerRows.length; i++) {
-            const row = playerRows[i];
-            let currentProv = parseInt(jQuery(row).find("td:nth-child(3)").text().trim());
-            if (currentProv > maxProv) {
-                maxProv = currentProv;
-                maxProvIndex = i;
-            }
-        }
-
-        return maxProvIndex;
-    },
-
-    attackServerArenaPlayer: function (index) {
-        if (index < 0 || index > 4) {
-            gca_notifications.error("Invalid player index");
-            return;
-        }
-
-        if (this.isCountdownActive()) {
-            gca_notifications.warning("Wait for countdown");
-            return;
-        }
-
-        jQuery("#content article table > tbody > tr:nth-child(" + (index + 2) + ") > td:nth-child(4) > div")[0].click();
     },
 
 
