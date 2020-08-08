@@ -156,20 +156,10 @@ var gca_hotkey = {
             // this.eatBestFood();
         }
         else if (pageParams.mod == "location") { // expedition
-            if (this.isCountdownActive()) {
-                const hourglassCount = this.getHourglassCount();
-                if (hourglassCount > 0) {
-                    const isConfirmed = window.confirm("Use hourglass? Have: " + hourglassCount);
-                    if (isConfirmed)
-                        this.attackExpedition(4);
-                }
-                else {
-                    gca_notifications.warning("Wait for countdown");
-                }
-            }
-            else {
-                this.attackExpedition(4);
-            }
+            if(this.isAttackAllowed())
+                this.attackExpedition(3);
+            else
+                gca_notifications.warning("Attack not allowed.");
         }
         else if (pageParams.mod == "dungeon") {
             if (this.shouldEnterDungeon()) {
@@ -337,6 +327,30 @@ var gca_hotkey = {
         gca_tools.item.move(jQuery(".best-food")[0], 'avatar');
     },
 
+    isAttackAllowed: function () {
+        let isAllowed = false;
+
+        if (this.isCountdownActive()) {
+            const hourglassCount = this.getHourglassCount();
+            if (hourglassCount > 0)
+                isAllowed = window.confirm("Use hourglass? Have: " + hourglassCount);
+        }
+        else 
+            isAllowed = true;
+
+        return isAllowed;
+    },
+
+    getHourglassCount: function () {
+        let count = 0;
+
+        let hourglassTooltip = jQuery(".expedition_cooldown_reduce img").first().data().tooltip;
+        if(hourglassTooltip)
+            count = parseInt(hourglassTooltip[0][1][0].split(" ")[1].trim());
+        
+        return count;
+    },
+
     attackExpedition: function (monsterNo) {
         if (monsterNo < 1 || monsterNo > 4) {
             gca_notifications.error("Invalid monster no");
@@ -346,10 +360,6 @@ var gca_hotkey = {
         jQuery("#expedition_list .expedition_box:nth-child(" + monsterNo + ") .expedition_button")[0].click();
     },
 
-    getHourglassCount: function () {
-        const c = jQuery(".expedition_cooldown_reduce img").first().data().tooltip[0][1][0].split(" ")[1].trim();
-        return parseInt(c);
-    },
 
     attackDungeon: function () {
         if (this.isCountdownActive()) {
