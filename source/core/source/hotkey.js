@@ -156,11 +156,8 @@ var gca_hotkey = {
         if (pageParams.mod == "overview") {
             // this.eatBestFood();
         }
-        else if (pageParams.mod == "location") { // expedition
-            if (this.expedition.isAttackAllowed())
-                this.expedition.attackExpedition(3);
-            else
-                gca_notifications.warning("Attack not allowed.");
+        else if (pageParams.mod == "location") {
+            this.expedition.attack();
         }
         else if (pageParams.mod == "dungeon") {
             this.dungeon.attack();
@@ -316,6 +313,13 @@ var gca_hotkey = {
     },
 
     expedition: {
+
+        attack: function () {
+            if (this.isAttackAllowed())
+                this.attackExpedition(3);
+            else
+                gca_notifications.warning("Attack not allowed.");
+        },
 
         isAttackAllowed: function () {
             let isAllowed = false;
