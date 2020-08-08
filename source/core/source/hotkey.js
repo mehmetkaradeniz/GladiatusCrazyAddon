@@ -74,12 +74,10 @@ var gca_hotkey = {
     },
 
 
-    // EXECUTES
-    //--------------------------------------------------
-
+    //#region EXECUTES 
     executeShiftCombo: function (e) {
         if (map[9]) { // Tab
-            if (this.hasInventory()) {
+            if (gca_hotkey.utils.hasInventory()) {
                 e.preventDefault();
                 this.navigation.toPreviousInventoryTab();
             }
@@ -143,7 +141,7 @@ var gca_hotkey = {
             this.executeSecondaryAction(e);
         }
         else if (map[9]) { // Tab
-            if (this.hasInventory()) {
+            if (gca_hotkey.utils.hasInventory()) {
                 e.preventDefault();
                 this.navigation.toNextInventoryTab();
             }
@@ -198,9 +196,7 @@ var gca_hotkey = {
         }
     },
 
-
-    // ACTIONS
-    //--------------------------------------------------
+    //#endregion
 
     navigation: {
         toExpedition: function () {
@@ -208,35 +204,27 @@ var gca_hotkey = {
         },
 
         toNextMercenary: function () {
-            let currentIndex = this.getActiveMercenaryIndex();
+            let currentIndex = gca_hotkey.utils.getActiveMercenaryIndex();
             let nextIndex = (currentIndex + 1) % 6;
             jQuery(".charmercsel")[nextIndex].click();
         },
 
         toPreviousMercenary: function () {
-            let currentIndex = this.getActiveMercenaryIndex();
+            let currentIndex = gca_hotkey.utils.getActiveMercenaryIndex();
             let previousIndex = (currentIndex + 5) % 6;
             jQuery(".charmercsel")[previousIndex].click();
         },
 
-        getActiveMercenaryIndex: function () {
-            return jQuery(".charmercsel").index(jQuery(".charmercsel.active"));
-        },
-
         toNextInventoryTab: function () {
-            let currentIndex = this.getCurrentInventoryTabIndex();
+            let currentIndex = gca_hotkey.utils.getCurrentInventoryTabIndex();
             let nextIndex = (currentIndex + 1) % 4;
             jQuery("#inventory_nav .awesome-tabs")[nextIndex].click();
         },
 
         toPreviousInventoryTab: function () {
-            let currentIndex = this.getCurrentInventoryTabIndex();
+            let currentIndex = gca_hotkey.utils.getCurrentInventoryTabIndex();
             let previousIndex = (currentIndex + 3) % 4;
             jQuery("#inventory_nav .awesome-tabs")[previousIndex].click();
-        },
-
-        getCurrentInventoryTabIndex: function () {
-            return jQuery("#inventory_nav .awesome-tabs").index(jQuery("#inventory_nav .awesome-tabs.current").first());
         },
 
         toExpedition: function () {
@@ -313,7 +301,7 @@ var gca_hotkey = {
         isAttackAllowed: function () {
             let isAllowed = false;
 
-            if (gca_hotkey.isCountdownActive()) {
+            if (gca_hotkey.utils.isCountdownActive()) {
                 const hourglassCount = this.getHourglassCount();
                 if (hourglassCount > 0)
                     isAllowed = window.confirm("Use hourglass? Have: " + hourglassCount);
@@ -350,12 +338,12 @@ var gca_hotkey = {
         bossSelector: "#content .map_label:contains('Boss')",
 
         attack: function () {
-            if (gca_hotkey.isCountdownActive()) {
+            if (gca_hotkey.utils.isCountdownActive()) {
                 gca_notifications.warning("Wait for countdown");
                 return;
             }
 
-            if (gca_hotkey.exists(this.bossSelector))
+            if (gca_hotkey.utils.exists(this.bossSelector))
                 this.attackBoss();
             else
                 this.attackMinion();
@@ -376,7 +364,7 @@ var gca_hotkey = {
         attack: function () {
             let index = 0;
 
-            if (gca_hotkey.exists(this.playerTargetSelector))
+            if (gca_hotkey.utils.exists(this.playerTargetSelector))
                 index = this.getFirstPlayerTargetIndex();
             else
                 index = this.getHighestProvinceIndex();
@@ -411,7 +399,7 @@ var gca_hotkey = {
                 return;
             }
 
-            if (gca_hotkey.isCountdownActive()) {
+            if (gca_hotkey.utils.isCountdownActive()) {
                 gca_notifications.warning("Wait for countdown");
                 return;
             }
@@ -533,32 +521,37 @@ var gca_hotkey = {
 
     },
 
-    // shared
-    hasInventory: function () {
-        return this.exists(".inventoryBox");
-    },
 
+    utils: {
+        getActiveMercenaryIndex: function () {
+            return jQuery(".charmercsel").index(jQuery(".charmercsel.active"));
+        },
+
+        getCurrentInventoryTabIndex: function () {
+            return jQuery("#inventory_nav .awesome-tabs").index(jQuery("#inventory_nav .awesome-tabs.current").first());
+        },
+
+        isCountdownActive: function () {
+            return this.exists("#content *[data-ticker-type='countdown'");
+        },
+
+        hasInventory: function () {
+            return this.exists(".inventoryBox");
+        },
+
+        exists: function (selector) {
+            return jQuery(selector).length > 0;
+        }
+    },
 
     eatBestFood: function () {
         gca_tools.item.move(jQuery(".best-food")[0], 'avatar');
     },
 
 
-
-
-
     moveFirstPackageToInventory: function () {
         gca_tools.item.move(jQuery("#packages .ui-draggable")[0], 'inv');
     },
-
-
-    // shared
-    isCountdownActive: function () {
-        return this.exists("#content *[data-ticker-type='countdown'");
-    },
-
-
-
 
 
 
@@ -574,13 +567,13 @@ var gca_hotkey = {
         const restartSelector = ".quest_slot_button.quest_slot_button_restart";
         const importantQuestAcceptSelector = ".important-quest " + acceptSelector;
 
-        if (this.exists(finishSelector)) {
+        if (gca_hotkey.utils.exists(finishSelector)) {
             window.location = jQuery(finishSelector).first().attr("href");
         }
-        else if (this.exists(restartSelector)) {
+        else if (gca_hotkey.utils.exists(restartSelector)) {
             window.location = jQuery(restartSelector).first().attr("href");
         }
-        else if (this.exists(importantQuestAcceptSelector)) {
+        else if (gca_hotkey.utils.exists(importantQuestAcceptSelector)) {
             window.location = jQuery(importantQuestAcceptSelector).first().attr("href");
         }
     },
@@ -600,10 +593,7 @@ var gca_hotkey = {
     },
 
 
-    //shared
-    exists: function (selector) {
-        return jQuery(selector).length > 0;
-    }
+
 };
 
 
