@@ -157,8 +157,8 @@ var gca_hotkey = {
             // this.eatBestFood();
         }
         else if (pageParams.mod == "location") { // expedition
-            if (this.isAttackAllowed())
-                this.attackExpedition(3);
+            if (this.expedition.isAttackAllowed())
+                this.expedition.attackExpedition(3);
             else
                 gca_notifications.warning("Attack not allowed.");
         }
@@ -241,6 +241,10 @@ var gca_hotkey = {
             jQuery(".charmercsel")[previousIndex].click();
         },
 
+        getActiveMercenaryIndex: function () {
+            return jQuery(".charmercsel").index(jQuery(".charmercsel.active"));
+        },
+
         toNextInventoryTab: function () {
             let currentIndex = this.getCurrentInventoryTabIndex();
             let nextIndex = (currentIndex + 1) % 4;
@@ -251,6 +255,10 @@ var gca_hotkey = {
             let currentIndex = this.getCurrentInventoryTabIndex();
             let previousIndex = (currentIndex + 3) % 4;
             jQuery("#inventory_nav .awesome-tabs")[previousIndex].click();
+        },
+
+        getCurrentInventoryTabIndex: function () {
+            return jQuery("#inventory_nav .awesome-tabs").index(jQuery("#inventory_nav .awesome-tabs.current").first());
         },
 
         toExpedition: function () {
@@ -315,55 +323,57 @@ var gca_hotkey = {
 
     },
 
+    expedition: {
 
-    getActiveMercenaryIndex: function () {
-        return jQuery(".charmercsel").index(jQuery(".charmercsel.active"));
+        isAttackAllowed: function () {
+            let isAllowed = false;
+
+            if (gca_hotkey.isCountdownActive()) {
+                const hourglassCount = this.getHourglassCount();
+                if (hourglassCount > 0)
+                    isAllowed = window.confirm("Use hourglass? Have: " + hourglassCount);
+            }
+            else
+                isAllowed = true;
+
+            return isAllowed;
+        },
+
+        getHourglassCount: function () {
+            let count = 0;
+
+            let hourglassTooltip = jQuery(".expedition_cooldown_reduce img").first().data().tooltip;
+            if (hourglassTooltip)
+                count = parseInt(hourglassTooltip[0][1][0].split(" ")[1].trim());
+
+            return count;
+        },
+
+        attackExpedition: function (monsterNo) {
+            if (monsterNo < 1 || monsterNo > 4) {
+                gca_notifications.error("Invalid monster no");
+                return;
+            }
+
+            jQuery("#expedition_list .expedition_box:nth-child(" + monsterNo + ") .expedition_button")[0].click();
+        },
+
     },
 
+
+
+
+// shared
     hasInventory: function () {
         return this.exists(".inventoryBox");
     },
 
-    getCurrentInventoryTabIndex: function () {
-        return jQuery("#inventory_nav .awesome-tabs").index(jQuery("#inventory_nav .awesome-tabs.current").first());
-    },
+
 
     eatBestFood: function () {
         gca_tools.item.move(jQuery(".best-food")[0], 'avatar');
     },
 
-    isAttackAllowed: function () {
-        let isAllowed = false;
-
-        if (this.isCountdownActive()) {
-            const hourglassCount = this.getHourglassCount();
-            if (hourglassCount > 0)
-                isAllowed = window.confirm("Use hourglass? Have: " + hourglassCount);
-        }
-        else
-            isAllowed = true;
-
-        return isAllowed;
-    },
-
-    getHourglassCount: function () {
-        let count = 0;
-
-        let hourglassTooltip = jQuery(".expedition_cooldown_reduce img").first().data().tooltip;
-        if (hourglassTooltip)
-            count = parseInt(hourglassTooltip[0][1][0].split(" ")[1].trim());
-
-        return count;
-    },
-
-    attackExpedition: function (monsterNo) {
-        if (monsterNo < 1 || monsterNo > 4) {
-            gca_notifications.error("Invalid monster no");
-            return;
-        }
-
-        jQuery("#expedition_list .expedition_box:nth-child(" + monsterNo + ") .expedition_button")[0].click();
-    },
 
 
     attackDungeon: function () {
@@ -400,6 +410,8 @@ var gca_hotkey = {
     attackDungeonMinion: function () {
         jQuery("#content img[src*='combatloc.gif']").last().click()
     },
+
+
 
     hasPlayerTarget: function () {
         return this.exists("#own2 a.gca-player-target");
@@ -440,6 +452,8 @@ var gca_hotkey = {
         jQuery("#content article table > tbody > tr:nth-child(" + (index + 2) + ") > td:nth-child(4) > div")[0].click();
     },
 
+
+
     storeResources: function () {
         jQuery("#store").click();
     },
@@ -458,9 +472,13 @@ var gca_hotkey = {
         gca_tools.item.move(jQuery("#packages .ui-draggable")[0], 'inv');
     },
 
+
+    // shared
     isCountdownActive: function () {
         return this.exists("#content *[data-ticker-type='countdown'");
     },
+
+
 
     highlightInventoryItems: function () {
         this.highlightItems("inv");
@@ -539,9 +557,13 @@ var gca_hotkey = {
         jQuery(item).css("border", borderCss);
     },
 
+
+
     toggleGoodPricedItems: function () {
         jQuery(".gca-auction-show-hide-button").first().click();
     },
+
+
 
     handleQuest: function () {
         const acceptSelector = ".quest_slot_button.quest_slot_button_accept";
@@ -568,10 +590,14 @@ var gca_hotkey = {
         jQuery("#quest_footer_reroll input[type='button']").first().click();
     },
 
+
+
     filterPackages: function () {
         window.location = gca_getPage.link({ "mod": "packages", "fq": "0", "qry": "", "page": "1" });
     },
 
+
+    //shared
     exists: function (selector) {
         return jQuery(selector).length > 0;
     }
