@@ -162,7 +162,7 @@ var gca_hotkey = {
         else if (pageParams.mod == "forge" && pageParams.submod == "smeltery")
             this.forge.smelter.sendAllAsPackage();
         else if (pageParams.mod == "packages")
-            this.moveFirstPackageToInventory();
+            this.packages.moveFirstPackageToInventory();
         else if (pageParams.mod == "auction")
             this.toggleGoodPricedItems();
         else if (pageParams.mod == "quests")
@@ -180,7 +180,7 @@ var gca_hotkey = {
             this.highlighter.highlightAuctionItems();
         }
         else if (pageParams.mod == "packages") {
-            // this.filterPackages();
+            // this.packages.filterPackages();
             this.highlighter.highlightInventoryItems();
             this.highlighter.highlightPackageItems();
         }
@@ -527,6 +527,18 @@ var gca_hotkey = {
         }
     },
 
+    packages: {
+
+        moveFirstPackageToInventory: function () {
+            gca_tools.item.move(jQuery("#packages .ui-draggable")[0], 'inv');
+        },
+
+        filterPackages: function () {
+            window.location = gca_getPage.link({ "mod": "packages", "fq": "0", "qry": "", "page": "1" });
+        }
+
+    },
+
     utils: {
         getActiveMercenaryIndex: function () {
             return jQuery(".charmercsel").index(jQuery(".charmercsel.active"));
@@ -552,10 +564,6 @@ var gca_hotkey = {
 
 
 
-
-    moveFirstPackageToInventory: function () {
-        gca_tools.item.move(jQuery("#packages .ui-draggable")[0], 'inv');
-    },
 
 
 
@@ -591,10 +599,6 @@ var gca_hotkey = {
     },
 
 
-
-    filterPackages: function () {
-        window.location = gca_getPage.link({ "mod": "packages", "fq": "0", "qry": "", "page": "1" });
-    },
 
 
 
