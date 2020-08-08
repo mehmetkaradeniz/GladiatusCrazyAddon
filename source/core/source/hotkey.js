@@ -187,22 +187,22 @@ var gca_hotkey = {
         let pageParams = gca_getPage.parameters();
 
         if (pageParams.mod == "overview") {
-            this.highlightInventoryItems();
+            this.highlighter.highlightInventoryItems();
         }
         else if (pageParams.mod == "auction") {
-            this.highlightAuctionItems();
+            this.highlighter.highlightAuctionItems();
         }
         else if (pageParams.mod == "packages") {
             // this.filterPackages();
-            this.highlightInventoryItems();
-            this.highlightPackageItems();
+            this.highlighter.highlightInventoryItems();
+            this.highlighter.highlightPackageItems();
         }
         else if (pageParams.mod == "inventory") {
-            this.highlightShopItems();
-            this.highlightInventoryItems();
+            this.highlighter.highlightShopItems();
+            this.highlighter.highlightInventoryItems();
         }
         else if (pageParams.mod == "forge") {
-            this.highlightInventoryItems();
+            this.highlighter.highlightInventoryItems();
         }
         else if (pageParams.mod == "quests") {
             // this.newQuests();
@@ -432,6 +432,86 @@ var gca_hotkey = {
 
     },
 
+    highlighter: {
+        highlightInventoryItems: function () {
+            this.highlightItems("inv");
+        },
+
+        highlightPackageItems: function () {
+            this.highlightItems("packages");
+        },
+
+        highlightAuctionItems: function () {
+            this.highlightItems("auction");
+        },
+
+        highlightShopItems: function () {
+            this.highlightItems("shop");
+        },
+
+        highlightItems: function (type) {
+            let model = gca_data.section.get("hotkey", "keywordHighlightModelWrapper");
+
+            switch (type) {
+                case "inv":
+                    this.doHighlightItems("#inv", model.inv);
+                    break;
+
+                case "packages":
+                    this.doHighlightItems("#packages", model.packages);
+                    break;
+
+                case "auction":
+                    this.doHighlightItems("#auction_table", model.auction);
+                    break;
+
+                case "shop":
+                    this.doHighlightItems("#shop", model.shop);
+                    break;
+
+                default:
+                    break;
+            }
+        },
+
+        doHighlightItems: function (containerSelector, keywordHighlightModel) {
+            let that = this;
+
+            jQuery(containerSelector + " .ui-draggable").each(function () {
+                let item = this;
+
+                jQuery(this).data().tooltip[0].forEach(prop => {
+
+                    keywordHighlightModel.forEach(khm => {
+                        if (prop[0].toString().toLowerCase().contains(khm.keyword.toString().toLowerCase())) {
+                            that.highlightItem(item, khm.priority);
+                        }
+                    });
+                });
+            });
+        },
+
+        highlightItem: function (item, priority) {
+            let borderCss = "";
+            switch (priority) {
+                case "H":
+                    borderCss = "red solid 3px";
+                    break;
+
+                case "M":
+                    borderCss = "orange solid 3px";
+                    break;
+
+                default:
+                    borderCss = "green solid 3px";
+                    break;
+            }
+
+            jQuery(item).css("border", borderCss);
+        },
+
+    },
+
 
     // shared
     hasInventory: function () {
@@ -471,82 +551,6 @@ var gca_hotkey = {
 
 
 
-    highlightInventoryItems: function () {
-        this.highlightItems("inv");
-    },
-
-    highlightPackageItems: function () {
-        this.highlightItems("packages");
-    },
-
-    highlightAuctionItems: function () {
-        this.highlightItems("auction");
-    },
-
-    highlightShopItems: function () {
-        this.highlightItems("shop");
-    },
-
-    highlightItems: function (type) {
-        let model = gca_data.section.get("hotkey", "keywordHighlightModelWrapper");
-
-        switch (type) {
-            case "inv":
-                this.doHighlightItems("#inv", model.inv);
-                break;
-
-            case "packages":
-                this.doHighlightItems("#packages", model.packages);
-                break;
-
-            case "auction":
-                this.doHighlightItems("#auction_table", model.auction);
-                break;
-
-            case "shop":
-                this.doHighlightItems("#shop", model.shop);
-                break;
-
-            default:
-                break;
-        }
-    },
-
-    doHighlightItems: function (containerSelector, keywordHighlightModel) {
-        let that = this;
-
-        jQuery(containerSelector + " .ui-draggable").each(function () {
-            let item = this;
-
-            jQuery(this).data().tooltip[0].forEach(prop => {
-
-                keywordHighlightModel.forEach(khm => {
-                    if (prop[0].toString().toLowerCase().contains(khm.keyword.toString().toLowerCase())) {
-                        that.highlightItem(item, khm.priority);
-                    }
-                });
-            });
-        });
-    },
-
-    highlightItem: function (item, priority) {
-        let borderCss = "";
-        switch (priority) {
-            case "H":
-                borderCss = "red solid 3px";
-                break;
-
-            case "M":
-                borderCss = "orange solid 3px";
-                break;
-
-            default:
-                borderCss = "green solid 3px";
-                break;
-        }
-
-        jQuery(item).css("border", borderCss);
-    },
 
 
 
