@@ -447,7 +447,8 @@ var gca_markets = {
 			let b = data.item.data("priceGold") || 0;
 			b = Math.floor(b * data.amount / 1.5);
 			document.getElementById('auto_value').value = b;
-			modeSwitchFunction(); // calcDues(); is called within this function
+            const itemHash = jQuery(data.item).first().data().hash;
+			nodeSwitchFunctionIntercept(itemHash); // calcDues(); is called within this function
 			
 			// Save "Value" translation
 			if (get_translation) {
@@ -463,6 +464,22 @@ var gca_markets = {
 			}
 		});
 		
+
+        var pricesByItemHash = {
+            "dnj-9-1-32-0-0-0-0-0-0-0-0-0-0-!1-6o-0-c9k" : 100000,
+            "emq-9-8-32-0-0-0-0-1-0-0-0-0-0-!1-6o-0-c9k" : 200000,
+            "c2o-9-5-32-0-0-0-0-0-0-0-0-0-0-!1-6o-0-c9k" : 300000,
+            "dje-9-3-3z-0-0-0-0-0-0-0-0-0-0-2-go-0-car" : 500000,
+            "dnj-9-7-4l-0-0-0-0-0-0-0-0-0-0-3-k0-0-c9k" : 1000000,
+        };
+
+        var nodeSwitchFunctionIntercept = function(itemHash){
+            if(pricesByItemHash[itemHash]){
+                setCustomPrice(itemHash);
+            }
+            else
+                nodeSwitchFunction();
+        };
 		// Change mode
 		var modeSwitchFunction = function(){
 			let selected = parseInt(document.querySelector('input[name=sell_mode]:checked').value);
@@ -478,6 +495,13 @@ var gca_markets = {
 			}
 			window.calcDues();
 		};
+        var setCustomPrice = function (itemHash) {
+            let price = pricesByItemHash[itemHash];
+            if (document.getElementById('preis').value != '') {
+                document.getElementById('preis').value = price;
+            }
+            window.calcDues();
+        };
 		modeSwitch.addEventListener('change', modeSwitchFunction);
 	},
 
