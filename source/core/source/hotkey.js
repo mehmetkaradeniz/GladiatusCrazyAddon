@@ -153,33 +153,22 @@ var gca_hotkey = {
     executePrimaryAction: function (e) {
         let pageParams = gca_getPage.parameters();
 
-        if (pageParams.mod == "overview") {
-            // this.eatBestFood();
-        }
-        else if (pageParams.mod == "location") {
+        if (pageParams.mod == "location")
             this.expedition.attack();
-        }
-        else if (pageParams.mod == "dungeon") {
+        else if (pageParams.mod == "dungeon")
             this.dungeon.attack();
-        }
-        else if (pageParams.mod == "arena" && pageParams.submod == "serverArena") {
+        else if (pageParams.mod == "arena" && pageParams.submod == "serverArena")
             this.arena.attack();
-        }
-        else if (pageParams.mod == "forge" && pageParams.submod == "storage") {
-            this.storeResources();
-        }
-        else if (pageParams.mod == "forge" && pageParams.submod == "smeltery") {
-            this.sendAllAsPackage();
-        }
-        else if (pageParams.mod == "packages") {
+        else if (pageParams.mod == "forge" && pageParams.submod == "storage")
+            this.forge.horreum.storeResources();
+        else if (pageParams.mod == "forge" && pageParams.submod == "smeltery")
+            this.forge.smelter.sendAllAsPackage();
+        else if (pageParams.mod == "packages")
             this.moveFirstPackageToInventory();
-        }
-        else if (pageParams.mod == "auction") {
+        else if (pageParams.mod == "auction")
             this.toggleGoodPricedItems();
-        }
-        else if (pageParams.mod == "quests") {
+        else if (pageParams.mod == "quests")
             this.handleQuest();
-        }
 
     },
 
@@ -512,6 +501,37 @@ var gca_hotkey = {
 
     },
 
+    forge: {
+
+        forge: {
+
+        },
+
+        smelter: {
+            sendAllAsPackage: function () {
+                let btn = jQuery("#content > table > tbody > tr > td:nth-child(1) > div.background_trader.pngfix > div.awesome-button")[0];
+                if (btn === undefined) {
+                    gca_notifications.warning("No package found");
+                    return;
+                }
+
+                jQuery("#content > table > tbody > tr > td:nth-child(1) > div.background_trader.pngfix > div.awesome-button")[0].click()
+            },
+        },
+
+        workbench: {
+
+        },
+
+        horreum: {
+            storeResources: function () {
+                jQuery("#store").click();
+            },
+        },
+
+
+
+    },
 
     // shared
     hasInventory: function () {
@@ -525,19 +545,7 @@ var gca_hotkey = {
 
 
 
-    storeResources: function () {
-        jQuery("#store").click();
-    },
 
-    sendAllAsPackage: function () {
-        let btn = jQuery("#content > table > tbody > tr > td:nth-child(1) > div.background_trader.pngfix > div.awesome-button")[0];
-        if (btn === undefined) {
-            gca_notifications.warning("No package found");
-            return;
-        }
-
-        jQuery("#content > table > tbody > tr > td:nth-child(1) > div.background_trader.pngfix > div.awesome-button")[0].click()
-    },
 
     moveFirstPackageToInventory: function () {
         gca_tools.item.move(jQuery("#packages .ui-draggable")[0], 'inv');
