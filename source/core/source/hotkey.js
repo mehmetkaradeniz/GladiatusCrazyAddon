@@ -290,10 +290,11 @@ var gca_hotkey = {
     },
 
     expedition: {
+        targetMonsterNo: 4,
 
         attack: function () {
             if (this.isAttackAllowed())
-                this.attackExpedition(3);
+                this.attackExpedition(this.targetMonsterNo);
             else
                 gca_notifications.warning("Attack not allowed.");
         },
