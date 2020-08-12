@@ -448,7 +448,7 @@ var gca_markets = {
 			b = Math.floor(b * data.amount / 1.5);
 			document.getElementById('auto_value').value = b;
             const itemHash = jQuery(data.item).first().data().hash;
-			nodeSwitchFunctionIntercept(itemHash); // calcDues(); is called within this function
+			modeSwitchFunctionIntercept(itemHash); // calcDues(); is called within this function
 			
 			// Save "Value" translation
 			if (get_translation) {
@@ -473,13 +473,7 @@ var gca_markets = {
             "dnj-9-7-4l-0-0-0-0-0-0-0-0-0-0-3-k0-0-c9k" : 1000000,
         };
 
-        var nodeSwitchFunctionIntercept = function(itemHash){
-            if(pricesByItemHash[itemHash]){
-                setCustomPrice(itemHash);
-            }
-            else
-                nodeSwitchFunction();
-        };
+        
 		// Change mode
 		var modeSwitchFunction = function(){
 			let selected = parseInt(document.querySelector('input[name=sell_mode]:checked').value);
@@ -502,8 +496,17 @@ var gca_markets = {
             }
             window.calcDues();
         };
+        var modeSwitchFunctionIntercept = function(itemHash){
+            if(pricesByItemHash[itemHash]){
+                setCustomPrice(itemHash);
+            }
+            else
+                modeSwitchFunction();
+        };
 		modeSwitch.addEventListener('change', modeSwitchFunction);
 	},
+
+    
 
 	// Layout
 	layout : {
