@@ -330,7 +330,7 @@ var gca_hotkey = {
             if (this.isAttackAllowed())
                 this.doAttack(targetMonsterNo);
             else
-                gca_notifications.warning("Attack not allowed.");
+                gca_notifications.warning("Attack not allowed. Who knows why..");
         },
 
         isAttackAllowed: function () {
