@@ -131,6 +131,9 @@ var gca_hotkey = {
         else if (map[84]) { // t
             this.navigation.toTraining();
         }
+        else if (map[81]) { // q
+            this.navigation.toUsablePackages();
+        }
         else if (map[69]) { // e
             this.navigation.toNileBank();
         }
@@ -261,6 +264,10 @@ var gca_hotkey = {
 
         toPackages: function () {
             window.location = jQuery("#menue_packages").attr("href");
+        },
+
+        toUsablePackages: function () {
+            window.location = gca_getPage.link({ "mod": "packages", "f": "7", "fq": "-1", "gry": "", "page": "1" });
         },
 
         toDoll: function (dollNo) {
