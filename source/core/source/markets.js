@@ -499,9 +499,8 @@ var gca_markets = {
             window.calcDues();
         };
         var modeSwitchFunctionIntercept = function(itemHash){
-            if(pricesByItemHash[itemHash]){
+            if(pricesByItemHash[itemHash])
                 setCustomPrice(itemHash);
-            }
             else
                 modeSwitchFunction();
         };
