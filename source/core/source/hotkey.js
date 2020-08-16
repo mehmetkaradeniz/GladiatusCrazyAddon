@@ -158,8 +158,12 @@ var gca_hotkey = {
     executePrimaryAction: function (e) {
         let pageParams = gca_getPage.parameters();
 
-        if (pageParams.mod == "location")
-            this.expedition.attack();
+        if (pageParams.mod == "location") {
+            if (pageParams.loc.match(/\d+/)) // normal expedition
+                this.expedition.attackBoss();
+            else // event expedition
+                this.eventExpedition.attackFirstMob();
+        }
         else if (pageParams.mod == "dungeon")
             this.dungeon.attack();
         else if (pageParams.mod == "arena" && pageParams.submod == "serverArena")
@@ -305,11 +309,26 @@ var gca_hotkey = {
     },
 
     expedition: {
-        targetMonsterNo: 4,
 
-        attack: function () {
+        attackFirstMob: function () {
+            this.attack(1);
+        },
+
+        attackSecondMob: function () {
+            this.attack(2);
+        },
+
+        attackThirdMob: function () {
+            this.attack(3);
+        },
+
+        attackBoss: function () {
+            this.attack(4);
+        },
+
+        attack: function (targetMonsterNo) {
             if (this.isAttackAllowed())
-                this.attackExpedition(this.targetMonsterNo);
+                this.doAttack(targetMonsterNo);
             else
                 gca_notifications.warning("Attack not allowed.");
         },
@@ -338,12 +357,51 @@ var gca_hotkey = {
             return count;
         },
 
-        attackExpedition: function (monsterNo) {
-            if (monsterNo < 1 || monsterNo > 4) {
-                gca_notifications.error("Invalid monster no");
-                return;
-            }
+        doAttack: function (monsterNo) {
+            jQuery("#expedition_list .expedition_box:nth-child(" + monsterNo + ") .expedition_button")[0].click();
+        },
 
+    },
+
+    eventExpedition: {
+        
+        attackFirstMob: function () {
+            this.attack(1);
+        },
+
+        attackSecondMob: function () {
+            this.attack(2);
+        },
+
+        attackThirdMob: function () {
+            this.attack(3);
+        },
+
+        attackBoss: function () {
+            this.attack(4);
+        },
+
+        attack: function (targetMonsterNo) {
+            if (this.isAttackAllowed())
+                this.doAttack(targetMonsterNo);
+            else
+                gca_notifications.warning("Attack not allowed.");
+        },
+
+        isAttackAllowed: function () {
+            if (this.hasEventPoints())
+                return true;
+
+            return false;
+        },
+
+        hasEventPoints: function () {
+            let remainingEventPoints = jQuery("#ServerQuestTime > span").first().text().trim();
+
+            return parseInt(remainingEventPoints) > 0;
+        },
+
+        doAttack: function (monsterNo) {
             jQuery("#expedition_list .expedition_box:nth-child(" + monsterNo + ") .expedition_button")[0].click();
         },
 
