@@ -131,6 +131,10 @@ var gca_hotkey = {
         else if (map[84]) { // t
             this.navigation.toTraining();
         }
+        else if (map[69]) { // e
+            this.navigation.toNileBank();
+        }
+
     },
 
     executeNonCombo: function (e) {
@@ -285,7 +289,11 @@ var gca_hotkey = {
 
         toTraining: function () {
             window.location = gca_getPage.link({ "mod": "training" });
-        }
+        },
+
+        toNileBank: function () {
+            window.location = gca_getPage.link({ "mod": "location", "loc": "nile_bank" });
+        },
 
     },
 
