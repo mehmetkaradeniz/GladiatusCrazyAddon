@@ -227,7 +227,8 @@
 		#manage_mercenaries_table .task{cursor:pointer;width:18px;height:18px;margin:0px auto;}
 	/* Info Box */
 		.gca_rtl .info_box{margin-right: 13px!important;margin-left: auto!important;}
-
+    /* Food */
+        .worst-food{border: green solid 3px;}
 /* Training */
 	.gca-training-info{width: 240px!important;right: 140px!important;}
 	.gca_rtl .gca-training-info{left: 140px!important;right: auto!important;}

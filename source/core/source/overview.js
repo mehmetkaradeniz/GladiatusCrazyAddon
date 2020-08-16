@@ -1082,7 +1082,7 @@ var gca_overview = {
                 return aVit > bVit ? 1 : -1;
             }).first();
 
-            jQuery(worstFood).css('border', "green solid 3px");
+            jQuery(worstFood).addClass("worst-food");
         },
 
 		// Find best food

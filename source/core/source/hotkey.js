@@ -164,6 +164,8 @@ var gca_hotkey = {
             else // event expedition
                 this.eventExpedition.attackFirstMob();
         }
+        else if (pageParams.mod == "overview")
+            this.overview.eatWorstFood();
         else if (pageParams.mod == "dungeon")
             this.dungeon.attack();
         else if (pageParams.mod == "arena" && pageParams.submod == "serverArena")
@@ -364,7 +366,7 @@ var gca_hotkey = {
     },
 
     eventExpedition: {
-        
+
         attackFirstMob: function () {
             this.attack(1);
         },
@@ -516,8 +518,26 @@ var gca_hotkey = {
     },
 
     overview: {
-        eatBestFood: function () {
-            gca_tools.item.move(jQuery(".best-food")[0], 'avatar');
+        eatWorstFood: function () {
+            if (this.isEatWorstFoodAllowed())
+                this.doEatWorstFood();
+        },
+
+        isEatWorstFoodAllowed: function () {
+            const foodHp = jQuery(".worst-food").first().data().vitality;
+            const hpData = gca_hotkey.utils.getHpData();
+            const maxHp = hpData.maxValue;
+            const wastedFoodHp = foodHp - (maxHp - hpData.value);
+            const wastedFoodPercentage = (wastedFoodHp * 100 / foodHp).toFixed(2);
+
+            if (wastedFoodPercentage > 20)
+                return window.confirm("Confirm overeat? Wasted food: " + wastedFoodHp + " (" + wastedFoodPercentage + "%)");
+
+            return true;
+        },
+
+        doEatWorstFood: function () {
+            gca_tools.item.move(jQuery(".worst-food")[0], 'avatar');
         }
     },
 
@@ -663,7 +683,11 @@ var gca_hotkey = {
 
         exists: function (selector) {
             return jQuery(selector).length > 0;
-        }
+        },
+
+        getHpData: function () {
+            return jQuery("#header_values_hp_bar").data();
+        },
     },
 
 };
