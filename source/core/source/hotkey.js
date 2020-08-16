@@ -433,7 +433,7 @@ var gca_hotkey = {
     },
 
     arena: {
-        playerTargetSelector: "#own2 a.gca-player-target",
+        playerTargetSelector: "#own2 a.gca-player-target, #own3 a.gca-player-target",
 
         attack: function () {
             let index = 0;
@@ -447,7 +447,7 @@ var gca_hotkey = {
         },
 
         getFirstPlayerTargetIndex: function () {
-            return jQuery("#own2 a").index(jQuery(this.playerTargetSelector).first());
+            return jQuery("#own2 a, #own3 a").index(jQuery(this.playerTargetSelector).first());
         },
 
         getHighestProvinceIndex: function () {
