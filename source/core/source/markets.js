@@ -472,7 +472,7 @@ var gca_markets = {
             "dnj-9-5-32-0-0-0-0-0-0-0-0-0-0-!1-6o-0-c9k" : 300000,
             "dje-9-3-3z-0-0-0-0-0-0-0-0-0-0-2-go-0-car" : 500000,
             "dnj-9-3-3z-0-0-0-0-0-0-0-0-0-0-2-go-0-car" : 500000,
-            "dnj-9-7-4l-0-0-0-0-0-0-0-0-0-0-3-k0-0-c9k" : 1000000,
+            "dnj-9-7-4l-0-0-0-0-0-0-0-0-0-0-3-k0-0-c9k" : 1000000
         };
 
         
@@ -500,7 +500,10 @@ var gca_markets = {
         };
         var modeSwitchFunctionIntercept = function(itemHash){
             if(pricesByItemHash[itemHash])
+            {
                 setCustomPrice(itemHash);
+                jQuery("#dauer").val(3); // set 24h
+            }
             else
                 modeSwitchFunction();
         };
