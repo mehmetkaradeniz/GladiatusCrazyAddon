@@ -1095,6 +1095,18 @@ var gca_global = {
                 button.appendChild(link);
                 shortcutsBar.appendChild(button);
 
+                // Create a food auction
+                button = document.createElement('div');
+                button.className = "icon-out";
+                link = document.createElement('a');
+                link.className = "icon food-icon";
+                link.href = gca_getPage.link({ "mod": "auction", "qry": "", "itemLevel": "63", "itemType": "7", "itemQuality": "-1" });
+                link.title = "FOOD";
+                button.appendChild(link);
+                shortcutsBar.appendChild(button);
+
+
+
                 // Create a Link to pacts
                 button = document.createElement('div');
                 button.className = "icon-out";
