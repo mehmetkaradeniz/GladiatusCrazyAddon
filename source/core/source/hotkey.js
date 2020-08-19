@@ -174,6 +174,8 @@ var gca_hotkey = {
             this.forge.horreum.storeResources();
         else if (pageParams.mod == "forge" && pageParams.submod == "smeltery")
             this.forge.smelter.sendAllAsPackage();
+        else if (pageParams.mod == "forge" && pageParams.submod == "workbench")
+            this.forge.workbench.sendAsPackage();
         else if (pageParams.mod == "packages")
             this.packages.moveFirstPackageToInventory();
         else if (pageParams.mod == "auction")
@@ -504,7 +506,9 @@ var gca_hotkey = {
         },
 
         workbench: {
-
+            sendAsPackage: function(){
+                jQuery("#forge_lootbox").first().click();
+            }
         },
 
         horreum: {
