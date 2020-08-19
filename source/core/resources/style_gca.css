@@ -123,6 +123,8 @@
     .amulet-icon{background: transparent url('icons/amulet.png'); background-repeat: no-repeat; background-size: auto;}
     .ring-icon{background: transparent url('icons/ring.png'); background-repeat: no-repeat; background-size: auto;}
     .food-icon{background: transparent url('icons/cheese.png'); background-repeat: no-repeat; background-size: auto;}
+    .mercenary-icon{background: transparent url('icons/mercenary.png'); background-repeat: no-repeat; background-size: auto;}
+    .apollo-symbol-icon{background: transparent url('icons/apollo-symbol.png'); background-repeat: no-repeat; background-size: auto;}
 /* Auction Status Bar */
 	#AuctionStatusDiv{position: absolute; z-index: 10; top: 111px; right: 110px;}
 	.gca_rtl #AuctionStatusDiv{right: auto; left: 110px;}
