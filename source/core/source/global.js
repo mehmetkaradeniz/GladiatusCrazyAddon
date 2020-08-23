@@ -1111,7 +1111,7 @@ var gca_global = {
                 button.className = "icon-out";
                 link = document.createElement('a');
                 link.className = "icon mercenary-icon";
-                link.href = gca_getPage.link({ "mod": "auction", "qry": "", "itemLevel": "93", "itemType": "15", "itemQuality": "-1" });
+                link.href = gca_getPage.link({ "mod": "auction", "qry": "", "itemLevel": "102", "itemType": "15", "itemQuality": "-1" });
                 link.title = "BATTLE";
                 button.appendChild(link);
                 shortcutsBar.appendChild(button);
