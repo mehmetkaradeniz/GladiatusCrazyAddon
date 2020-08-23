@@ -42,8 +42,14 @@ var gca_auction = {
 			
 		// Setting Link
 		gca_tools.create.settingsLink("auction");
+
+        this.disabledBuyouts();
 	},
 	
+    disabledBuyouts: function(){
+        jQuery("input[name='buyout']").attr("disabled", "disabled");
+    },
+
 	levelsYouCanSee : function(){
 		let playerLvl = parseInt(document.getElementById("header_values_level").textContent);
 		let minLvl = Math.floor(playerLvl* 0.75);
