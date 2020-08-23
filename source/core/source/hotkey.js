@@ -76,7 +76,10 @@ var gca_hotkey = {
 
     //#region EXECUTES 
     executeShiftCombo: function (e) {
-        if (map[9]) { // Tab
+        if (map[81]) { // q
+            this.auction.promptBidHotkeyMode();
+        }
+        else if (map[9]) { // Tab
             if (gca_hotkey.utils.hasInventory()) {
                 e.preventDefault();
                 this.navigation.toPreviousInventoryTab();
@@ -179,7 +182,10 @@ var gca_hotkey = {
         else if (pageParams.mod == "packages")
             this.packages.moveFirstPackageToInventory();
         else if (pageParams.mod == "auction")
-            this.auction.toggleGoodPricedItems();
+            if(this.auction.bidHotkeyModeActive)
+                this.auction.bidLastVisibleGoodPriceItem();
+            else
+                this.auction.toggleGoodPricedItems();
         else if (pageParams.mod == "quests")
             this.pantheon.quests.handleQuest();
 
@@ -558,10 +564,19 @@ var gca_hotkey = {
     },
 
     auction: {
+        bidHotkeyModeActive: false,
 
         toggleGoodPricedItems: function () {
             jQuery(".gca-auction-show-hide-button").first().click();
         },
+
+        promptBidHotkeyMode: function(){
+            this.bidHotkeyModeActive = window.confirm("Activate bid hotkey mode?");
+        },
+
+        bidLastVisibleGoodPriceItem: function(){
+            jQuery(".auction_bid_div.gca-auction-good-price-wrapper:visible input[name='bid']:enabled").last().click();
+        }
 
     },
 

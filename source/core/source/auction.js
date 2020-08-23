@@ -166,6 +166,7 @@ var gca_auction = {
 				items[i].getElementsByTagName('input')[0].style.backgroundColor = "#FFCC66";
 				span.className = "gca-auction-good-price";
 				span.textContent = gca_locale.get("auction", "hide_your_gold_here");
+                items[i].classList.add("gca-auction-good-price-wrapper");
 			}
 			// Price is not good
 			else{
