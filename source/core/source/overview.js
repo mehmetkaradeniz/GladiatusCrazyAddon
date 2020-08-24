@@ -33,8 +33,8 @@ var gca_overview = {
 				this.foodStuff.lifeGain());
 
 			// Highlight best food to consume
-			(this.doll == 1 && gca_options.bool("overview", "best_food") && 
-				this.foodStuff.bestFood());
+			// (this.doll == 1 && gca_options.bool("overview", "best_food") && 
+			// 	this.foodStuff.bestFood());
 
 			// Make foods that give more life transparent
 			(this.doll == 1 && gca_options.bool("overview", "overfeed_food") && 

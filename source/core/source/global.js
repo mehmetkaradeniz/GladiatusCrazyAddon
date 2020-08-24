@@ -1034,19 +1034,19 @@ var gca_global = {
 					table_wrapper.appendChild(spacer);
 					
 					// Shortcut button
-					button = document.createElement('div');
-					button.className = "icon-out";
-					link = document.createElement('a');
-					link.className = "icon people-icon";
-					link.title = gca_locale.get("global", "stats_display");
-					button.appendChild(link);
-					button.appendChild(show_stats);
-					shortcutsBar.appendChild(button);
+					// button = document.createElement('div');
+					// button.className = "icon-out";
+					// link = document.createElement('a');
+					// link.className = "icon people-icon";
+					// link.title = gca_locale.get("global", "stats_display");
+					// button.appendChild(link);
+					// button.appendChild(show_stats);
+					// shortcutsBar.appendChild(button);
 
-					link.addEventListener('click', () => {
-						this.playerStats.create();
-						jQuery(show_stats).fadeToggle();
-					}, false);
+					// link.addEventListener('click', () => {
+					// 	this.playerStats.create();
+					// 	jQuery(show_stats).fadeToggle();
+					// }, false);
 				}
 				
 				// Display Online Players
