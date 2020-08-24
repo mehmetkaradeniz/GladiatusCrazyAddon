@@ -180,7 +180,7 @@ var gca_hotkey = {
         else if (pageParams.mod == "forge" && pageParams.submod == "workbench")
             this.forge.workbench.sendAsPackage();
         else if (pageParams.mod == "packages")
-            this.packages.moveFirstPackageToInventory();
+            this.packages.moveFirstNonGoldPackageToInventory();
         else if (pageParams.mod == "auction")
             if(this.auction.bidHotkeyModeActive)
                 this.auction.bidLastVisibleGoodPriceItem();
@@ -553,8 +553,9 @@ var gca_hotkey = {
 
     packages: {
 
-        moveFirstPackageToInventory: function () {
-            gca_tools.item.move(jQuery("#packages .ui-draggable")[0], 'inv');
+        moveFirstNonGoldPackageToInventory: function () {
+            const firstNonGoldPackage = jQuery("#packages .ui-draggable[data-content-type!='-1']")[0];
+            gca_tools.item.move(firstNonGoldPackage, 'inv');
         },
 
         filterPackages: function () {
