@@ -406,8 +406,9 @@ var gca_hotkey = {
         },
 
         hasEventPoints: function () {
-            let remainingEventPoints = jQuery("#ServerQuestTime > span").first().text().trim();
-
+            // let remainingEventPoints = jQuery("#ServerQuestTime > span").first().text().trim();
+            let remainingEventPoints = jQuery("#content > div:nth-child(3) > div.section-header > p:nth-child(2)").text().match(/\d+/)[0];
+            
             return parseInt(remainingEventPoints) > 0;
         },
 
