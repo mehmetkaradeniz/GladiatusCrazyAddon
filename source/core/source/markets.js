@@ -465,9 +465,11 @@ var gca_markets = {
 		});
 		
 
+        // if this patterns keep goes like this. We should start using contains without first 4 characters.
         var pricesByItemHash = {
             "dnj-9-1-32-0-0-0-0-0-0-0-0-0-0-!1-6o-0-c9k" : 100000,
             "emq-9-8-32-0-0-0-0-1-0-0-0-0-0-!1-6o-0-c9k" : 200000,
+            "dnj-9-8-32-0-0-0-0-1-0-0-0-0-0-!1-6o-0-c9k" : 200000,
             "c2o-9-5-32-0-0-0-0-0-0-0-0-0-0-!1-6o-0-c9k" : 300000,
             "dnj-9-5-32-0-0-0-0-0-0-0-0-0-0-!1-6o-0-c9k" : 300000,
             "dje-9-3-3z-0-0-0-0-0-0-0-0-0-0-2-go-0-car" : 500000,
