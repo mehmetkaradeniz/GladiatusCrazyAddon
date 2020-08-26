@@ -1795,7 +1795,7 @@ var gca_overview = {
 			});
 		},
 		handler : function() {
-			gca_tools.item.move(this, 'avatar');
+            gca_hotkey.overview.eatFood(this);
 		}
 	},
 

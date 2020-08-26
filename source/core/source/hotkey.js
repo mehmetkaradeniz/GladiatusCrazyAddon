@@ -530,15 +530,23 @@ var gca_hotkey = {
 
     overview: {
         eatWorstFood: function () {
-            if (this.isEatWorstFoodAllowed())
-                this.doEatWorstFood();
+            const worstFood = this.getWorstFood();
+            if (this.isEatFoodAllowed(worstFood))
+                this.doEatFood(worstFood);
         },
 
-        isEatWorstFoodAllowed: function () {
-            const foodHp = jQuery(".worst-food").first().data().vitality;
+        eatFood: function(food){
+            if(this.isEatFoodAllowed(food))
+                this.doEatFood(food);
+        },
+
+        isEatFoodAllowed: function(food){
+            const foodHp = jQuery(food).data().vitality;
             const hpData = gca_hotkey.utils.getHpData();
-            const maxHp = hpData.maxValue;
-            const wastedFoodHp = foodHp - (maxHp - hpData.value);
+            const playerMaxHp = hpData.maxValue;
+            const playerCurrentHp = hpData.value;
+
+            const wastedFoodHp = foodHp - (playerMaxHp - playerCurrentHp);
             const wastedFoodPercentage = (wastedFoodHp * 100 / foodHp).toFixed(2);
 
             if (wastedFoodPercentage > 20)
@@ -547,8 +555,12 @@ var gca_hotkey = {
             return true;
         },
 
-        doEatWorstFood: function () {
-            gca_tools.item.move(jQuery(".worst-food")[0], 'avatar');
+        doEatFood: function(food){
+            gca_tools.item.move(food, 'avatar');
+        },
+
+        getWorstFood: function(){
+            return jQuery(".worst-food")[0];
         }
     },
 
