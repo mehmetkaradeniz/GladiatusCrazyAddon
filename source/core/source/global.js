@@ -5345,10 +5345,10 @@ var gca_global = {
                     keyword: "Gaius", // atk
                     priority: "H"
                 },
-                {
-                    keyword: "Marcus", // crit heal, heal
-                    priority: "H"
-                },
+                // {
+                //     keyword: "Marcus", // crit heal, heal
+                //     priority: "H"
+                // },
                 {
                     keyword: "Clever", // int , heal
                     priority: "H"
