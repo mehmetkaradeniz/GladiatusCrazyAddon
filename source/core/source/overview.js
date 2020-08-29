@@ -1807,8 +1807,10 @@ var gca_overview = {
             for (let i = 0; i < wearedItems.length; i++) {
                 let item = wearedItems[i];
                 let conditionPercentage = this.getConditionPercentage(item);
-                if(conditionPercentage < 30)
+                if(conditionPercentage < 15)
                     jQuery(item).css("border", "red solid 3px");
+                else if(conditionPercentage < 30)
+                    jQuery(item).css("border", "orange solid 3px");
             }
         },
 
