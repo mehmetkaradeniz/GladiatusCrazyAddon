@@ -138,7 +138,7 @@ var gca_hotkey = {
             this.navigation.toUsablePackages();
         }
         else if (map[69]) { // e
-            this.navigation.toNileBank();
+            // this.navigation.toNileBank();
         }
         else if (map[87]) { // w
             this.navigation.ToGuildMarket();
