@@ -140,6 +140,10 @@ var gca_hotkey = {
         else if (map[69]) { // e
             this.navigation.toNileBank();
         }
+        else if (map[87]) { // w
+            this.navigation.ToGuildMarket();
+        }
+
 
     },
 
@@ -314,6 +318,10 @@ var gca_hotkey = {
 
         toNileBank: function () {
             window.location = gca_getPage.link({ "mod": "location", "loc": "nile_bank" });
+        },
+
+        ToGuildMarket: function () {
+            window.location = gca_getPage.link({ "mod": "guildMarket", "s": "pd" });
         },
 
     },
