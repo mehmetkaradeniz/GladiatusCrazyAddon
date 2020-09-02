@@ -1790,9 +1790,27 @@ var gca_global = {
 				}
 				
 				if(gca_options.bool("global","auction_status_bar") || gca_options.bool("global","auction_status_notification")){
-					this.getStatus();
+                    if(this.allowGetStatus()){
+                        this.getStatus();
+    			        gca_data.section.set('cache', 'latest_auction_status_fetch_time_ms', new Date().getTime());
+                    }
+                    else{
+                        this.setOldStatus("gladiator");
+                        this.setOldStatus("mercenary");
+                    }
 				}
 			},
+
+
+            allowGetStatus: function(){
+                const nowMs = new Date().getTime();
+                const latestFetchTimeMs = gca_data.section.get('cache', 'latest_auction_status_fetch_time_ms', false);
+                if(!latestFetchTimeMs)
+                    return true;
+
+                const diffInMins = Math.abs(nowMs - latestFetchTimeMs)/60000;
+                return diffInMins > 1;
+            },
 
 			// Get Status
 			getStatus : function(){
@@ -1809,8 +1827,9 @@ var gca_global = {
 
 			parseStatus : function(type, content){
 				// Get Auction Name
-				var auctionName = content.match(/class="awesome-tabs current">([^<]+)<\/a>/);
+				// var auctionName = content.match(/class="awesome-tabs current">([^<]+)<\/a>/);
 				// Get Auction Status
+				var auctionName = type;
 				var auctionStatus = content.match(/<span\s*class="description_span_right"><b>([^<]+)<\/b><\/span>/);
 
 				// Get UI
@@ -1824,7 +1843,6 @@ var gca_global = {
 				}
 
 				// Parse
-				auctionName = auctionName[1];
 				auctionStatus = auctionStatus[1];
 
 				// If status UI
@@ -1854,7 +1872,13 @@ var gca_global = {
 				}
 				// Save status
 				gca_data.section.set("cache", "auction_status_" + type, auctionStatus);
-			}
+			},
+
+            setOldStatus: function(type){
+                let ui = document.getElementById("auction_status_" + type);
+                const oldStatus = gca_data.section.get("cache", "auction_status_" + type, false);
+                ui.textContent = type + ": " + oldStatus;
+            },
 		},
 
 		// Move event bar
