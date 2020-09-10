@@ -138,7 +138,7 @@ var gca_hotkey = {
             this.navigation.toUsablePackages();
         }
         else if (map[69]) { // e
-            // this.navigation.toNileBank();
+            this.navigation.toRome();
         }
         else if (map[87]) { // w
             this.navigation.ToGuildMarket();
@@ -169,7 +169,7 @@ var gca_hotkey = {
             if (pageParams.loc.match(/\d+/)) // normal expedition
                 this.expedition.attackBoss();
             else // event expedition
-                this.eventExpedition.attackBoss();
+                this.eventExpedition.attackFirstMob();
         }
         else if (pageParams.mod == "overview")
             this.overview.eatWorstFood();
@@ -316,8 +316,8 @@ var gca_hotkey = {
             window.location = gca_getPage.link({ "mod": "training" });
         },
 
-        toNileBank: function () {
-            window.location = gca_getPage.link({ "mod": "location", "loc": "nile_bank" });
+        toRome: function () {
+            window.location = gca_getPage.link({ "mod": "location", "submod": "serverQuest", "loc": "streets_of_rome" });
         },
 
         ToGuildMarket: function () {
@@ -415,8 +415,9 @@ var gca_hotkey = {
 
         hasEventPoints: function () {
             // let remainingEventPoints = jQuery("#ServerQuestTime > span").first().text().trim();
-            let remainingEventPoints = jQuery("#content > div:nth-child(3) > div.section-header > p:nth-child(2)").text().match(/\d+/)[0];
-            
+        //    #content > div:nth-child(4) > div.section-header > p:nth-child(2) 
+            // let remainingEventPoints = jQuery("#content > div:nth-child(3) > div.section-header > p:nth-child(2)").text().match(/\d+/)[0];
+            let remainingEventPoints = jQuery("#content > div:nth-child(4) > div.section-header > p:nth-child(2)").text().match(/\d+/)[0];
             return parseInt(remainingEventPoints) > 0;
         },
 
