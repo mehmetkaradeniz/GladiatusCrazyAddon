@@ -59,7 +59,7 @@ var inject = function(_info, _window, _folder){
 	// Build
 	tools.preloadScript('source/gca.build.js');
 
-    tools.preloadScript("source/hotkey.js");
+	//tools.preloadScript("source/hotkey.js");
 
 	// Manager Load
 	manager.load();

@@ -169,7 +169,7 @@ var gca_hotkey = {
             if (pageParams.loc.match(/\d+/)) // normal expedition
                 this.expedition.attackBoss();
             else // event expedition
-                this.eventExpedition.attackFirstMob();
+                this.eventExpedition.attackSecondMob();
         }
         else if (pageParams.mod == "overview")
             this.overview.eatWorstFood();
